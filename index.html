@@ -11,11 +11,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script>
-/* Google Analytics 4: consenso negato di default. Lo script Google viene caricato SOLO dopo l'accettazione. */
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
-gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root{
@@ -175,26 +170,6 @@ textarea:focus{outline:none;border-color:var(--cherry);box-shadow:0 0 0 3px rgba
 .modal-act{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
 @media (max-width:640px){.modal-act{flex-direction:column-reverse}.modal-act .btn{width:100%}}
 
-
-/* privacy banner + footer */
-.foot{max-width:960px;margin:0 auto;padding:0 24px 36px;text-align:center}
-.linkbtn{background:none;border:0;padding:6px 8px;font:inherit;font-size:.82rem;color:var(--muted);text-decoration:underline;text-underline-offset:3px;cursor:pointer;border-radius:6px}
-.linkbtn:hover{color:var(--cherry-dark)}
-.linkbtn:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(185,28,53,.28)}
-.consent{position:fixed;left:0;right:0;bottom:0;z-index:70;padding:12px 12px calc(12px + env(safe-area-inset-bottom,0px));pointer-events:none}
-.consent.hide{display:none}
-.consent-in{pointer-events:auto;max-width:720px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:var(--r-card);box-shadow:0 8px 30px rgba(48,39,42,.16);padding:20px 22px;animation:rise .3s ease both}
-.consent h2{margin:0 0 6px;font-size:1rem;font-weight:600;color:var(--title)}
-.consent p{margin:0 0 10px;font-size:.88rem;line-height:1.5;color:var(--text)}
-.consent details{margin:0 0 12px;font-size:.82rem;color:var(--muted)}
-.consent summary{cursor:pointer;color:var(--cherry-dark);font-weight:500;width:fit-content}
-.consent details p{font-size:.82rem;color:var(--muted);margin:8px 0 0}
-.consent .cstatus{font-size:.8rem;color:var(--muted);margin:0 0 12px}
-.consent-act{display:flex;gap:10px}
-.consent-act .btn{flex:1;height:44px;background:#fff;color:var(--cherry-dark);border-color:var(--cherry)}
-.consent-act .btn:hover{background:var(--pink-1)}
-@media (max-width:640px){.consent-in{padding:16px 16px}.consent-act .btn{padding:0 10px}}
-
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -257,18 +232,6 @@ textarea:focus{outline:none;border-color:var(--cherry);box-shadow:0 0 0 3px rgba
 </section>
 </main>
 
-<footer class="foot"><button type="button" class="linkbtn" id="privOpen">Preferenze privacy</button></footer>
-
-<div class="consent hide" id="consent" role="dialog" aria-labelledby="cTitle" aria-describedby="cText">
-<div class="consent-in">
-<h2 id="cTitle">Preferenze privacy</h2>
-<p id="cText">Con il tuo consenso usiamo Google Analytics per capire come viene utilizzato il sito: visite e azioni come generare, approvare o scaricare un cruciverba. Le parole che inserisci non vengono mai inviate. Rifiutare non limita nessuna funzione e puoi cambiare scelta in ogni momento da “Preferenze privacy”, in fondo alla pagina.</p>
-<details><summary>Maggiori informazioni</summary>
-<p><strong>Strumento:</strong> Google Analytics 4 (Google Ireland Limited; i dati possono essere trattati anche da Google LLC negli Stati Uniti). <strong>Cosa viene raccolto, solo con consenso:</strong> pagine visitate, sessioni, paese e città approssimativi ricavati dall’indirizzo IP (che GA4 non registra), tipo di dispositivo e browser, ed eventi di utilizzo con soli conteggi numerici (parole inserite, parole collocate, esclusioni, tipo di PDF scaricato). <strong>Cookie:</strong> _ga e _ga_1TLDSWWPTG, fino a 2 anni. <strong>Cosa non viene fatto:</strong> nessun invio delle parole digitate, nessun dato personale, nessun segnale Google né personalizzazione degli annunci. Senza consenso non viene caricato alcuno script di Google. La scelta è salvata nel tuo browser e ti verrà richiesta di nuovo dopo 6 mesi. Titolare del trattamento: il gestore di questo sito.</p></details>
-<p class="cstatus" id="cStatus"></p>
-<div class="consent-act"><button type="button" class="btn" id="cNo">Rifiuta</button><button type="button" class="btn" id="cYes">Accetta</button></div>
-</div></div>
-
 <div class="toasts" id="toasts" aria-live="polite"></div>
 <div class="modal-back hide" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
 <div class="modal"><h3 id="mTitle"></h3><div id="mBody"></div>
@@ -277,54 +240,6 @@ textarea:focus{outline:none;border-color:var(--cherry);box-shadow:0 0 0 3px rgba
 <script>
 (function(){
 var $=function(i){return document.getElementById(i)};
-
-/* ---------- Google Analytics 4 con consenso (Consent Mode v2, caricamento solo dopo accettazione) ---------- */
-var GA_ID='G-1TLDSWWPTG',CK='cv_consent_v1',CK_DAYS=180;
-function readConsent(){try{var o=JSON.parse(localStorage.getItem(CK)||'null');if(o&&(o.v==='granted'||o.v==='denied')&&Date.now()-o.t<CK_DAYS*864e5)return o.v}catch(e){}return null}
-function writeConsent(v){try{localStorage.setItem(CK,JSON.stringify({v:v,t:Date.now()}))}catch(e){}}
-function gaConfig(){var c={allow_google_signals:false,allow_ad_personalization_signals:false};if(/[?&]ga_debug=1/.test(location.search))c.debug_mode=true;return c}
-function loadGA(){
-  window['ga-disable-'+GA_ID]=false;
-  gtag('consent','update',{analytics_storage:'granted'});
-  if(!window.__gaLoaded){
-    window.__gaLoaded=true;
-    var sc=document.createElement('script');sc.async=true;sc.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;document.head.appendChild(sc);
-    gtag('js',new Date());
-  }
-  gtag('config',GA_ID,gaConfig());
-  window.__gaOn=true;
-}
-function delCookies(){
-  var names=['_ga','_ga_'+GA_ID.replace('G-','')],host=location.hostname,parts=host.split('.'),doms=['',host,'.'+host];
-  if(parts.length>2)doms.push('.'+parts.slice(-2).join('.'));
-  names.forEach(function(n){doms.forEach(function(d){document.cookie=n+'=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'+(d?'; domain='+d:'')})});
-}
-function revokeGA(){
-  window.__gaOn=false;window['ga-disable-'+GA_ID]=true;
-  gtag('consent','update',{analytics_storage:'denied'});
-  delCookies();
-}
-/* invia un evento solo se c'è consenso; i parametri sono SOLO conteggi o etichette fisse, mai testo digitato */
-function track(name,params){if(!window.__gaOn)return;try{gtag('event',name,params||{})}catch(e){}}
-
-function showConsent(){
-  var c=readConsent();
-  $('cStatus').textContent=c==='granted'?'Scelta attuale: statistiche consentite.':c==='denied'?'Scelta attuale: statistiche rifiutate.':'';
-  $('consent').classList.remove('hide');
-  document.body.style.paddingBottom=($('consent').offsetHeight)+'px';
-  $('cNo').focus({preventScroll:true});
-}
-function hideConsent(){$('consent').classList.add('hide');document.body.style.paddingBottom=''}
-function choose(v){
-  var prev=readConsent();writeConsent(v);hideConsent();
-  if(v==='granted')loadGA();else if(window.__gaOn||prev==='granted')revokeGA();
-  if(typeof toast==='function')toast(v==='granted'?'Statistiche consentite. Puoi cambiare scelta da “Preferenze privacy”.':'Statistiche rifiutate: nessun dato viene inviato.','ok');
-}
-$('cYes').onclick=function(){choose('granted')};
-$('cNo').onclick=function(){choose('denied')};
-$('privOpen').onclick=showConsent;
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('consent').classList.contains('hide')&&readConsent())hideConsent()});
-(function(){var c=readConsent();if(c==='granted')loadGA();else if(c===null)showConsent()})();
 
 /* ENGINE START (logica pura, senza DOM: testabile in Node) */
 function normWord(x){return x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z]/g,'')}
@@ -631,12 +546,6 @@ function run(regen){
       if(out.repeated){state.seen={};toast('Hai già visto tutte le strutture che sono riuscito a trovare: da qui si ripetono.')}
       state.res=finalize(out,state.words);state.sig=state.res.sig;state.seen[state.sig]=1;
       state.zoom=1;render();
-      var rr=state.res,ev={word_count:state.words.length,placed_count:rr.count,excluded_count:rr.failed.length};
-      track(regen?'crossword_regenerated':'crossword_generated',ev);
-      if(rr.failed.length){
-        var st=rr.failed.filter(function(f){return f.kind!=='search'}).length;
-        track('generation_error',{error_type:'words_excluded',word_count:ev.word_count,placed_count:ev.placed_count,excluded_count:ev.excluded_count,structural_count:st,search_count:rr.failed.length-st,regenerated:regen?1:0});
-      }
       $('s2').classList.remove('hide');$('s3').classList.add('hide');
       $('s2').scrollIntoView({behavior:'smooth'});
     }finally{b.innerHTML=label;$('gen').disabled=false;$('regen').disabled=false}
@@ -651,7 +560,7 @@ function showErr1(p){
 $('gen').onclick=function(){
   var p=parseInput($('words').value);
   state.parsed=p;
-  if(p.words.length<2){showErr1(p);track('generation_error',{error_type:'too_few_words',word_count:p.words.length});return}
+  if(p.words.length<2){showErr1(p);return}
   $('err1').innerHTML='';
   state.words=p.words;state.seen={};state.sig='';
   run(false);
@@ -662,7 +571,6 @@ $('showl').onchange=render;
 
 function approve(partial){
   var res=state.res;
-  track('crossword_approved',{approval_type:partial?'partial':'complete',word_count:state.words.length,placed_count:res.count,excluded_count:res.failed.length});
   $('partialNote').innerHTML=partial?'<div class="err" role="status">'+ICON_WARN+'<div><strong>Versione parziale: '+res.count+(res.count===1?' parola':' parole')+' su '+state.words.length+'.</strong> Non presenti nei PDF: '+list(res.failed.map(function(f){return f.w}))+'.</div></div>':'';
   $('s3').classList.remove('hide');$('s3').scrollIntoView({behavior:'smooth'});
   toast(partial?'Versione parziale approvata.':'Schema approvato: ora puoi scaricare i PDF.','ok');
@@ -705,7 +613,6 @@ function save(solution){
     document.body.appendChild(a);a.click();document.body.removeChild(a);
     setTimeout(function(){URL.revokeObjectURL(url)},4000);
     msg.textContent='';toast('Download avviato: '+name,'ok');
-    track(solution?'pdf_solutions_download':'pdf_blank_download',{pdf_type:solution?'solutions':'blank',word_count:state.words.length,placed_count:state.res.count});
   }catch(e){
     msg.textContent='Download non riuscito'+(e&&e.message?': '+e.message:'')+'.';
   }
