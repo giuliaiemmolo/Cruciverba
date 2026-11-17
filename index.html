@@ -3,245 +3,162 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#B91C35">
-<title>Cruciverba Studio</title>
+<meta name="theme-color" content="#A8132F">
+<title>Cruciverba by Giuggi</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-:root{
-  --cherry:#B91C35;--cherry-dark:#9F1730;--pink-1:#FCECEF;--pink-2:#F9EEF0;--tile:#FCEFF1;
-  --bg:#FAF8F8;--card:#FFFFFF;--title:#30272A;--text:#4D4146;--muted:#766B70;--line:#F0E4E6;--line-2:#E6D6DA;--field:#FCFAFA;
-  --r-card:18px;--r-ctl:12px;
-  --font:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-}
+:root{--c:#A8132F;--cd:#8C0F27;--p1:#FCE6EA;--bg:#FEF3F5;--t:#3A0F1A;--tx:#5A4249;--m:#7A5F67;--ln:#F3D9DE;--f:"Plus Jakarta Sans",system-ui,sans-serif}
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
-svg{display:block}
-.ico{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ico svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* header */
-.top{background:var(--bg);border-bottom:1px solid var(--line)}
-.top-in{max-width:960px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:12px}
-.mark{width:36px;height:36px;flex:none}
-.brand{font-weight:600;font-size:1.05rem;color:var(--title);letter-spacing:-.01em}
-
-main{max-width:960px;margin:0 auto;padding:44px 24px 72px}
-
-/* hero */
-.hero{text-align:center;margin-bottom:28px}
-.logo{width:116px;height:116px;margin:0 auto 24px}
-.hero h1{margin:0;font-size:clamp(1.9rem,5.2vw,2.9rem);line-height:1.12;font-weight:700;letter-spacing:-.03em;color:var(--title)}
-.hero p{margin:14px auto 0;max-width:34rem;font-size:clamp(1rem,2.4vw,1.1rem);color:var(--muted)}
-
-/* steps */
-.steps{list-style:none;margin:0 auto 32px;padding:0;display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;font-size:.82rem;font-weight:500}
-.steps li{display:flex;align-items:center;gap:8px;color:#A89DA2;transition:color .2s}
-.steps li b{font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.02em}
-.steps li+li::before{content:"";width:28px;height:1px;background:var(--line-2);margin-right:6px}
-.steps li.on{color:var(--cherry)}
-.steps li.on span{border-bottom:2px solid var(--cherry);padding-bottom:2px}
-.steps li.done{color:var(--muted)}
-
-/* cards */
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:32px;margin:0 auto 20px;box-shadow:0 1px 2px rgba(48,39,42,.04);animation:rise .35s ease both}
-.card-h{display:flex;align-items:center;gap:14px;margin-bottom:22px}
-.chip{width:42px;height:42px;border-radius:12px;background:var(--pink-1);color:var(--cherry);display:grid;place-items:center;flex:none}
-.card-h h2{margin:0;font-size:1.2rem;font-weight:600;letter-spacing:-.015em;color:var(--title);line-height:1.25}
-.card-h .sub{margin:2px 0 0;font-size:.88rem;color:var(--muted)}
-.card-h .grow{flex:1;min-width:0}
-.badge{background:var(--pink-1);color:var(--cherry-dark);font-size:.8rem;font-weight:600;padding:5px 12px;border-radius:999px;white-space:nowrap}
+body{margin:0;display:flex;min-height:100vh;background:radial-gradient(circle at 90% 100%,#FBDDE3,transparent 40%),var(--bg);font:500 15px/1.5 var(--f);color:var(--tx)}
+button,input,select,textarea{font:inherit;color:inherit}
+.hide{display:none!important}
+.ico{display:inline-grid;width:20px;height:20px;flex:none}.ico svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.side{width:86px;background:linear-gradient(180deg,#A8132F,#8C0F27);color:#fff;padding:6px 21px 22px;border-radius:0 0 90px 0;position:fixed;left:0;top:0;z-index:5;height:100vh;display:flex;flex-direction:column;gap:6px;overflow:hidden;transition:width .22s ease,box-shadow .22s ease}
+.side:hover,.side:has(button:focus-visible){width:226px;box-shadow:8px 0 30px rgba(58,15,26,.25)}
+.side button span{white-space:nowrap;opacity:0;transition:opacity .15s}.side:hover span,.side:has(button:focus-visible) span{opacity:1}
+.side .logo{width:52px;height:52px;flex:none;display:block;margin:0 -4px 16px;border-radius:14px}
+.side button{display:flex;align-items:center;gap:12px;padding:12px;border:0;background:none;border-radius:14px;cursor:pointer;font-weight:600;font-size:.92rem;text-align:left;line-height:1.2;color:#fff}
+.side button:hover{background:rgba(255,255,255,.14)}.side button.on{background:rgba(255,255,255,.9);color:var(--c)}
+.wrap{flex:1;min-width:0}
+.top{display:flex;align-items:center;gap:8px;min-height:64px;padding:8px 30px;border-bottom:1px solid var(--ln);background:rgba(255,255,255,.7)}
+.top .name{flex:1;font-weight:800;font-size:1.3rem;letter-spacing:-.01em;color:var(--t)}
+.top button{display:flex;gap:8px;align-items:center;border:0;background:none;cursor:pointer;font-weight:600;padding:8px 10px;border-radius:10px;color:var(--t)}.top button:hover{background:var(--p1)}
+.wrap{margin-left:86px}
+main{max-width:1240px;margin:0 auto;padding:26px 30px 48px}
+.head{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:24px;align-items:center;margin-bottom:24px}.head .pill{grid-column:1/-1;justify-self:start}.head h1{grid-column:1;grid-row:2}.head p{grid-column:1;grid-row:3}
+.pill{display:inline-block;background:var(--p1);color:var(--c);font-weight:700;font-size:.85rem;padding:7px 16px;border-radius:999px}
+h1{margin:12px 0 8px;font-size:clamp(2rem,4.5vw,3.3rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;color:var(--t)}h1 em{font-style:normal;color:var(--c)}
+.head p{margin:0;max-width:30rem;color:var(--m);font-size:1.05rem}
+.stp{list-style:none;display:flex;margin:0;padding:0;grid-column:2;grid-row:2;align-self:center}
+.stp li{position:relative;width:118px;text-align:center;cursor:pointer;font-weight:600;font-size:.9rem;line-height:1.25}
+.stp b{display:grid;place-items:center;width:52px;height:52px;margin:0 auto 6px;border:2px solid var(--c);border-radius:50%;background:#fff;color:var(--c);font-size:1.25rem;position:relative;z-index:1}.stp b svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.stp li+li::before{content:"";position:absolute;top:25px;right:50%;width:100%;height:2px;background:var(--c)}
+.stp li.on{color:var(--c);font-weight:800}.stp li.on b{background:var(--c);color:#fff}
+.card{background:rgba(255,255,255,.9);border:1px solid var(--ln);border-radius:22px;padding:22px;box-shadow:0 10px 30px rgba(168,19,47,.08)}
+.ch{display:flex;align-items:center;gap:12px;margin-bottom:16px}.ch h2{margin:0;font-size:1.25rem;font-weight:800;color:var(--t);line-height:1.2}.ch p{margin:0;font-size:.85rem;color:var(--m)}.ch>div{flex:1;min-width:0}
+.chip{width:42px;height:42px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;flex:none}
+.badge{background:var(--p1);color:var(--c);font-weight:700;font-size:.8rem;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.g1{display:grid;grid-template-columns:minmax(300px,5fr) 6fr;gap:30px;align-items:start}
+.g2{display:grid;grid-template-columns:minmax(250px,3fr) minmax(0,5fr) minmax(270px,2.6fr);gap:28px;align-items:start}
+.g3{display:grid;grid-template-columns:minmax(300px,4fr) 6fr;gap:30px;align-items:start}
+.stack{position:relative}.stack::before,.stack::after{content:"";position:absolute;border-radius:28px}
+.stack::before{inset:18px -16px -16px 16px;background:var(--c);transform:rotate(1.5deg)}.stack::after{inset:8px 18px -10px -14px;background:var(--p1);transform:rotate(-1.5deg)}
+.stack>*{position:relative;z-index:1}
+.sheet{background:#fff;border:1px solid var(--ln);border-radius:14px;padding:14px;overflow:auto;max-height:540px;text-align:center}
+.empty{padding:40px 20px;color:var(--m);display:grid;gap:10px;justify-items:center}.empty .ico{width:56px;height:56px;color:#E7B8C1}
+.lw{margin:8px 2px 0;font-size:.82rem;color:var(--c);min-height:1em}
+.tools{display:flex;justify-content:space-around;gap:8px;margin-top:10px}
+.tools button{display:grid;justify-items:center;gap:4px;border:0;background:none;cursor:pointer;font-size:.8rem;font-weight:600;color:var(--tx)}.tools .ico{width:46px;height:46px;border-radius:50%;background:var(--p1);color:var(--c);padding:12px}
+.seg-box{border:1px solid var(--ln);border-radius:14px;padding:12px;margin-bottom:16px;background:#fff}.seg-box .lab{font-weight:800;color:var(--t);margin-bottom:8px}
+.seg{display:flex;gap:6px}.seg button{flex:1;border:0;border-radius:10px;padding:10px;background:var(--p1);color:var(--t);font-weight:700;cursor:pointer}.seg button.on{background:var(--c);color:#fff}
+#rows{max-height:340px;overflow:auto;padding:2px}
+.row{display:grid;grid-template-columns:26px 1fr 34px;gap:8px;align-items:start;margin-bottom:10px;animation:rise .25s ease both}
+.row .n{margin-top:10px;font-weight:800;color:var(--c);text-align:center}.f{display:grid;gap:6px}
+input.w,textarea.df,.cfg input[type=text],.cfg select{width:100%;padding:12px 14px;border:1px solid var(--ln);border-radius:12px;background:#fff}
+textarea.df{resize:vertical}input:focus,textarea:focus,select:focus{outline:2px solid var(--c);outline-offset:0}
+.bad{border-color:var(--c)!important;background:#FFF0F2!important}
+.x{margin-top:6px;border:0;background:none;color:var(--m);cursor:pointer;border-radius:8px;padding:6px}.x:hover{background:var(--p1);color:var(--c)}
+.add{width:100%;margin-top:6px;padding:14px;border:1.5px dashed var(--c);border-radius:14px;background:var(--p1);color:var(--c);font-weight:800;cursor:pointer;display:flex;justify-content:center;gap:8px;align-items:center}
 @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
-/* form */
-textarea{display:block;width:100%;min-height:170px;padding:16px 18px;border:1px solid var(--line-2);border-radius:var(--r-ctl);background:var(--field);color:var(--title);font:inherit;font-size:1rem;line-height:1.6;resize:vertical;transition:border-color .15s,box-shadow .15s}
-textarea::placeholder{color:#A89DA2}
-textarea:focus{outline:none;border-color:var(--cherry);box-shadow:0 0 0 3px rgba(185,28,53,.1)}
-.meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 2px 0;font-size:.82rem;color:var(--muted)}
-.meta .count{color:var(--cherry-dark);font-weight:600}
-
-/* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 22px;border-radius:var(--r-ctl);border:1px solid transparent;font:inherit;font-size:.95rem;font-weight:600;cursor:pointer;transition:background-color .18s,border-color .18s,color .18s,transform .12s;text-decoration:none}
-.btn .ico{width:18px;height:18px}
-.btn:active{transform:translateY(1px)}
-.btn:focus-visible,.tile:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(185,28,53,.28)}
-.btn-primary{background:var(--cherry);color:#fff}
-.btn-primary:hover{background:var(--cherry-dark)}
-.btn-soft{background:var(--pink-1);color:var(--cherry-dark)}
-.btn-soft:hover{background:#F8DEE3}
-.btn-ghost{background:#fff;color:var(--text);border-color:var(--line-2)}
-.btn-ghost:hover{background:var(--bg);border-color:#D9C6CB}
-.actions{margin-top:22px}
-.actions .btn-primary{min-width:220px}
-.controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:24px}
-.controls .switch{margin-left:auto}
-
-/* switch */
-.switch{display:inline-flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text);cursor:pointer;user-select:none}
-.switch input{position:absolute;opacity:0;width:1px;height:1px}
-.track{width:38px;height:22px;border-radius:999px;background:var(--line-2);position:relative;transition:background-color .2s;flex:none}
-.track::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.18);transition:transform .2s}
-.switch input:checked+.track{background:var(--cherry)}
-.switch input:checked+.track::after{transform:translateX(16px)}
-.switch input:focus-visible+.track{box-shadow:0 0 0 3px rgba(185,28,53,.28)}
-
-/* crossword preview: always black on white */
-.sheet{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 20px;overflow-x:auto;text-align:center}
-.sheet svg{margin:0 auto}
-.stats{margin:0 0 16px;font-size:.88rem;color:var(--muted)}
-.stats strong{color:var(--title);font-weight:600}
-
-/* errors */
-.err{display:flex;gap:12px;align-items:flex-start;background:var(--pink-1);color:var(--cherry-dark);border:1.5px solid var(--cherry);border-radius:var(--r-ctl);padding:14px 16px;margin-bottom:16px;font-size:.92rem;font-weight:500;line-height:1.5}
-.err svg{width:20px;height:20px;flex:none;margin-top:1px;fill:none;stroke:var(--cherry);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* export tiles */
-.tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.tile{display:flex;align-items:center;gap:14px;width:100%;min-height:84px;padding:18px 20px;background:var(--tile);color:var(--cherry-dark);border:1px solid transparent;border-radius:var(--r-ctl);font:inherit;text-align:left;cursor:pointer;transition:background-color .18s,border-color .18s,transform .12s}
-.tile:hover{background:#FBE6EA;border-color:#F1CBD3}
-.tile:active{transform:translateY(1px)}
-.tile .ico{width:26px;height:26px;color:var(--cherry);stroke-width:1.75}
-.tile strong{display:block;font-size:.98rem;font-weight:600;line-height:1.3}
-.tile small{display:block;margin-top:2px;font-size:.8rem;font-weight:400;color:var(--muted)}
-.note{margin:16px 2px 0;font-size:.84rem;color:var(--muted)}
-
-.hide{display:none}
-
-@media (max-width:640px){
-  .top-in{padding:12px 18px}
-  main{padding:30px 16px 56px}
-  .card{padding:22px 18px;border-radius:16px}
-  .card-h{margin-bottom:18px}
-  .logo{width:96px;height:96px;margin-bottom:20px}
-  .sheet{padding:16px 10px}
-  .tiles{grid-template-columns:1fr}
-  .actions .btn-primary{width:100%}
-  .controls .btn{flex:1 1 100%}
-  .controls .switch{margin-left:0;width:100%;justify-content:center;padding-top:4px}
-  .steps li+li::before{width:16px}
-}
-
-/* notices, errors detail */
-.notes{list-style:none;margin:0 0 14px;padding:12px 14px;background:var(--pink-2);border:1px solid var(--line);border-radius:var(--r-ctl);font-size:.88rem;color:var(--text)}
-.notes li{display:flex;gap:10px;align-items:flex-start;padding:3px 0}
-.notes svg{width:17px;height:17px;flex:none;margin-top:2px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.err ul.why{margin:8px 0 0;padding-left:18px;font-weight:400}
-.err ul.why li{margin:4px 0}
-.err .inerr{margin-top:10px}
-.err .inerr .notes{margin:0;background:#fff}
-#err1 .err{margin:16px 0 0}
-#partialNote .err{margin-bottom:16px}
-.okhint{margin:14px 2px 0;font-size:.84rem;color:var(--muted)}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.btn-primary:disabled:hover{background:var(--cherry)}
-
-/* zoom bar: only small / touch screens */
-.zoombar{display:none;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px}
-.zhint{font-size:.78rem;color:var(--muted);line-height:1.35}
-.zbtns{display:flex;align-items:center;gap:6px;flex:none}
-.zbtn{height:36px;min-width:36px;padding:0 10px;border-radius:10px;border:1px solid var(--line-2);background:#fff;color:var(--text);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;display:grid;place-items:center}
-.zbtn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.zbtn:active{background:var(--pink-1)}
-.zpct{font-size:.78rem;color:var(--muted);min-width:38px;text-align:center;font-variant-numeric:tabular-nums}
-@media (max-width:640px),(pointer:coarse){
-  .zoombar{display:flex}
-  .sheet{max-height:72vh;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}
-}
-
-/* toasts */
-.toasts{position:fixed;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 16px;pointer-events:none;z-index:50}
-.toast{pointer-events:auto;display:flex;gap:10px;align-items:center;max-width:420px;background:var(--title);color:#fff;padding:12px 16px;border-radius:12px;font-size:.88rem;line-height:1.4;box-shadow:0 6px 20px rgba(48,39,42,.18);animation:rise .25s ease both;transition:opacity .25s}
-.toast.out{opacity:0}
-.toast svg{width:18px;height:18px;flex:none;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* confirm dialog */
-.modal-back{position:fixed;inset:0;background:rgba(48,39,42,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:60}
-.modal-back.hide{display:none}
-.modal{background:#fff;border-radius:var(--r-card);padding:26px;max-width:440px;width:100%;box-shadow:0 12px 40px rgba(48,39,42,.22);animation:rise .2s ease both;max-height:90vh;overflow:auto}
-.modal h3{margin:0 0 12px;font-size:1.1rem;font-weight:600;color:var(--title);letter-spacing:-.01em}
-.modal p{margin:0 0 10px;font-size:.92rem}
-.modal .mwords{font-weight:600;color:var(--cherry-dark);word-break:break-word}
-.modal-act{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
-@media (max-width:640px){.modal-act{flex-direction:column-reverse}.modal-act .btn{width:100%}}
-
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:52px;padding:0 26px;border-radius:999px;border:1.5px solid var(--c);font-weight:800;font-size:1rem;cursor:pointer}
+.pri{background:linear-gradient(180deg,#B3163A,#8C0F27);color:#fff;box-shadow:0 6px 16px rgba(168,19,47,.3)}.ghost{background:#fff;color:var(--t);border-color:var(--ln)}.btn:disabled{opacity:.5;cursor:wait}
+.bar{display:flex;justify-content:center;gap:20px;margin-top:34px;flex-wrap:wrap}.bar .btn{min-width:260px}
+.wl{list-style:none;margin:0;padding:0;max-height:430px;overflow:auto}.wl li{display:flex;align-items:center;gap:12px;padding:9px 4px;border-bottom:1px solid var(--ln)}
+.wl .n{width:26px;height:22px;border-radius:6px;background:var(--p1);font-size:.78rem;font-weight:700;display:grid;place-items:center}.wl b{flex:1;color:var(--t)}
+.st .ico{width:22px;height:22px}.st.ok{color:#2E9B4F}.st.no{color:#E08A00}
+.leg{display:flex;gap:14px;margin-top:12px;font-size:.8rem;color:var(--m);justify-content:center}.leg span{display:flex;gap:5px;align-items:center}.leg .ico{width:16px;height:16px}
+.ctl{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;min-width:0}.ctl>button,.ctl>.line{display:flex;justify-content:center;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--ln);border-radius:14px;background:var(--p1);color:var(--t);font-weight:700;cursor:pointer;width:100%;text-align:left}
+.ctl .line{justify-content:space-between;cursor:default}.ctl .line>span{display:flex;gap:12px;align-items:center;white-space:nowrap}.ctl .ico{color:var(--c)}.ctl .btn{width:100%}.ctl .zb{border:0;background:none;cursor:pointer;padding:4px}
+.sw input{position:absolute;opacity:0}.sw i{display:block;width:44px;height:24px;border-radius:99px;background:#D9C2C8;position:relative;cursor:pointer}.sw i::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}.sw input:checked+i{background:var(--c)}.sw input:checked+i::after{transform:translateX(20px)}
+#ap2.btn{display:flex;justify-content:center;white-space:nowrap;gap:8px;font-size:.92rem;height:52px;padding:0 12px;min-width:0;border-radius:999px;background:#8C0F27;border-color:#8C0F27;color:#fff;box-shadow:0 6px 16px rgba(140,15,39,.35)}#ap2.btn:hover{background:#740C20;border-color:#740C20}#ap2.btn .ico{color:#fff}
+.banner{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;padding:12px 14px;border:1.5px solid var(--c);border-radius:14px;background:var(--p1);color:var(--cd);animation:rise .25s ease both}.banner>.ico{color:var(--c);margin-top:1px}.banner>div{flex:1;font-weight:600;font-size:.9rem;line-height:1.35}.banner b{display:block;font-weight:800}.banner button{border:0;background:none;color:var(--cd);cursor:pointer;font-size:1.4rem;line-height:1;padding:0 4px}
+.err{margin-top:20px;padding:14px 16px;border:1.5px solid var(--c);border-radius:14px;background:var(--p1);color:var(--cd);font-weight:600}
+#defs{margin-top:34px}.dcols{display:grid;grid-template-columns:1fr 1fr;gap:28px;text-align:left}.dcols ul{list-style:none;margin:10px 0 0;padding:0}.dcols li{padding:5px 0;font-size:.92rem}.dcols li b{color:var(--c)}
+.tag{display:inline-block;background:var(--p1);color:var(--c);font-weight:800;padding:4px 14px;border-radius:999px;font-size:.85rem}
+.cfg label.l{display:block;font-weight:800;color:var(--t);margin:16px 0 6px}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rng{display:flex;gap:14px;align-items:center}.rng input{flex:1;accent-color:var(--c)}.rng output{background:var(--p1);padding:6px 12px;border-radius:10px;font-weight:700}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}.opts label{display:flex;gap:10px;align-items:center;padding:14px;border:1.5px solid var(--ln);border-radius:14px;background:#fff;cursor:pointer;font-weight:600;line-height:1.2}.opts label:has(input:checked){border-color:var(--c);background:var(--p1)}.opts input{accent-color:var(--c)}
+.cfg .btn{width:100%;margin-top:22px}.note{margin:12px 2px 0;color:var(--m);font-size:.85rem;text-align:center}
+.paper{background:#fff;padding:24px}.ptitle{margin:0 0 14px;text-align:center;font:italic 700 2rem "Playfair Display",serif;color:#111}.paper .sheet{border:0;padding:0}.paper .dcols{margin-top:18px;border-top:1px solid var(--c);padding-top:14px;font-size:.9rem}
+.zs{position:absolute!important;right:-70px;top:30px;display:grid;gap:12px;z-index:2}.zs button{width:48px;height:48px;border-radius:14px;border:0;background:var(--p1);color:var(--c);cursor:pointer;display:grid;place-items:center}
+.toasts{position:fixed;left:0;right:0;bottom:18px;display:flex;justify-content:center;pointer-events:none;z-index:50}.toast{background:var(--t);color:#fff;padding:12px 18px;border-radius:12px;max-width:420px;animation:rise .25s ease both}
+.mb{position:fixed;inset:0;background:rgba(58,15,26,.5);display:flex;align-items:center;justify-content:center;padding:16px;z-index:60}.mb>div{background:#fff;border-radius:22px;padding:26px;max-width:440px;width:100%}.mb h3{margin:0 0 10px;color:var(--t)}.ma{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}.ma .btn{height:44px;padding:0 20px}
+@media(max-width:1100px){.zs{right:8px;top:8px}}
+@media(max-width:860px){body{flex-direction:column}.side,.side:hover{position:static;width:auto;height:auto;flex-direction:row;flex-wrap:wrap;border-radius:0 0 24px 24px;padding:10px;box-shadow:none}.wrap{margin-left:0}.side span{display:none}.g1,.g2,.g3,.dcols{grid-template-columns:1fr}.head{grid-template-columns:1fr}.head h1,.head p,.stp{grid-column:1;grid-row:auto}.stp{margin:12px 0}main{padding:20px 16px 40px}.top{padding:10px 16px}.top button span{display:none}.stp li{width:96px}}
 </style>
 </head>
 <body>
-<header class="top"><div class="top-in">
-<svg class="mark" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="112" fill="#B91C35"/><rect x="148" y="76" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="76" y="148" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="148" y="148" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="220" y="148" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="292" y="148" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="364" y="148" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="148" y="220" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="292" y="220" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="148" y="292" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="292" y="292" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="148" y="364" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="292" y="364" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/></svg>
-<span class="brand">Cruciverba Studio</span>
-</div></header>
-
+<aside class="side">
+<img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAWfmNhQlgAABZ+anVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAFlhqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOjc3YWE4OGEwLTM1YTctNDVhZS04ODFiLTk4ODE2MWU0Y2ZjYgAAAAOTanVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAAuGp1bWIAAABEanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5pbmdyZWRpZW50LnYzAAAAABhjMnNoq8HbbAMA0q4t+gSeupmvjgAAAGxjYm9yo2lkYzpmb3JtYXRpaW1hZ2UvcG5namluc3RhbmNlSUR4LHhtcDppaWQ6NTFkMzMwM2EtYjBmZC00Y2IzLWJmNWYtNjMwODFmZmNiMzEwbHJlbGF0aW9uc2hpcGhwYXJlbnRPZgAAAeJqdW1iAAAAQWp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuYWN0aW9ucy52MgAAAAAYYzJzaL2WS+pYe5QaRTiz+fP82m0AAAGZY2JvcqJnYWN0aW9uc4KiZmFjdGlvbmtjMnBhLm9wZW5lZGpwYXJhbWV0ZXJzoWtpbmdyZWRpZW50c4GiY3VybHgtc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5pbmdyZWRpZW50LnYzZGhhc2hYIGeT191ycYkkeFk0E31mees2StbEmCRGmMv6n6oi/TJypGZhY3Rpb254HWNvbS5hbnRocm9waWMuY2xhdWRlLnByb3ZpZGVkanBhcmFtZXRlcnOheB9jb20uYW50aHJvcGljLm9yaWdpbi1jb25maWRlbmNlZ3Vua25vd25rZGVzY3JpcHRpb254ZkNsYXVkZSBwcm92aWRlZCB0aGlzIGZpbGUgYXQgdGhlIHJlcXVlc3Qgb2YgYSB1c2VyIGFuZCBtYXkgaGF2ZSBjcmVhdGVkIG9yIG1vZGlmaWVkIHRoZSBmaWxlIGNvbnRlbnRzLm1zb2Z0d2FyZUFnZW50oWRuYW1lZkNsYXVkZXJhbGxBY3Rpb25zSW5jbHVkZWT1AAAAyGp1bWIAAABAanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5oYXNoLmRhdGEAAAAAGGMyc2g+Brd2XnpFaoi8K1rvp1dHAAAAgGNib3KlY2FsZ2ZzaGEyNTZjcGFkTQAAAAAAAAAAAAAAAABkaGFzaFgg+uqgYGzo8uIfqhAFrNYOjN78AE1+h1+3QStJaPEV5kZkbmFtZW5qdW1iZiBtYW5pZmVzdGpleGNsdXNpb25zgaJlc3RhcnQYIWZsZW5ndGgZFooAAAI+anVtYgAAACdqdW1kYzJjbAARABCAAACqADibcQNjMnBhLmNsYWltLnYyAAAAAg9jYm9ypWNhbGdmc2hhMjU2aXNpZ25hdHVyZXhNc2VsZiNqdW1iZj0vYzJwYS91cm46YzJwYTo3N2FhODhhMC0zNWE3LTQ1YWUtODgxYi05ODgxNjFlNGNmY2IvYzJwYS5zaWduYXR1cmVqaW5zdGFuY2VJRHgseG1wOmlpZDo5NTRmZmY5MC05MzI5LTQ3MjEtOTVlZS1kZTk3MjI2NWVhNWVyY3JlYXRlZF9hc3NlcnRpb25zg6JjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggZ5PX3XJxiSR4WTQTfWZ56zZK1sSYJEaYy/qfqiL9MnKiY3VybHgqc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5hY3Rpb25zLnYyZGhhc2hYIIEZ1DfiCWqjAW5omld8xU1sByWLGMZcV/MGxRsIsw4PomN1cmx4KXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaGFzaC5kYXRhZGhhc2hYIHRBG9imMXzHR2NAeeYvYa6h0mJAvK5AX4Bs+X3t68fDdGNsYWltX2dlbmVyYXRvcl9pbmZvo2RuYW1lb0FudGhyb3BpYyBGaWxlc2d2ZXJzaW9uZTEuMC4wa3NwZWNWZXJzaW9uZTIuNC4wAAAQOGp1bWIAAAAoanVtZGMyY3MAEQAQgAAAqgA4m3EDYzJwYS5zaWduYXR1cmUAAAAQCGNib3LShFkCEqIBJhghWQIKMIICBjCCAY2gAwIBAgIUQOWgCu7COdC+uIP6BkIFPWdVEwAwCgYIKoZIzj0EAwMwSTEXMBUGA1UEChMOQW50aHJvcGljLCBQQkMxLjAsBgNVBAMTJUFudGhyb3BpYyBDb250ZW50IENyZWRlbnRpYWxzIFJvb3QgQ0EwHhcNMjYwODA3MTg0MzU2WhcNMjgwODA2MTk0MzU2WjBEMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEpMCcGA1UEAxMgQW50aHJvcGljIENsYXVkZSBDb250ZW50IFNpZ25pbmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASYegpry1AYBRTVNL1CpTlbROnY3dey+UrsF9C3phYrATN3ZHf93Mo8RQN0KOUuOn19P4oWNFWe5n2/She9N7eTo1gwVjAOBgNVHQ8BAf8EBAMCB4AwFQYDVR0lBA4wDAYKKwYBBAGD6F4CATAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFM5R4gSBTmRbI/jjxM+aPpzB11zCMAoGCCqGSM49BAMDA2cAMGQCMDFzHRSeAXrSy1WOzkbhPZ6Km2wGTmZ/2gK18k8BQGXyqz88Rdrz6CTX9flAnYNVxgIwcF9c3fVhqmJKpi+UhasNUMko69cyX6STPfta3Q8EjyzDjzoyrol46FP6VFHhvUcJoWNwYWRZDZ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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" alt="">
+<button data-go="1"><i class="ico" data-i="pen"></i><span>Crea cruciverba</span></button>
+<button data-go="2"><i class="ico" data-i="grid"></i><span>Genera e controlla</span></button>
+<button data-go="3"><i class="ico" data-i="dl"></i><span>Scarica e stampa</span></button>
+<button data-soon><i class="ico" data-i="folder"></i><span>Progetti salvati</span></button>
+</aside>
+<div class="wrap">
+<header class="top"><div class="name">Cruciverba by Giuggi</div><button data-soon><i class="ico" data-i="help"></i><span>Guida</span></button><button data-soon><i class="ico" data-i="info"></i><span>Info</span></button><button data-soon><i class="ico" data-i="set"></i><span>Impostazioni</span></button></header>
 <main>
-<section class="hero">
-<svg class="logo" viewBox="0 0 512 512" role="img" aria-label="Logo GIULIA" font-family="Inter,'Helvetica Neue',Arial,sans-serif"><rect width="512" height="512" rx="112" fill="#B91C35"/><rect x="120" y="86" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="127" y="106" font-size="17" font-weight="600" fill="#B91C35">1</text><rect x="52" y="154" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="59" y="174" font-size="17" font-weight="600" fill="#B91C35">2</text><text x="86.0" y="203.84" font-size="44" font-weight="700" text-anchor="middle" fill="#B91C35">G</text><rect x="120" y="154" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="154.0" y="203.84" font-size="44" font-weight="700" text-anchor="middle" fill="#B91C35">I</text><rect x="188" y="154" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="222.0" y="203.84" font-size="44" font-weight="700" text-anchor="middle" fill="#B91C35">U</text><rect x="256" y="154" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="290.0" y="203.84" font-size="44" font-weight="700" text-anchor="middle" fill="#B91C35">L</text><rect x="324" y="154" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="331" y="174" font-size="17" font-weight="600" fill="#B91C35">3</text><text x="358.0" y="203.84" font-size="44" font-weight="700" text-anchor="middle" fill="#B91C35">I</text><rect x="392" y="154" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="426.0" y="203.84" font-size="44" font-weight="700" text-anchor="middle" fill="#B91C35">A</text><rect x="120" y="222" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="324" y="222" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="120" y="290" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="324" y="290" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="120" y="358" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="324" y="358" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/></svg>
-<h1>Le tue parole, un cruciverba unico.</h1>
-<p>Crea, personalizza e stampa il tuo cruciverba in pochi clic.</p>
+<div class="head"><span class="pill">• Strumento gratuito &nbsp; • nessuna registrazione</span><h1 id="h1"></h1>
+<ol class="stp" id="stp"><li data-go="1"><b></b><span>Inserisci<br>le parole</span></li><li data-go="2"><b></b><span>Genera<br>e controlla</span></li><li data-go="3"><b></b><span>Scarica<br>e stampa</span></li></ol>
+<p id="sub"></p></div>
+
+<section id="p1">
+<div class="g1">
+<div class="card"><div class="ch"><span class="chip"><i class="ico" data-i="pen"></i></span><div><h2>Inserisci le parole</h2><p>Aggiungi le parole del tuo cruciverba.</p></div></div>
+<div class="seg-box"><div class="lab">Aa &nbsp;Gestione input</div><div class="seg" id="mode"><button class="on" data-m="w">Solo parole</button><button data-m="d">Con definizioni</button></div></div>
+<div class="banner hide" id="bn" role="alert"><i class="ico" data-i="warn"></i><div><b>Parola troppo corta</b><span id="bnT"></span></div><button type="button" id="bnX" aria-label="Chiudi">×</button></div>
+<div id="rows"></div>
+<button class="add" id="add"><i class="ico" data-i="plus"></i>Aggiungi parola</button></div>
+<div class="stack"><div class="card"><div class="ch"><span class="chip"><i class="ico" data-i="grid"></i></span><div><h2>Anteprima</h2></div><span class="badge" id="b1">0 parole inserite</span></div>
+<div class="sheet" id="pv1"></div><p class="lw" id="lw"></p>
+<div class="tools"><button id="tre"><i class="ico" data-i="re"></i>Rigenera<br>struttura</button><button id="teye"><i class="ico" data-i="eye"></i><span id="tel">Nascondi<br>lettere</span></button></div></div></div>
+</div>
+<div class="bar"><button class="btn ghost" id="reset"><i class="ico" data-i="back"></i>Ricomincia da capo</button><button class="btn pri" id="go2"><i class="ico" data-i="check"></i>Approva cruciverba<i class="ico" data-i="next"></i></button></div>
 </section>
 
-<ol class="steps" aria-label="Fasi">
-<li class="on"><b>01</b><span>Parole</span></li>
-<li><b>02</b><span>Anteprima</span></li>
-<li><b>03</b><span>Esporta</span></li>
-</ol>
-
-<section class="card" id="s1">
-<div class="card-h"><div class="chip"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span></div>
-<div class="grow"><h2>Inserisci le parole</h2><p class="sub">Una parola per riga</p></div></div>
-<textarea id="words" aria-label="Parole del cruciverba" placeholder="DATABASE&#10;SEGNALE&#10;MODULAZIONE"></textarea>
-<div class="meta"><span>Accenti e spazi vengono ignorati. Servono almeno 2 parole di 2 lettere o più.</span><span class="count" id="count">0 parole</span></div>
-<div id="err1"></div>
-<div class="actions"><button class="btn btn-primary" id="gen">Genera cruciverba <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button></div>
-</section>
-
-<section class="card hide" id="s2">
-<div class="card-h"><div class="chip"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></span></div>
-<div class="grow"><h2>Il tuo cruciverba</h2><p class="sub">Controlla lo schema prima di esportarlo</p></div>
-<span class="badge" id="badge">0 parole</span></div>
-<div id="notes"></div>
+<section id="p2" class="hide">
+<div class="g2">
+<div class="card"><div class="ch"><span class="chip"><i class="ico" data-i="list"></i></span><div><h2>Parole inserite</h2><p>Controlla lo stato di ogni parola.</p></div><span class="badge" id="b2a"></span></div>
+<ul class="wl" id="wl"></ul><div class="leg"><span><i class="ico st ok" data-i="ok"></i>Inserita</span><span><i class="ico st no" data-i="warn"></i>Esclusa</span></div></div>
+<div class="stack"><div class="card"><div class="ch"><span class="chip"><i class="ico" data-i="grid"></i></span><div><h2>Anteprima</h2></div><span class="badge" id="b2"></span></div><div class="sheet" id="pv2"></div></div></div>
+<div class="card ctl">
+<button id="re2"><i class="ico" data-i="re"></i>Rigenera schema</button>
+<div class="line"><span><i class="ico" data-i="eye"></i>Mostra soluzioni</span><label class="sw"><input type="checkbox" id="sol"><i></i></label></div>
+<div class="line"><button class="zb" data-z="out" aria-label="Riduci"><i class="ico" data-i="zo"></i></button><b>Zoom</b><button class="zb" data-z="in" aria-label="Ingrandisci"><i class="ico" data-i="zi"></i></button></div>
+<button id="back2" style="background:#fff;border-color:var(--c)"><i class="ico" data-i="pen"></i>Modifica parole</button>
+<button class="btn pri" id="ap2"><i class="ico" data-i="check"></i>Approva cruciverba<i class="ico" data-i="next"></i></button>
+</div></div>
 <div id="warn"></div>
-<p class="stats" id="stats"></p>
-<div class="zoombar" aria-label="Zoom dello schema"><span class="zhint">Pizzica o usa i pulsanti per ingrandire; trascina per spostarti.</span><span class="zbtns"><button type="button" class="zbtn" id="zOut" aria-label="Riduci"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button><span class="zpct" id="zoomPct">100%</span><button type="button" class="zbtn" id="zIn" aria-label="Ingrandisci"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button><button type="button" class="zbtn zfit" id="zFit">Adatta</button></span></div>
-<div class="sheet" id="preview"></div>
-<div class="controls">
-<button class="btn btn-primary" id="ok"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>Approva</button>
-<button class="btn btn-ghost hide" id="okPartial">Approva versione parziale</button>
-<button class="btn btn-soft" id="regen"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></span>Rigenera struttura</button>
-<button class="btn btn-ghost" id="back"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></span>Modifica parole</button>
-<label class="switch"><input type="checkbox" id="showl" checked><span class="track"></span><span>Mostra lettere</span></label>
-</div>
-<p class="okhint hide" id="okHint">Per approvare lo schema devono esserci tutte le parole: rigenera la struttura, modifica l’elenco oppure approva consapevolmente una versione parziale.</p>
+<div class="card" id="defs"><div class="ch"><span class="chip"><i class="ico" data-i="list"></i></span><div><h2>Definizioni</h2><p>Ordinate per numero, divise per direzione.</p></div></div><div class="dcols" id="dc"></div></div>
 </section>
 
-<section class="card hide" id="s3">
-<div class="card-h"><div class="chip"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg></span></div>
-<div class="grow"><h2>Scarica il tuo cruciverba</h2><p class="sub">Due PDF in formato A4, pronti per la stampa</p></div></div>
-<div id="partialNote"></div>
-<div class="tiles">
-<button class="tile" id="pdfSol"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="m9 15 2 2 4-4"/></svg></span><span><strong>PDF con soluzioni</strong><small>Schema con le parole inserite</small></span></button>
-<button class="tile" id="pdfBlank"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></span><span><strong>PDF da risolvere</strong><small>Schema vuoto con i numeri</small></span></button>
+<section id="p3" class="hide">
+<div class="g3">
+<div class="card cfg"><div class="ch"><span class="chip"><i class="ico" data-i="set"></i></span><div><h2>Configura il download</h2></div></div>
+<div class="seg" id="ft"><button class="on" data-f="pdf">PDF</button><button data-f="png">PNG (per papiri)</button></div>
+<div class="po"><label class="l" for="ttl">Titolo personalizzato</label><input type="text" id="ttl" value="Il mio cruciverba">
+<div class="two"><div><label class="l" for="fmt">Formato</label><select id="fmt"><option value="a4">A4</option><option value="a3">A3</option></select></div><div><label class="l" for="ori">Orientamento</label><select id="ori"><option value="p">Verticale</option><option value="l">Orizzontale</option></select></div></div>
 </div>
-<p class="note" id="dlmsg">I PDF sono vettoriali: restano nitidi a qualsiasi ingrandimento e in stampa.</p>
+<label class="l">Cosa scaricare</label>
+<div class="opts"><label><input type="radio" name="sol" value="0"><span id="o0">PDF senza soluzioni</span></label><label><input type="radio" name="sol" value="1" checked><span id="o1">PDF con soluzioni</span></label></div>
+<button class="btn pri" id="dlb"><i class="ico" data-i="dl"></i><span id="dll">Scarica il PDF</span></button>
+<p class="note" id="pgn"></p></div>
+<div class="stack"><div class="card paper"><h3 class="ptitle" id="pt"></h3><div class="sheet" id="pv3"></div><div class="dcols" id="pcl"></div></div></div>
+</div>
 </section>
-</main>
-
+</main></div>
 <div class="toasts" id="toasts" aria-live="polite"></div>
-<div class="modal-back hide" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
-<div class="modal"><h3 id="mTitle"></h3><div id="mBody"></div>
-<div class="modal-act"><button class="btn btn-ghost" id="mNo">Annulla</button><button class="btn btn-primary" id="mYes">Conferma</button></div></div></div>
+<div class="mb hide" id="modal" role="dialog" aria-modal="true"><div><h3 id="mT"></h3><p id="mB"></p><div class="ma"><button class="btn ghost" id="mNo">Annulla</button><button class="btn pri" id="mYes">Conferma</button></div></div></div>
 
 <script>
 (function(){
 var $=function(i){return document.getElementById(i)};
-
-/* ENGINE START (logica pura, senza DOM: testabile in Node) */
 function normWord(x){return x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z]/g,'')}
 
 function parseInput(text){
@@ -406,7 +323,7 @@ function finalize(out,words){
     var i=words.indexOf(w);
     return{w:w,kind:info.deg[i]===0?'isolated':(info.comp[i]!==pc?'separate':'search')};
   });
-  return{cells:cells,num:num,h:x.h,w:x.w,failed:failed,sig:x.sig,count:x.placed.length,tries:out.tries,variants:out.variants};
+  var entries=x.placed.map(function(p){return{w:p.w,d:p.d,n:num[(p.r-bb.r0)+','+(p.c-bb.c0)]}});return{entries:entries,cells:cells,num:num,h:x.h,w:x.w,failed:failed,sig:x.sig,count:x.placed.length,tries:out.tries,variants:out.variants};
 }
 
 /* layout PDF: sceglie l'orientazione che permette caselle piu' grandi, centra, caselle sempre quadrate */
@@ -419,68 +336,6 @@ function pdfLayout(w,h){
   best.ox=(best.PW-best.cs*w)/2;best.oy=(best.PH-best.cs*h)/2;
   return best;
 }
-/* ENGINE END */
-
-var ICON_WARN='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>';
-var ICON_INFO='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>';
-var ICON_OK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
-var state={words:[],res:null,sig:'',seen:{},parsed:null,zoom:1};
-
-function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-function list(a){return a.map(esc).join(', ')}
-
-/* ---------- avvisi, notifiche, conferma ---------- */
-function notesHtml(p){
-  var h='',seen={};
-  p.ignored.forEach(function(x){
-    h+='<li>'+ICON_INFO+'<span>'+(x.reason==='short'
-      ?'La parola “'+esc(x.orig)+'” è stata ignorata perché deve contenere almeno 2 lettere.'
-      :'“'+esc(x.orig)+'” è stata ignorata perché non contiene lettere.')+'</span></li>';
-  });
-  if(p.dups.length){
-    var same=[],norm=[];
-    p.dups.forEach(function(x){
-      if(x.orig.toLowerCase().replace(/\s/g,'')===x.first.toLowerCase().replace(/\s/g,'')){if(!seen[x.word]){seen[x.word]=1;same.push(x.word)}}
-      else norm.push(x);
-    });
-    if(same.length)h+='<li>'+ICON_INFO+'<span>Duplicati rimossi: '+list(same)+'.</span></li>';
-    norm.forEach(function(x){h+='<li>'+ICON_INFO+'<span>“'+esc(x.orig)+'” è stata rimossa perché, dopo la normalizzazione (accenti, maiuscole, simboli), coincide con “'+esc(x.first)+'” già presente.</span></li>'});
-  }
-  p.cleaned.forEach(function(x){
-    h+='<li>'+ICON_INFO+'<span>Da “'+esc(x.orig)+'” sono stati tolti i caratteri non alfabetici: inserita come '+esc(x.word)+'.</span></li>';
-  });
-  return h?'<ul class="notes">'+h+'</ul>':'';
-}
-function failedHtml(res,total){
-  if(!res.failed.length)return '';
-  var why=res.failed.map(function(f){
-    var t=f.kind==='isolated'?'non ha nessuna lettera in comune con le altre parole: non può incrociarsi (impossibile per questa lista).'
-      :f.kind==='separate'?'ha lettere in comune solo con un gruppo di parole separato da quello inserito: un unico cruciverba non può contenerle tutte (impossibile per questa lista).'
-      :'ha lettere in comune, ma non è stato trovato un incrocio valido dopo '+res.tries+' tentativi. Potrebbe esistere un’altra disposizione: prova con “Rigenera struttura”.';
-    return '<li><strong>'+esc(f.w)+'</strong>: '+t+'</li>';
-  }).join('');
-  return '<div class="err" role="alert">'+ICON_WARN+'<div><strong>Schema incompleto: '+res.count+(res.count===1?' parola':' parole')+' su '+total+'. Non inserite: '+list(res.failed.map(function(f){return f.w}))+'.</strong><ul class="why">'+why+'</ul></div></div>';
-}
-function toast(msg,kind){
-  while($('toasts').firstChild)$('toasts').removeChild($('toasts').firstChild);
-  var t=document.createElement('div');t.className='toast';
-  t.innerHTML=(kind==='ok'?ICON_OK:ICON_INFO)+'<span>'+esc(msg)+'</span>';
-  $('toasts').appendChild(t);
-  setTimeout(function(){t.classList.add('out');setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t)},250)},4200);
-}
-var modalYes=null,lastFocus=null;
-function openModal(title,bodyHtml,yesLabel,onYes){
-  $('mTitle').textContent=title;$('mBody').innerHTML=bodyHtml;$('mYes').textContent=yesLabel;
-  modalYes=onYes;lastFocus=document.activeElement;
-  $('modal').classList.remove('hide');$('mNo').focus();
-}
-function closeModal(){$('modal').classList.add('hide');modalYes=null;if(lastFocus&&lastFocus.focus)lastFocus.focus()}
-$('mNo').onclick=closeModal;
-$('mYes').onclick=function(){var f=modalYes;closeModal();if(f)f()};
-$('modal').addEventListener('click',function(e){if(e.target===$('modal'))closeModal()});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('modal').classList.contains('hide'))closeModal()});
-
-/* ---------- disegno schema ---------- */
 function svg(res,letters){
   var S=44,P=2,W=res.w*S+P*2,H=res.h*S+P*2,
   o='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="'+W+'" data-max="'+Math.min(res.w*56+4,760)+'" style="display:block;margin:0 auto;width:100%;max-width:'+Math.min(res.w*56+4,760)+'px;height:auto" font-family="Arial,sans-serif">';
@@ -495,142 +350,238 @@ function svg(res,letters){
   return o+'</svg>';
 }
 
-/* ---------- zoom e spostamento (smartphone) ---------- */
-function applyZoom(){
-  var box=$('preview'),sv=box.querySelector('svg');if(!sv)return;
-  var cs=getComputedStyle(box),avail=box.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
-  var fit=Math.min(avail,parseFloat(sv.getAttribute('data-max')));
-  sv.style.maxWidth='none';sv.style.width=(fit*state.zoom)+'px';
-  $('zoomPct').textContent=Math.round(state.zoom*100)+'%';
-}
-function setZoom(z){
-  var box=$('preview'),z0=state.zoom;
-  z=Math.max(1,Math.min(4,z));if(z===z0)return;
-  var cx=(box.scrollLeft+box.clientWidth/2)/(box.scrollWidth||1),cy=(box.scrollTop+box.clientHeight/2)/(box.scrollHeight||1);
-  state.zoom=z;applyZoom();
-  box.scrollLeft=cx*box.scrollWidth-box.clientWidth/2;box.scrollTop=cy*box.scrollHeight-box.clientHeight/2;
-}
-$('zIn').onclick=function(){setZoom(state.zoom*1.3)};
-$('zOut').onclick=function(){setZoom(state.zoom/1.3)};
-$('zFit').onclick=function(){setZoom(1)};
-(function(){
-  var box=$('preview'),pin=null;
-  function dist(e){var a=e.touches[0],b=e.touches[1];return Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY)}
-  box.addEventListener('touchstart',function(e){if(e.touches.length===2)pin={d:dist(e),z:state.zoom}},{passive:true});
-  box.addEventListener('touchmove',function(e){if(pin&&e.touches.length===2){e.preventDefault();setZoom(pin.z*dist(e)/pin.d)}},{passive:false});
-  box.addEventListener('touchend',function(e){if(e.touches.length<2)pin=null});
-})();
-window.addEventListener('resize',applyZoom);
+/* ---------- app ---------- */
+var ICONS={pen:'<path d="M21.2 6.8a1 1 0 0 0-4-4L3.8 16.2a2 2 0 0 0-.5.8L2 21.4a.5.5 0 0 0 .6.6l4.4-1.3a2 2 0 0 0 .8-.5z"/><path d="m15 5 4 4"/>',grid:'<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>',dl:'<path d="M12 15V3M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5"/>',folder:'<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.600 3.900A2 2 0 0 0 7.900 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/>',help:'<circle cx="12" cy="12" r="10"/><path d="M9.100 9a3 3 0 0 1 5.800 1c0 2-3 3-3 3M12 17h.01"/>',info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.900 4.900 7 7M17 17l2.100 2.100M4.900 19.100 7 17M17 7l2.100-2.100"/>',plus:'<path d="M5 12h14M12 5v14"/>',re:'<path d="M3 12a9 9 0 0 1 15-6.700L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.700L3 16M8 16H3v5"/>',eye:'<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',exp:'<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>',back:'<path d="m12 19-7-7 7-7M19 12H5"/>',next:'<path d="M5 12h14M12 5l7 7-7 7"/>',check:'<path d="M20 6 9 17l-5-5"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',ok:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',warn:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>',zi:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.300-4.300M11 8v6M8 11h6"/>',zo:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.300-4.300M8 11h6"/>',trash:'<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>'};
+function ic(n){return'<svg viewBox="0 0 24 24" aria-hidden="true">'+ICONS[n]+'</svg>'}
+document.querySelectorAll('[data-i]').forEach(function(e){e.innerHTML=ic(e.dataset.i)});
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var state={fill:false,page:1,mode:'w',letters:true,zoom:1,words:[],defs:{},res:null,lv:null,ok:false,seen:{},sig:'',dm:false,ft:'pdf'};
+var rows=[{w:'',d:''}];
+var T=[['Crea il tuo <em>Cruciverba</em>','Inserisci le parole, genera lo schema in un click e scarica il tuo cruciverba pronto da stampare.'],['Genera e <em>controlla</em>','Verifica lo schema, rigenera una nuova disposizione se vuoi e approva il cruciverba quando sei soddisfatta.'],['Scarica e <em>stampa</em>','Personalizza il tuo cruciverba e scaricalo pronto da stampare.']];
 
-/* ---------- rendering ---------- */
-function render(){
-  var res=state.res,total=state.words.length;
-  $('preview').innerHTML=svg(res,$('showl').checked);
-  applyZoom();
-  $('badge').textContent=res.count+(res.count===1?' parola':' parole');
-  $('stats').innerHTML='Parole inserite: <strong>'+total+'</strong> &middot; '+res.count+(res.count===1?' presente':' presenti')+' nello schema'+(res.failed.length?', '+res.failed.length+(res.failed.length===1?' esclusa':' escluse'):'');
-  $('notes').innerHTML=notesHtml(state.parsed);
-  $('warn').innerHTML=failedHtml(res,total);
-  var inc=res.failed.length>0;
-  $('ok').disabled=inc;
-  $('okPartial').classList.toggle('hide',!inc);
-  $('okHint').classList.toggle('hide',!inc);
-}
+function toast(m){var b=$('toasts'),t=document.createElement('div');t.className='toast';t.textContent=m;b.innerHTML='';b.appendChild(t);setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t)},4000)}
+var yes=null;
+function openModal(t,b,l,f){$('mT').textContent=t;$('mB').textContent=b;$('mYes').textContent=l;yes=f;$('modal').classList.remove('hide')}
+function closeModal(){$('modal').classList.add('hide');yes=null}
+$('mNo').onclick=closeModal;$('mYes').onclick=function(){var f=yes;closeModal();if(f)f()};
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
 
-function run(regen){
-  var b=regen?$('regen'):$('gen'),label=b.innerHTML;
-  $('gen').disabled=true;$('regen').disabled=true;b.innerHTML='Generazione in corso…';
+/* zoom */
+function fit(){document.querySelectorAll('.sheet svg').forEach(function(s){
+  var b=s.parentNode,cs=getComputedStyle(b),a=b.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);if(a<=0)return;
+  var w=Math.min(a,+s.dataset.max);
+  if(state.fill){var mh=parseFloat(cs.maxHeight),vb=s.viewBox.baseVal;
+    w=a;if(!isNaN(mh)&&vb.height){var ah=mh-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);w=Math.min(a,ah*vb.width/vb.height)}}
+  s.style.maxWidth='none';s.style.width=w*state.zoom+'px'})}
+window.addEventListener('resize',fit);
+
+/* navigazione */
+function go(n){
+  if(n>1&&!state.res)return toast('Prima inserisci le parole e approva lo schema.');
+  if(n>2&&!state.ok)return toast('Approva il cruciverba per passare al download.');
+  state.page=n;state.fill=false;state.zoom=1;
+  [1,2,3].forEach(function(i){$('p'+i).classList.toggle('hide',i!==n)});
+  document.body.classList.toggle('cmp',n>1);
+  $('h1').innerHTML=T[n-1][0];$('sub').textContent=T[n-1][1];
+  document.querySelectorAll('#stp li').forEach(function(li,k){li.className=k+1===n?'on':'';li.firstChild.innerHTML=k+1<n?ic('check'):String(k+1)});
+  document.querySelectorAll('.side [data-go]').forEach(function(b){b.classList.toggle('on',+b.dataset.go===n)});
+  if(n===1)paintLive();if(n===2)paint2();if(n===3)paint3();
+  fit();window.scrollTo(0,0);
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-go],[data-soon],[data-z]');if(!b)return;
+  if(b.dataset.z){if(b.dataset.z==='fit'){state.zoom=1;state.fill=true}else state.zoom=Math.max(.5,Math.min(4,state.zoom*(b.dataset.z==='in'?1.25:.8)));fit();return}
+  if(b.dataset.soon!==undefined)toast('Questa sezione verrà sviluppata più avanti.');else go(+b.dataset.go);
+});
+
+/* ---------- pagina 1: inserimento ---------- */
+function drawRows(){
+  var h='';
+  rows.forEach(function(r,i){
+    h+='<div class="row"><span class="n">'+(i+1)+'</span><div class="f"><input class="w" data-k="'+i+'" placeholder="Inserisci parola" autocomplete="off" aria-label="Parola '+(i+1)+'" value="'+esc(r.w)+'">'+(state.mode==='d'?'<textarea class="df" data-k="'+i+'" rows="2" placeholder="Inserisci definizione" aria-label="Definizione '+(i+1)+'">'+esc(r.d)+'</textarea>':'')+'</div><button class="x" data-del="'+i+'" aria-label="Elimina">'+ic('trash')+'</button></div>';
+  });
+  $('rows').innerHTML=h;
+}
+/* parole di una sola lettera: non ammesse, spiegazione con banner */
+function isShort(i){var o=rows[i].w.trim();return!!o&&normWord(o).length===1}
+function hideBanner(){$('bn').classList.add('hide')}
+function shortAlert(i){
+  var el=$('rows').querySelector('.w[data-k="'+i+'"]');
+  $('bnT').textContent='«'+rows[i].w.trim()+'» ha una sola lettera: ogni parola deve contenere almeno due lettere. Aggiungine almeno un’altra per inserirla nel cruciverba.';
+  $('bn').classList.remove('hide');
+  if(el){el.classList.add('bad');el.focus()}
+}
+$('bnX').onclick=hideBanner;
+function focusRow(i,sel){var el=$('rows').querySelector((sel||'.w')+'[data-k="'+i+'"]');if(el){el.focus();el.scrollIntoView({block:'nearest'})}}
+function nextRow(k){if(k===rows.length-1){rows.push({w:'',d:''});drawRows()}focusRow(k+1)}
+$('rows').addEventListener('input',function(e){var k=e.target.dataset.k;if(k===undefined)return;rows[k][e.target.classList.contains('w')?'w':'d']=e.target.value;e.target.classList.remove('bad');if(e.target.classList.contains('w')&&!isShort(+k))hideBanner();live()});
+$('rows').addEventListener('keydown',function(e){
+  var k=e.target.dataset.k;if(k===undefined||e.key!=='Enter'||e.shiftKey)return;
+  e.preventDefault();k=+k;
+  if(e.target.classList.contains('w')){if(!rows[k].w.trim())return;if(isShort(k))return shortAlert(k);if(state.mode==='d')focusRow(k,'.df');else nextRow(k)}
+  else{if(!rows[k].d.trim())return;if(isShort(k))return shortAlert(k);nextRow(k)}
+});
+$('rows').addEventListener('click',function(e){var b=e.target.closest('[data-del]');if(!b)return;rows.splice(+b.dataset.del,1);hideBanner();if(!rows.length)rows.push({w:'',d:''});drawRows();live()});
+$('add').onclick=function(){for(var q=0;q<rows.length;q++)if(isShort(q))return shortAlert(q);var l=rows[rows.length-1];if(l.w.trim()||l.d.trim()){rows.push({w:'',d:''});drawRows()}focusRow(rows.length-1)};
+$('mode').onclick=function(e){var b=e.target.closest('[data-m]');if(!b)return;state.mode=b.dataset.m;[].forEach.call($('mode').children,function(x){x.classList.toggle('on',x===b)});drawRows()};
+
+function parse(){return parseInput(rows.map(function(r){return r.w}).join('\n'))}
+function defsMap(){var m={};rows.forEach(function(r){var w=normWord(r.w);if(w&&!(w in m))m[w]=r.d.trim()});return m}
+var EMPTY='<div class="empty"><i class="ico" data-i="grid"></i><p>Inserisci almeno una parola per vedere qui l’anteprima del cruciverba.</p></div>';
+var lt;function live(){clearTimeout(lt);lt=setTimeout(doLive,220)}
+function doLive(){
+  var p=parse(),n=p.words.length;
+  $('b1').textContent=n+(n===1?' parola inserita':' parole inserite');
+  if(!n){state.lv=null;$('lw').textContent='';return paintLive()}
+  try{
+    var r=finalize(build(p.words,{},{minN:6,base:1,hard:120,maxN:20}),p.words);
+    state.lv=r;$('lw').textContent=r.failed.length?'Non ancora incrociate: '+r.failed.map(function(f){return f.w}).join(', ')+'.':'';
+  }catch(x){state.lv=null}
+  paintLive();
+}
+function paintLive(){
+  $('pv1').innerHTML=state.lv?svg(state.lv,state.letters):EMPTY;
+  var e=$('pv1').querySelector('[data-i]');if(e)e.innerHTML=ic('grid');
+  fit();
+}
+$('tre').onclick=doLive;
+$('teye').onclick=function(){state.letters=!state.letters;$('tel').innerHTML=state.letters?'Nascondi<br>lettere':'Mostra<br>lettere';paintLive()};
+$('reset').onclick=function(){openModal('Ricominciare da capo?','Tutte le parole inserite verranno cancellate.','Cancella tutto',function(){rows=[{w:'',d:''}];state.res=null;state.ok=false;drawRows();doLive();go(1);focusRow(0)})};
+$('go2').onclick=function(){
+  for(var q=0;q<rows.length;q++)if(isShort(q))return shortAlert(q);
+  var p=parse();
+  if(p.words.length<2)return toast('Servono almeno 2 parole valide (di almeno 2 lettere).');
+  state.dm=state.mode==='d';
+  if(state.dm){var bad=-1;rows.forEach(function(r,i){if(bad<0&&normWord(r.w).length>=2&&!r.d.trim())bad=i});
+    if(bad>=0){focusRow(bad,'.df');$('rows').querySelector('.df[data-k="'+bad+'"]').classList.add('bad');return toast('Ogni parola deve avere una definizione.')}}
+  state.words=p.words;state.defs=defsMap();state.seen={};state.sig='';run($('go2'));
+};
+
+/* ---------- generazione completa ---------- */
+function run(b){
+  var lab=b.innerHTML;b.disabled=true;b.textContent='Generazione in corso…';
   setTimeout(function(){
     try{
       var out=build(state.words,state.seen,{current:state.sig});
-      if(out.repeated){state.seen={};toast('Hai già visto tutte le strutture che sono riuscito a trovare: da qui si ripetono.')}
-      state.res=finalize(out,state.words);state.sig=state.res.sig;state.seen[state.sig]=1;
-      state.zoom=1;render();
-      $('s2').classList.remove('hide');$('s3').classList.add('hide');
-      $('s2').scrollIntoView({behavior:'smooth'});
-    }finally{b.innerHTML=label;$('gen').disabled=false;$('regen').disabled=false}
+      if(out.repeated){state.seen={};toast('Hai già visto tutte le strutture trovate: da qui si ripetono.')}
+      var r=finalize(out,state.words);
+      r.entries.forEach(function(e){e.def=state.dm?(state.defs[e.w]||''):''});
+      state.res=r;state.sig=r.sig;state.seen[r.sig]=1;state.ok=false;
+      if(state.page===2){paint2();fit()}else go(2);
+    }finally{b.disabled=false;b.innerHTML=lab}
   },30);
 }
 
-function showErr1(p){
-  var n=p.words.length;
-  $('err1').innerHTML='<div class="err" role="alert">'+ICON_WARN+'<div><strong>Servono almeno 2 parole valide per costruire un cruciverba.</strong>'+(n===1?' Ne hai inserita 1 valida.':' Nessuna parola valida inserita.')+(notesHtml(p)?'<div class="inerr">'+notesHtml(p)+'</div>':'')+'</div></div>';
-  $('words').focus();
-}
-$('gen').onclick=function(){
-  var p=parseInput($('words').value);
-  state.parsed=p;
-  if(p.words.length<2){showErr1(p);return}
-  $('err1').innerHTML='';
-  state.words=p.words;state.seen={};state.sig='';
-  run(false);
-};
-$('regen').onclick=function(){$('s3').classList.add('hide');run(true)};
-$('back').onclick=function(){$('s2').classList.add('hide');$('s3').classList.add('hide');$('words').focus()};
-$('showl').onchange=render;
+/* ---------- definizioni ---------- */
+function split(){var e=state.res.entries.slice().sort(function(a,b){return a.n-b.n});return[e.filter(function(x){return!x.d}),e.filter(function(x){return x.d})]}
+function ctext(x){return x.def||'('+x.w.length+' lettere)'}
+function clHtml(){var s=split();return['Orizzontali','Verticali'].map(function(t,i){return'<div><span class="tag">'+t+'</span><ul>'+s[i].map(function(x){return'<li><b>'+x.n+'.</b> '+esc(ctext(x))+'</li>'}).join('')+'</ul></div>'}).join('')}
 
-function approve(partial){
-  var res=state.res;
-  $('partialNote').innerHTML=partial?'<div class="err" role="status">'+ICON_WARN+'<div><strong>Versione parziale: '+res.count+(res.count===1?' parola':' parole')+' su '+state.words.length+'.</strong> Non presenti nei PDF: '+list(res.failed.map(function(f){return f.w}))+'.</div></div>':'';
-  $('s3').classList.remove('hide');$('s3').scrollIntoView({behavior:'smooth'});
-  toast(partial?'Versione parziale approvata.':'Schema approvato: ora puoi scaricare i PDF.','ok');
+/* ---------- pagina 2 ---------- */
+function paint2(){
+  var r=state.res,n=state.words.length,ok={};
+  r.entries.forEach(function(e){ok[e.w]=e.n});
+  $('pv2').innerHTML=svg(r,$('sol').checked);
+  $('b2').textContent=r.count+(r.count===1?' parola inserita':' parole inserite');
+  $('b2a').textContent=n+(n===1?' parola':' parole');
+  $('wl').innerHTML=state.words.map(function(w){return'<li><span class="n">'+(ok[w]||'–')+'</span><b>'+w+'</b><i class="ico st '+(ok[w]?'ok':'no')+'">'+ic(ok[w]?'ok':'warn')+'</i></li>'}).join('');
+  $('warn').innerHTML=r.failed.length?'<div class="err">Schema incompleto: '+r.count+' parole su '+n+'. Non inserite: '+r.failed.map(function(f){return esc(f.w)}).join(', ')+'. Prova con “Rigenera schema” oppure modifica le parole.</div>':'';
+  $('defs').classList.toggle('hide',!state.dm);$('dc').innerHTML=clHtml();
+  fit();
 }
-$('ok').onclick=function(){if(state.res.failed.length)return;approve(false)};
-$('okPartial').onclick=function(){
-  var res=state.res;
-  openModal('Approvare uno schema incompleto?',
-    '<p>Lo schema contiene <strong>'+res.count+(res.count===1?' parola':' parole')+' su '+state.words.length+'</strong>. Queste parole <strong>non saranno nei PDF</strong>:</p><p class="mwords">'+list(res.failed.map(function(f){return f.w}))+'</p><p>Puoi anche tornare indietro e provare a rigenerare la struttura.</p>',
-    'Approva comunque',function(){approve(true)});
+$('sol').onchange=paint2;
+$('re2').onclick=function(){run(this)};
+$('back2').onclick=function(){go(1)};
+$('ap2').onclick=function(){
+  var r=state.res;function done(){state.ok=true;go(3);toast('Schema approvato: ora puoi scaricarlo.')}
+  if(r.failed.length)openModal('Approvare uno schema incompleto?','Lo schema contiene '+r.count+' parole su '+state.words.length+'. Non saranno nel download: '+r.failed.map(function(f){return f.w}).join(', ')+'.','Approva comunque',done);else done();
 };
 
-/* ---------- PDF ---------- */
-function makePdf(solution){
-  var res=state.res,J=window.jspdf&&window.jspdf.jsPDF;
-  if(!J)return null;
-  var L=pdfLayout(res.w,res.h),cs=L.cs,ox=L.ox,oy=L.oy;
-  var doc=new J({orientation:L.land?'l':'p',unit:'mm',format:'a4'});
-  doc.setDrawColor(0,0,0);doc.setTextColor(0,0,0);doc.setFillColor(255,255,255);
-  doc.setLineWidth(Math.min(.7,Math.max(.25,cs*.04)));
-  var numPt=Math.min(cs*.81,13),numMm=numPt*.3528;
-  for(var r=0;r<res.h;r++)for(var c=0;c<res.w;c++){
-    var ch=res.cells[r][c];if(!ch)continue;
-    var x=ox+c*cs,y=oy+r*cs;
-    doc.rect(x,y,cs,cs,'S');
-    var n=res.num[r+','+c];
-    if(n){doc.setFont('helvetica','normal');doc.setFontSize(numPt);doc.text(String(n),x+cs*.07,y+cs*.06+numMm*.82)}
-    if(solution){doc.setFont('helvetica','normal');doc.setFontSize(cs*2.2);doc.text(ch,x+cs/2,y+cs*.76,{align:'center'})}
+/* ---------- pagina 3 ---------- */
+function sol(){return document.querySelector('input[name=sol]:checked').value==='1'}
+function paint3(){
+  var png=state.ft==='png';
+  $('pt').textContent=$('ttl').value||'Il mio cruciverba';
+  $('pv3').innerHTML=svg(state.res,sol());$('pcl').innerHTML=state.dm?clHtml():'';
+  $('pt').classList.toggle('hide',png);$('pcl').classList.toggle('hide',png||!state.dm);
+  document.querySelectorAll('.po').forEach(function(e){e.classList.toggle('hide',png)});
+  var X=png?'PNG':'PDF';$('o0').textContent=X+' senza soluzioni';$('o1').textContent=X+' con soluzioni';$('dll').textContent='Scarica il '+X;
+  fit();
+  var d=png?null:buildPdf(false),n=d?d.getNumberOfPages():0;
+  $('pgn').classList.toggle('hide',!n);
+  if(n)$('pgn').textContent='Dimensione e impaginazione automatiche · il PDF avrà '+n+(n>1?' pagine':' pagina');
+}
+$('ttl').oninput=paint3;
+document.querySelectorAll('input[name=sol]').forEach(function(i){i.onchange=paint3});
+$('fmt').onchange=$('ori').onchange=paint3;
+$('ft').onclick=function(e){var b=e.target.closest('[data-f]');if(!b)return;state.ft=b.dataset.f;[].forEach.call($('ft').children,function(x){x.classList.toggle('on',x===b)});paint3()};
+
+function dl(blob,name){var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('Download avviato: '+name)}
+
+function makePng(s){
+  var r=state.res,S=120,P=6,c=document.createElement('canvas');
+  c.width=r.w*S+2*P;c.height=r.h*S+2*P;
+  var g=c.getContext('2d');g.lineWidth=5;g.strokeStyle='#000';g.fillStyle='#000';g.lineJoin='miter';
+  for(var i=0;i<r.h;i++)for(var j=0;j<r.w;j++){
+    var ch=r.cells[i][j];if(!ch)continue;
+    var x=P+j*S,y=P+i*S,n=r.num[i+','+j];
+    g.strokeRect(x,y,S,S);
+    if(n){g.font='bold 30px Arial,sans-serif';g.textAlign='left';g.textBaseline='top';g.fillText(String(n),x+9,y+7)}
+    if(s){g.font='bold 76px Arial,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(ch,x+S/2,y+S/2+6)}
   }
+  c.toBlob(function(b){dl(b,s?'cruciverba-soluzione.png':'cruciverba-vuoto.png')},'image/png');
+}
+
+/* PDF: dimensione delle caselle automatica, definizioni sotto lo schema (o su pagine nuove se sono tante) */
+var CAP=24,GAP=12,LH=4.6;
+function buildClues(doc,cw){
+  return split().map(function(list,c){
+    var a=[{t:['Orizzontali','Verticali'][c],h:1}];
+    doc.setFont('helvetica','normal');doc.setFontSize(9.5);
+    list.forEach(function(x){doc.splitTextToSize(x.n+'. '+ctext(x),cw-3).forEach(function(t,k){a.push({t:t,f:!k})})});
+    return a});
+}
+function drawClues(doc,L,y2,PH,M,cw){
+  for(var k=0;k<Math.max(L[0].length,L[1].length);k++){
+    if(y2>PH-M){doc.addPage();y2=M+4}
+    L.forEach(function(a,c){var o=a[k];if(!o)return;
+      doc.setFont('helvetica',o.h?'bold':'normal');doc.setFontSize(o.h?11:9.5);
+      doc.text(o.t,M+c*(cw+8)+((o.h||o.f)?0:3),y2)});
+    y2+=LH;
+  }
+}
+function buildPdf(s){
+  var J=window.jspdf&&window.jspdf.jsPDF;if(!J)return null;
+  var r=state.res,doc=new J({orientation:$('ori').value,unit:'mm',format:$('fmt').value}),
+  PW=doc.internal.pageSize.getWidth(),PH=doc.internal.pageSize.getHeight(),M=14,TP=M+16,cw=(PW-2*M-8)/2,
+  u=Math.min(CAP,(PW-2*M)/r.w,(PH-TP-M)/r.h),cs=u,L=null,sep=false;
+  if(state.dm){
+    L=buildClues(doc,cw);var need=Math.max(L[0].length,L[1].length)*LH;sep=true;
+    /* caselle piu' grandi possibile (ma non sotto i 12 mm) che lasciano spazio alle definizioni sulla stessa pagina */
+    for(var c=u;c>=Math.min(u,12)-1e-9;c-=.5)if(TP+c*r.h+GAP+need<=PH-M){cs=c;sep=false;break}
+  }
+  var ox=(PW-cs*r.w)/2;
+  doc.setTextColor(0);doc.setFont('helvetica','bold');doc.setFontSize(20);
+  doc.text($('ttl').value||'Il mio cruciverba',PW/2,M+7,{align:'center'});
+  doc.setDrawColor(0);doc.setLineWidth(Math.min(.7,Math.max(.25,cs*.04)));
+  var numPt=Math.min(cs*.81,13),numMm=numPt*.3528;doc.setFont('helvetica','normal');
+  for(var i=0;i<r.h;i++)for(var j=0;j<r.w;j++){
+    var ch=r.cells[i][j];if(!ch)continue;
+    var x=ox+j*cs,y=TP+i*cs,n=r.num[i+','+j];
+    doc.rect(x,y,cs,cs,'S');
+    if(n){doc.setFontSize(numPt);doc.text(String(n),x+cs*.07,y+cs*.06+numMm*.82)}
+    if(s){doc.setFontSize(cs*2.2);doc.text(ch,x+cs/2,y+cs*.76,{align:'center'})}
+  }
+  if(L){var y2=TP+cs*r.h+GAP;if(sep){doc.addPage();y2=M+4}drawClues(doc,L,y2,PH,M,cw)}
   return doc;
 }
-function save(solution){
-  var msg=$('dlmsg');
-  try{
-    var doc=makePdf(solution);
-    if(!doc){msg.textContent='Libreria PDF non caricata: controlla la connessione e ricarica la pagina.';return}
-    var name=solution?'cruciverba-soluzione.pdf':'cruciverba-da-risolvere.pdf';
-    var blob=doc.output('blob'),url=URL.createObjectURL(blob),a=document.createElement('a');
-    a.href=url;a.download=name;
-    document.body.appendChild(a);a.click();document.body.removeChild(a);
-    setTimeout(function(){URL.revokeObjectURL(url)},4000);
-    msg.textContent='';toast('Download avviato: '+name,'ok');
-  }catch(e){
-    msg.textContent='Download non riuscito'+(e&&e.message?': '+e.message:'')+'.';
-  }
+function makePdf(s){
+  var doc=buildPdf(s);if(!doc)return toast('Libreria PDF non caricata: controlla la connessione e ricarica la pagina.');
+  dl(doc.output('blob'),s?'cruciverba-con-soluzioni.pdf':'cruciverba-da-risolvere.pdf');
 }
-$('pdfSol').onclick=function(){save(true)};
-$('pdfBlank').onclick=function(){save(false)};
+$('dlb').onclick=function(){try{state.ft==='png'?makePng(sol()):makePdf(sol())}catch(e){toast('Download non riuscito: '+e.message)}};
 
-/* ---------- indicatore fasi e contatore (solo interfaccia) ---------- */
-var steps=document.querySelectorAll('.steps li');
-function updSteps(){
-  var n=!$('s3').classList.contains('hide')?3:(!$('s2').classList.contains('hide')?2:1);
-  steps.forEach(function(li,k){li.classList.toggle('on',k+1===n);li.classList.toggle('done',k+1<n);
-    if(k+1===n)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current')});
-}
-['s2','s3'].forEach(function(id){new MutationObserver(updSteps).observe($(id),{attributes:true,attributeFilter:['class']})});
-updSteps();
-function updCount(){var n=parseInput($('words').value).words.length;$('count').textContent=n+(n===1?' parola valida':' parole valide')}
-$('words').addEventListener('input',function(){updCount();$('err1').innerHTML=''});updCount();
+drawRows();doLive();go(1);
 })();
 </script>
 </body>
