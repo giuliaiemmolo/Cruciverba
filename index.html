@@ -126,6 +126,50 @@ textarea:focus{outline:none;border-color:var(--cherry);box-shadow:0 0 0 3px rgba
   .controls .switch{margin-left:0;width:100%;justify-content:center;padding-top:4px}
   .steps li+li::before{width:16px}
 }
+
+/* notices, errors detail */
+.notes{list-style:none;margin:0 0 14px;padding:12px 14px;background:var(--pink-2);border:1px solid var(--line);border-radius:var(--r-ctl);font-size:.88rem;color:var(--text)}
+.notes li{display:flex;gap:10px;align-items:flex-start;padding:3px 0}
+.notes svg{width:17px;height:17px;flex:none;margin-top:2px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.err ul.why{margin:8px 0 0;padding-left:18px;font-weight:400}
+.err ul.why li{margin:4px 0}
+.err .inerr{margin-top:10px}
+.err .inerr .notes{margin:0;background:#fff}
+#err1 .err{margin:16px 0 0}
+#partialNote .err{margin-bottom:16px}
+.okhint{margin:14px 2px 0;font-size:.84rem;color:var(--muted)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-primary:disabled:hover{background:var(--cherry)}
+
+/* zoom bar: only small / touch screens */
+.zoombar{display:none;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px}
+.zhint{font-size:.78rem;color:var(--muted);line-height:1.35}
+.zbtns{display:flex;align-items:center;gap:6px;flex:none}
+.zbtn{height:36px;min-width:36px;padding:0 10px;border-radius:10px;border:1px solid var(--line-2);background:#fff;color:var(--text);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;display:grid;place-items:center}
+.zbtn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.zbtn:active{background:var(--pink-1)}
+.zpct{font-size:.78rem;color:var(--muted);min-width:38px;text-align:center;font-variant-numeric:tabular-nums}
+@media (max-width:640px),(pointer:coarse){
+  .zoombar{display:flex}
+  .sheet{max-height:72vh;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}
+}
+
+/* toasts */
+.toasts{position:fixed;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 16px;pointer-events:none;z-index:50}
+.toast{pointer-events:auto;display:flex;gap:10px;align-items:center;max-width:420px;background:var(--title);color:#fff;padding:12px 16px;border-radius:12px;font-size:.88rem;line-height:1.4;box-shadow:0 6px 20px rgba(48,39,42,.18);animation:rise .25s ease both;transition:opacity .25s}
+.toast.out{opacity:0}
+.toast svg{width:18px;height:18px;flex:none;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* confirm dialog */
+.modal-back{position:fixed;inset:0;background:rgba(48,39,42,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:60}
+.modal-back.hide{display:none}
+.modal{background:#fff;border-radius:var(--r-card);padding:26px;max-width:440px;width:100%;box-shadow:0 12px 40px rgba(48,39,42,.22);animation:rise .2s ease both;max-height:90vh;overflow:auto}
+.modal h3{margin:0 0 12px;font-size:1.1rem;font-weight:600;color:var(--title);letter-spacing:-.01em}
+.modal p{margin:0 0 10px;font-size:.92rem}
+.modal .mwords{font-weight:600;color:var(--cherry-dark);word-break:break-word}
+.modal-act{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+@media (max-width:640px){.modal-act{flex-direction:column-reverse}.modal-act .btn{width:100%}}
+
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -153,6 +197,7 @@ textarea:focus{outline:none;border-color:var(--cherry);box-shadow:0 0 0 3px rgba
 <div class="grow"><h2>Inserisci le parole</h2><p class="sub">Una parola per riga</p></div></div>
 <textarea id="words" aria-label="Parole del cruciverba" placeholder="DATABASE&#10;SEGNALE&#10;MODULAZIONE"></textarea>
 <div class="meta"><span>Accenti e spazi vengono ignorati. Servono almeno 2 parole di 2 lettere o più.</span><span class="count" id="count">0 parole</span></div>
+<div id="err1"></div>
 <div class="actions"><button class="btn btn-primary" id="gen">Genera cruciverba <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button></div>
 </section>
 
@@ -160,20 +205,25 @@ textarea:focus{outline:none;border-color:var(--cherry);box-shadow:0 0 0 3px rgba
 <div class="card-h"><div class="chip"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></span></div>
 <div class="grow"><h2>Il tuo cruciverba</h2><p class="sub">Controlla lo schema prima di esportarlo</p></div>
 <span class="badge" id="badge">0 parole</span></div>
+<div id="notes"></div>
 <div id="warn"></div>
 <p class="stats" id="stats"></p>
+<div class="zoombar" aria-label="Zoom dello schema"><span class="zhint">Pizzica o usa i pulsanti per ingrandire; trascina per spostarti.</span><span class="zbtns"><button type="button" class="zbtn" id="zOut" aria-label="Riduci"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button><span class="zpct" id="zoomPct">100%</span><button type="button" class="zbtn" id="zIn" aria-label="Ingrandisci"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button><button type="button" class="zbtn zfit" id="zFit">Adatta</button></span></div>
 <div class="sheet" id="preview"></div>
 <div class="controls">
 <button class="btn btn-primary" id="ok"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>Approva</button>
+<button class="btn btn-ghost hide" id="okPartial">Approva versione parziale</button>
 <button class="btn btn-soft" id="regen"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></span>Rigenera struttura</button>
 <button class="btn btn-ghost" id="back"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></span>Modifica parole</button>
 <label class="switch"><input type="checkbox" id="showl" checked><span class="track"></span><span>Mostra lettere</span></label>
 </div>
+<p class="okhint hide" id="okHint">Per approvare lo schema devono esserci tutte le parole: rigenera la struttura, modifica l’elenco oppure approva consapevolmente una versione parziale.</p>
 </section>
 
 <section class="card hide" id="s3">
 <div class="card-h"><div class="chip"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg></span></div>
 <div class="grow"><h2>Scarica il tuo cruciverba</h2><p class="sub">Due PDF in formato A4, pronti per la stampa</p></div></div>
+<div id="partialNote"></div>
 <div class="tiles">
 <button class="tile" id="pdfSol"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="m9 15 2 2 4-4"/></svg></span><span><strong>PDF con soluzioni</strong><small>Schema con le parole inserite</small></span></button>
 <button class="tile" id="pdfBlank"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></span><span><strong>PDF da risolvere</strong><small>Schema vuoto con i numeri</small></span></button>
@@ -182,28 +232,84 @@ textarea:focus{outline:none;border-color:var(--cherry);box-shadow:0 0 0 3px rgba
 </section>
 </main>
 
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="modal-back hide" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+<div class="modal"><h3 id="mTitle"></h3><div id="mBody"></div>
+<div class="modal-act"><button class="btn btn-ghost" id="mNo">Annulla</button><button class="btn btn-primary" id="mYes">Conferma</button></div></div></div>
+
 <script>
 (function(){
 var $=function(i){return document.getElementById(i)};
-var ICON_WARN='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>';
-var state={words:[],res:null,sig:''};
 
-function parse(t){
-  var seen={},out=[];
-  t.split(/[\n,;]+/).forEach(function(x){
-    var w=x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z]/g,'');
-    if(w.length>=2&&!seen[w]){seen[w]=1;out.push(w)}
+/* ENGINE START (logica pura, senza DOM: testabile in Node) */
+function normWord(x){return x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z]/g,'')}
+
+function parseInput(text){
+  var words=[],seen={},ignored=[],dups=[],cleaned=[];
+  text.split(/[\n,;]+/).forEach(function(raw){
+    var orig=raw.trim();if(!orig)return;
+    var w=normWord(orig);
+    if(!w){ignored.push({orig:orig,reason:'nonletters'});return}
+    if(w.length<2){ignored.push({orig:orig,reason:'short'});return}
+    if(seen[w]){dups.push({orig:orig,word:w,first:seen[w]});return}
+    seen[w]=orig;words.push(w);
+    if(/[^A-Za-z\u00C0-\u00FF\s]/.test(orig))cleaned.push({orig:orig,word:w});
   });
+  return{words:words,ignored:ignored,dups:dups,cleaned:cleaned};
+}
+
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function shares(a,b){for(var i=0;i<a.length;i++)if(b.indexOf(a[i])>=0)return true;return false}
+
+/* grafo delle lettere in comune: componenti connesse = limite strutturale */
+function analyze(words){
+  var n=words.length,adj=[],deg=[],comp=[],cs=[],i,j,c=0;
+  for(i=0;i<n;i++){adj.push([]);deg.push(0);comp.push(-1)}
+  for(i=0;i<n;i++)for(j=i+1;j<n;j++)if(shares(words[i],words[j])){adj[i].push(j);adj[j].push(i);deg[i]++;deg[j]++}
+  for(i=0;i<n;i++){
+    if(comp[i]>=0)continue;
+    var st=[i],cnt=0;comp[i]=c;
+    while(st.length){var u=st.pop();cnt++;for(var k=0;k<adj[u].length;k++){var v=adj[u][k];if(comp[v]<0){comp[v]=c;st.push(v)}}}
+    cs.push(cnt);c++;
+  }
+  return{deg:deg,comp:comp,csize:cs,max:n?Math.max.apply(null,cs):0};
+}
+
+function runs(grid,bb){
+  var out=[],r,c,s,st,ch;
+  for(r=bb.r0;r<=bb.r1;r++){s='';st=0;
+    for(c=bb.c0;c<=bb.c1+1;c++){ch=grid.get(r+','+c)||'';
+      if(ch){if(!s)st=c;s+=ch}else{if(s.length>=2)out.push({r:r,c:st,d:0,s:s});s=''}}}
+  for(c=bb.c0;c<=bb.c1;c++){s='';st=0;
+    for(r=bb.r0;r<=bb.r1+1;r++){ch=grid.get(r+','+c)||'';
+      if(ch){if(!s)st=r;s+=ch}else{if(s.length>=2)out.push({r:st,c:c,d:1,s:s});s=''}}}
   return out;
 }
-function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+/* controllo indipendente: le voci lette dalla griglia devono coincidere esattamente con le parole collocate */
+function verify(grid,placed,bb){
+  var rs=runs(grid,bb);
+  if(rs.length!==placed.length)return false;
+  var m={},covered={},n=0,i,k;
+  placed.forEach(function(p){m[p.r+','+p.c+','+p.d]=p.w});
+  for(i=0;i<rs.length;i++){
+    var x=rs[i];
+    if(m[x.r+','+x.c+','+x.d]!==x.s)return false;
+    for(k=0;k<x.s.length;k++){var kk=(x.r+(x.d?k:0))+','+(x.c+(x.d?0:k));if(!covered[kk]){covered[kk]=1;n++}}
+  }
+  return n===grid.size;
+}
+function sigOf(placed,bb){
+  return placed.map(function(p){return p.w+'@'+(p.r-bb.r0)+','+(p.c-bb.c0)+(p.d?'v':'h')}).sort().join('|');
+}
 
-function attempt(words){
-  var grid=new Map(),placed=[],bb={r0:0,r1:0,c0:0,c1:0};
-  var order=shuffle(words.slice()).sort(function(a,b){return b.length-a.length+(Math.random()-.5)*3});
+function attempt(words,info,n){
+  var grid=new Map(),by={},placed=[],bb={r0:0,r1:0,c0:0,c1:0};
   function key(r,c){return r+','+c}
   function put(w,r,c,d){
-    for(var k=0;k<w.length;k++){var rr=r+(d?k:0),cc=c+(d?0:k);grid.set(key(rr,cc),w[k])}
+    for(var k=0;k<w.length;k++){
+      var rr=r+(d?k:0),cc=c+(d?0:k),kk=key(rr,cc);
+      if(!grid.has(kk)){grid.set(kk,w[k]);(by[w[k]]=by[w[k]]||[]).push([rr,cc])}
+    }
     placed.push({w:w,r:r,c:c,d:d});
     var er=r+(d?w.length-1:0),ec=c+(d?0:w.length-1);
     if(placed.length==1){bb={r0:r,r1:er,c0:c,c1:ec}}
@@ -220,48 +326,69 @@ function attempt(words){
     }
     return(cross>0&&nw>0)?cross:-1;
   }
+  var idx=[],i;
+  for(i=0;i<words.length;i++)idx.push(i);
+  var byDeg=(n%2===1);
+  var metric=idx.map(function(j){return(byDeg?info.deg[j]*2+words[j].length*.5:words[j].length)+(Math.random()-.5)*3});
+  idx.sort(function(a,b){return metric[b]-metric[a]});
+  if(n%3===2){var f=Math.floor(Math.random()*idx.length),pos=idx.indexOf(f);idx.splice(pos,1);idx.unshift(f)}
+  var order=idx.map(function(j){return words[j]});
   put(order[0],0,0,0);
   var pending=order.slice(1),progress=true;
   while(pending.length&&progress){
     progress=false;var rest=[];
     for(var p=0;p<pending.length;p++){
-      var w=pending[p],best=null,bs=-1e9;
-      grid.forEach(function(ch,k){
-        for(var i=0;i<w.length;i++){
-          if(w[i]!==ch)continue;
-          var rc=k.split(','),r0=+rc[0],c0=+rc[1];
+      var w=pending[p],cands=[];
+      for(i=0;i<w.length;i++){
+        var list=by[w[i]];if(!list)continue;
+        for(var q=0;q<list.length;q++){
           for(var d=0;d<2;d++){
-            var r=r0-(d?i:0),c=c0-(d?0:i),x=valid(w,r,c,d);
+            var r=list[q][0]-(d?i:0),c=list[q][1]-(d?0:i),x=valid(w,r,c,d);
             if(x<0)continue;
             var er=r+(d?w.length-1:0),ec=c+(d?0:w.length-1);
             var h=Math.max(bb.r1,er)-Math.min(bb.r0,r)+1,wd=Math.max(bb.c1,ec)-Math.min(bb.c0,c)+1;
-            var s=x*3-h*wd*.25-Math.abs(h-wd)*.5+Math.random()*2;
-            if(s>bs){bs=s;best={r:r,c:c,d:d}}
+            cands.push({r:r,c:c,d:d,s:x*3-h*wd*.25-Math.abs(h-wd)*.5+Math.random()*2});
           }
         }
-      });
-      if(best){put(w,best.r,best.c,best.d);progress=true}else rest.push(w);
+      }
+      if(cands.length){
+        cands.sort(function(a,b){return b.s-a.s});
+        var b=cands[Math.floor(Math.pow(Math.random(),3)*Math.min(4,cands.length))];
+        put(w,b.r,b.c,b.d);progress=true;
+      }else rest.push(w);
     }
     pending=rest;
   }
-  var h=bb.r1-bb.r0+1,wd=bb.c1-bb.c0+1;
-  return{placed:placed,failed:pending,grid:grid,bb:bb,h:h,w:wd,score:placed.length*10000-h*wd-Math.abs(h-wd)};
+  if(!verify(grid,placed,bb))return null;
+  var H=bb.r1-bb.r0+1,W=bb.c1-bb.c0+1;
+  return{placed:placed,failed:pending,grid:grid,bb:bb,h:H,w:W,sig:sigOf(placed,bb),score:placed.length*10000-H*W-Math.abs(H-W)};
 }
 
-function build(words){
-  var all=[];
-  for(var i=0;i<300;i++)all.push(attempt(words));
-  all.sort(function(a,b){return b.score-a.score});
-  var top=all.filter(function(x){return x.score>=all[0].score-3});
-  var cand=top.filter(function(x){return sig(x)!==state.sig});
-  if(!cand.length)cand=all.filter(function(x){return x.placed.length===all[0].placed.length&&sig(x)!==state.sig});
-  if(!cand.length)cand=top;
-  var pick=cand[Math.floor(Math.random()*Math.min(cand.length,5))];
-  return finalize(pick);
+/* ricerca a tempo limitato; privilegia strutture non ancora mostrate */
+function build(words,seen,opt){
+  opt=opt||{};seen=seen||{};
+  var info=analyze(words),upper=info.max,t0=Date.now(),uniq={},maxP=0,n=0;
+  var minN=opt.minN||80,base=opt.base||700,hard=opt.hard||2400,maxN=opt.maxN||600;
+  while(true){
+    var r=attempt(words,info,n++);
+    if(r){var o=uniq[r.sig];if(!o||r.score>o.score)uniq[r.sig]=r;if(r.placed.length>maxP)maxP=r.placed.length}
+    var el=Date.now()-t0,full=maxP>=upper;
+    if(n>=minN&&((full&&(el>=base||n>=maxN))||el>=hard))break;
+    if(n>=maxN*4)break;
+  }
+  var q=function(x){return x.h*x.w+Math.abs(x.h-x.w)};
+  var arr=Object.keys(uniq).map(function(k){return uniq[k]}).filter(function(x){return x.placed.length===maxP});
+  arr.sort(function(a,b){return q(a)-q(b)||b.score-a.score});
+  var qmin=q(arr[0]),good=arr.filter(function(x){return q(x)<=qmin*1.35+2});
+  var fresh=good.filter(function(x){return!seen[x.sig]}),repeated=false;
+  if(!fresh.length)fresh=arr.filter(function(x){return!seen[x.sig]});
+  if(!fresh.length){repeated=true;fresh=good.filter(function(x){return x.sig!==opt.current});if(!fresh.length)fresh=good}
+  var pick=fresh[Math.floor(Math.pow(Math.random(),2)*Math.min(5,fresh.length))];
+  return{res:pick,repeated:repeated,tries:n,maxP:maxP,upper:upper,info:info,variants:arr.length};
 }
-function sig(x){return x.placed.map(function(p){return p.w+p.r+'.'+p.c+p.d}).sort().join('|')}
-function finalize(x){
-  var cells=[],num={},n=0,g=x.grid,bb=x.bb;
+
+function finalize(out,words){
+  var x=out.res,info=out.info,cells=[],num={},n=0,g=x.grid,bb=x.bb;
   function has(r,c){return g.has((r+bb.r0)+','+(c+bb.c0))}
   for(var r=0;r<x.h;r++){
     cells.push([]);
@@ -274,11 +401,89 @@ function finalize(x){
       }
     }
   }
-  return{cells:cells,num:num,h:x.h,w:x.w,failed:x.failed,sig:sig(x),count:x.placed.length};
+  var pc=info.comp[words.indexOf(x.placed[0].w)];
+  var failed=x.failed.map(function(w){
+    var i=words.indexOf(w);
+    return{w:w,kind:info.deg[i]===0?'isolated':(info.comp[i]!==pc?'separate':'search')};
+  });
+  return{cells:cells,num:num,h:x.h,w:x.w,failed:failed,sig:x.sig,count:x.placed.length,tries:out.tries,variants:out.variants};
 }
 
+/* layout PDF: sceglie l'orientazione che permette caselle piu' grandi, centra, caselle sempre quadrate */
+function pdfLayout(w,h){
+  var M=14,MAXC=26,opts=[{land:false,PW:210,PH:297},{land:true,PW:297,PH:210}],best=null;
+  opts.forEach(function(o){
+    o.cs=Math.min((o.PW-2*M)/w,(o.PH-2*M)/h,MAXC);
+    if(!best||o.cs>best.cs+1e-9)best=o;
+  });
+  best.ox=(best.PW-best.cs*w)/2;best.oy=(best.PH-best.cs*h)/2;
+  return best;
+}
+/* ENGINE END */
+
+var ICON_WARN='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>';
+var ICON_INFO='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>';
+var ICON_OK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+var state={words:[],res:null,sig:'',seen:{},parsed:null,zoom:1};
+
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function list(a){return a.map(esc).join(', ')}
+
+/* ---------- avvisi, notifiche, conferma ---------- */
+function notesHtml(p){
+  var h='',seen={};
+  p.ignored.forEach(function(x){
+    h+='<li>'+ICON_INFO+'<span>'+(x.reason==='short'
+      ?'La parola “'+esc(x.orig)+'” è stata ignorata perché deve contenere almeno 2 lettere.'
+      :'“'+esc(x.orig)+'” è stata ignorata perché non contiene lettere.')+'</span></li>';
+  });
+  if(p.dups.length){
+    var same=[],norm=[];
+    p.dups.forEach(function(x){
+      if(x.orig.toLowerCase().replace(/\s/g,'')===x.first.toLowerCase().replace(/\s/g,'')){if(!seen[x.word]){seen[x.word]=1;same.push(x.word)}}
+      else norm.push(x);
+    });
+    if(same.length)h+='<li>'+ICON_INFO+'<span>Duplicati rimossi: '+list(same)+'.</span></li>';
+    norm.forEach(function(x){h+='<li>'+ICON_INFO+'<span>“'+esc(x.orig)+'” è stata rimossa perché, dopo la normalizzazione (accenti, maiuscole, simboli), coincide con “'+esc(x.first)+'” già presente.</span></li>'});
+  }
+  p.cleaned.forEach(function(x){
+    h+='<li>'+ICON_INFO+'<span>Da “'+esc(x.orig)+'” sono stati tolti i caratteri non alfabetici: inserita come '+esc(x.word)+'.</span></li>';
+  });
+  return h?'<ul class="notes">'+h+'</ul>':'';
+}
+function failedHtml(res,total){
+  if(!res.failed.length)return '';
+  var why=res.failed.map(function(f){
+    var t=f.kind==='isolated'?'non ha nessuna lettera in comune con le altre parole: non può incrociarsi (impossibile per questa lista).'
+      :f.kind==='separate'?'ha lettere in comune solo con un gruppo di parole separato da quello inserito: un unico cruciverba non può contenerle tutte (impossibile per questa lista).'
+      :'ha lettere in comune, ma non è stato trovato un incrocio valido dopo '+res.tries+' tentativi. Potrebbe esistere un’altra disposizione: prova con “Rigenera struttura”.';
+    return '<li><strong>'+esc(f.w)+'</strong>: '+t+'</li>';
+  }).join('');
+  return '<div class="err" role="alert">'+ICON_WARN+'<div><strong>Schema incompleto: '+res.count+(res.count===1?' parola':' parole')+' su '+total+'. Non inserite: '+list(res.failed.map(function(f){return f.w}))+'.</strong><ul class="why">'+why+'</ul></div></div>';
+}
+function toast(msg,kind){
+  while($('toasts').firstChild)$('toasts').removeChild($('toasts').firstChild);
+  var t=document.createElement('div');t.className='toast';
+  t.innerHTML=(kind==='ok'?ICON_OK:ICON_INFO)+'<span>'+esc(msg)+'</span>';
+  $('toasts').appendChild(t);
+  setTimeout(function(){t.classList.add('out');setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t)},250)},4200);
+}
+var modalYes=null,lastFocus=null;
+function openModal(title,bodyHtml,yesLabel,onYes){
+  $('mTitle').textContent=title;$('mBody').innerHTML=bodyHtml;$('mYes').textContent=yesLabel;
+  modalYes=onYes;lastFocus=document.activeElement;
+  $('modal').classList.remove('hide');$('mNo').focus();
+}
+function closeModal(){$('modal').classList.add('hide');modalYes=null;if(lastFocus&&lastFocus.focus)lastFocus.focus()}
+$('mNo').onclick=closeModal;
+$('mYes').onclick=function(){var f=modalYes;closeModal();if(f)f()};
+$('modal').addEventListener('click',function(e){if(e.target===$('modal'))closeModal()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('modal').classList.contains('hide'))closeModal()});
+
+/* ---------- disegno schema ---------- */
 function svg(res,letters){
-  var S=44,P=2,W=res.w*S+P*2,H=res.h*S+P*2,o='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="'+W+'" style="display:block;margin:0 auto;width:100%;max-width:'+Math.min(res.w*56+4,760)+'px;height:auto" font-family="Arial,sans-serif">';
+  var S=44,P=2,W=res.w*S+P*2,H=res.h*S+P*2,
+  o='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="'+W+'" data-max="'+Math.min(res.w*56+4,760)+'" style="display:block;margin:0 auto;width:100%;max-width:'+Math.min(res.w*56+4,760)+'px;height:auto" font-family="Arial,sans-serif">';
   for(var r=0;r<res.h;r++)for(var c=0;c<res.w;c++){
     if(!res.cells[r][c])continue;
     var x=P+c*S,y=P+r*S;
@@ -290,52 +495,109 @@ function svg(res,letters){
   return o+'</svg>';
 }
 
+/* ---------- zoom e spostamento (smartphone) ---------- */
+function applyZoom(){
+  var box=$('preview'),sv=box.querySelector('svg');if(!sv)return;
+  var cs=getComputedStyle(box),avail=box.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+  var fit=Math.min(avail,parseFloat(sv.getAttribute('data-max')));
+  sv.style.maxWidth='none';sv.style.width=(fit*state.zoom)+'px';
+  $('zoomPct').textContent=Math.round(state.zoom*100)+'%';
+}
+function setZoom(z){
+  var box=$('preview'),z0=state.zoom;
+  z=Math.max(1,Math.min(4,z));if(z===z0)return;
+  var cx=(box.scrollLeft+box.clientWidth/2)/(box.scrollWidth||1),cy=(box.scrollTop+box.clientHeight/2)/(box.scrollHeight||1);
+  state.zoom=z;applyZoom();
+  box.scrollLeft=cx*box.scrollWidth-box.clientWidth/2;box.scrollTop=cy*box.scrollHeight-box.clientHeight/2;
+}
+$('zIn').onclick=function(){setZoom(state.zoom*1.3)};
+$('zOut').onclick=function(){setZoom(state.zoom/1.3)};
+$('zFit').onclick=function(){setZoom(1)};
+(function(){
+  var box=$('preview'),pin=null;
+  function dist(e){var a=e.touches[0],b=e.touches[1];return Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY)}
+  box.addEventListener('touchstart',function(e){if(e.touches.length===2)pin={d:dist(e),z:state.zoom}},{passive:true});
+  box.addEventListener('touchmove',function(e){if(pin&&e.touches.length===2){e.preventDefault();setZoom(pin.z*dist(e)/pin.d)}},{passive:false});
+  box.addEventListener('touchend',function(e){if(e.touches.length<2)pin=null});
+})();
+window.addEventListener('resize',applyZoom);
+
+/* ---------- rendering ---------- */
 function render(){
-  var res=state.res;
+  var res=state.res,total=state.words.length;
   $('preview').innerHTML=svg(res,$('showl').checked);
-  var tot=state.words.length;
+  applyZoom();
   $('badge').textContent=res.count+(res.count===1?' parola':' parole');
-  $('stats').innerHTML='Parole inserite: <strong>'+tot+'</strong> &middot; '+res.count+(res.count===1?' presente':' presenti')+' nello schema'+(res.failed.length?', '+res.failed.length+(res.failed.length===1?' esclusa':' escluse'):'');
-  var wn=$('warn');
-  if(res.failed.length){
-    wn.innerHTML='<div class="err" role="alert">'+ICON_WARN+'<span>Impossibile inserire nello schema: '+res.failed.join(', ')+'. Dopo molti tentativi queste parole non hanno lettere in comune utilizzabili con le altre. Modifica le parole o prova a rigenerare.</span></div>';
-  }else wn.innerHTML='';
+  $('stats').innerHTML='Parole inserite: <strong>'+total+'</strong> &middot; '+res.count+(res.count===1?' presente':' presenti')+' nello schema'+(res.failed.length?', '+res.failed.length+(res.failed.length===1?' esclusa':' escluse'):'');
+  $('notes').innerHTML=notesHtml(state.parsed);
+  $('warn').innerHTML=failedHtml(res,total);
+  var inc=res.failed.length>0;
+  $('ok').disabled=inc;
+  $('okPartial').classList.toggle('hide',!inc);
+  $('okHint').classList.toggle('hide',!inc);
 }
 
-function generate(){
-  state.res=build(state.words);state.sig=state.res.sig;
-  render();
-  $('s2').classList.remove('hide');$('s3').classList.add('hide');
-  $('s2').scrollIntoView({behavior:'smooth'});
+function run(regen){
+  var b=regen?$('regen'):$('gen'),label=b.innerHTML;
+  $('gen').disabled=true;$('regen').disabled=true;b.innerHTML='Generazione in corso…';
+  setTimeout(function(){
+    try{
+      var out=build(state.words,state.seen,{current:state.sig});
+      if(out.repeated){state.seen={};toast('Hai già visto tutte le strutture che sono riuscito a trovare: da qui si ripetono.')}
+      state.res=finalize(out,state.words);state.sig=state.res.sig;state.seen[state.sig]=1;
+      state.zoom=1;render();
+      $('s2').classList.remove('hide');$('s3').classList.add('hide');
+      $('s2').scrollIntoView({behavior:'smooth'});
+    }finally{b.innerHTML=label;$('gen').disabled=false;$('regen').disabled=false}
+  },30);
 }
 
+function showErr1(p){
+  var n=p.words.length;
+  $('err1').innerHTML='<div class="err" role="alert">'+ICON_WARN+'<div><strong>Servono almeno 2 parole valide per costruire un cruciverba.</strong>'+(n===1?' Ne hai inserita 1 valida.':' Nessuna parola valida inserita.')+(notesHtml(p)?'<div class="inerr">'+notesHtml(p)+'</div>':'')+'</div></div>';
+  $('words').focus();
+}
 $('gen').onclick=function(){
-  var w=parse($('words').value);
-  if(w.length<2){alert('Inserisci almeno 2 parole di 2 lettere o più.');return}
-  state.words=w;state.sig='';generate();
+  var p=parseInput($('words').value);
+  state.parsed=p;
+  if(p.words.length<2){showErr1(p);return}
+  $('err1').innerHTML='';
+  state.words=p.words;state.seen={};state.sig='';
+  run(false);
 };
-$('regen').onclick=function(){$('s3').classList.add('hide');generate()};
+$('regen').onclick=function(){$('s3').classList.add('hide');run(true)};
 $('back').onclick=function(){$('s2').classList.add('hide');$('s3').classList.add('hide');$('words').focus()};
 $('showl').onchange=render;
-$('ok').onclick=function(){
+
+function approve(partial){
+  var res=state.res;
+  $('partialNote').innerHTML=partial?'<div class="err" role="status">'+ICON_WARN+'<div><strong>Versione parziale: '+res.count+(res.count===1?' parola':' parole')+' su '+state.words.length+'.</strong> Non presenti nei PDF: '+list(res.failed.map(function(f){return f.w}))+'.</div></div>':'';
   $('s3').classList.remove('hide');$('s3').scrollIntoView({behavior:'smooth'});
+  toast(partial?'Versione parziale approvata.':'Schema approvato: ora puoi scaricare i PDF.','ok');
+}
+$('ok').onclick=function(){if(state.res.failed.length)return;approve(false)};
+$('okPartial').onclick=function(){
+  var res=state.res;
+  openModal('Approvare uno schema incompleto?',
+    '<p>Lo schema contiene <strong>'+res.count+(res.count===1?' parola':' parole')+' su '+state.words.length+'</strong>. Queste parole <strong>non saranno nei PDF</strong>:</p><p class="mwords">'+list(res.failed.map(function(f){return f.w}))+'</p><p>Puoi anche tornare indietro e provare a rigenerare la struttura.</p>',
+    'Approva comunque',function(){approve(true)});
 };
 
+/* ---------- PDF ---------- */
 function makePdf(solution){
   var res=state.res,J=window.jspdf&&window.jspdf.jsPDF;
   if(!J)return null;
-  var land=res.w>res.h,doc=new J({orientation:land?'l':'p',unit:'mm',format:'a4'});
-  var PW=land?297:210,PH=land?210:297,M=15;
-  var cs=Math.min((PW-2*M)/res.w,(PH-2*M)/res.h,18);
-  var ox=(PW-cs*res.w)/2,oy=(PH-cs*res.h)/2;
+  var L=pdfLayout(res.w,res.h),cs=L.cs,ox=L.ox,oy=L.oy;
+  var doc=new J({orientation:L.land?'l':'p',unit:'mm',format:'a4'});
   doc.setDrawColor(0,0,0);doc.setTextColor(0,0,0);doc.setFillColor(255,255,255);
-  doc.setLineWidth(Math.max(.25,cs*.04));
+  doc.setLineWidth(Math.min(.7,Math.max(.25,cs*.04)));
+  var numPt=Math.min(cs*.81,13),numMm=numPt*.3528;
   for(var r=0;r<res.h;r++)for(var c=0;c<res.w;c++){
     var ch=res.cells[r][c];if(!ch)continue;
     var x=ox+c*cs,y=oy+r*cs;
     doc.rect(x,y,cs,cs,'S');
     var n=res.num[r+','+c];
-    if(n){doc.setFont('helvetica','normal');doc.setFontSize(cs*.9*.9);doc.text(String(n),x+cs*.08,y+cs*.3)}
+    if(n){doc.setFont('helvetica','normal');doc.setFontSize(numPt);doc.text(String(n),x+cs*.07,y+cs*.06+numMm*.82)}
     if(solution){doc.setFont('helvetica','normal');doc.setFontSize(cs*2.2);doc.text(ch,x+cs/2,y+cs*.76,{align:'center'})}
   }
   return doc;
@@ -345,10 +607,12 @@ function save(solution){
   try{
     var doc=makePdf(solution);
     if(!doc){msg.textContent='Libreria PDF non caricata: controlla la connessione e ricarica la pagina.';return}
+    var name=solution?'cruciverba-soluzione.pdf':'cruciverba-da-risolvere.pdf';
     var blob=doc.output('blob'),url=URL.createObjectURL(blob),a=document.createElement('a');
-    a.href=url;a.download=solution?'cruciverba-soluzione.pdf':'cruciverba-da-risolvere.pdf';
+    a.href=url;a.download=name;
     document.body.appendChild(a);a.click();document.body.removeChild(a);
     setTimeout(function(){URL.revokeObjectURL(url)},4000);
+    msg.textContent='';toast('Download avviato: '+name,'ok');
   }catch(e){
     msg.textContent='Download non riuscito'+(e&&e.message?': '+e.message:'')+'.';
   }
@@ -356,7 +620,7 @@ function save(solution){
 $('pdfSol').onclick=function(){save(true)};
 $('pdfBlank').onclick=function(){save(false)};
 
-/* --- UI: indicatore fasi e contatore parole (solo interfaccia) --- */
+/* ---------- indicatore fasi e contatore (solo interfaccia) ---------- */
 var steps=document.querySelectorAll('.steps li');
 function updSteps(){
   var n=!$('s3').classList.contains('hide')?3:(!$('s2').classList.contains('hide')?2:1);
@@ -365,8 +629,8 @@ function updSteps(){
 }
 ['s2','s3'].forEach(function(id){new MutationObserver(updSteps).observe($(id),{attributes:true,attributeFilter:['class']})});
 updSteps();
-function updCount(){var n=parse($('words').value).length;$('count').textContent=n+(n===1?' parola':' parole')}
-$('words').addEventListener('input',updCount);updCount();
+function updCount(){var n=parseInput($('words').value).words.length;$('count').textContent=n+(n===1?' parola valida':' parole valide')}
+$('words').addEventListener('input',function(){updCount();$('err1').innerHTML=''});updCount();
 })();
 </script>
 </body>
