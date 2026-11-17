@@ -2,77 +2,190 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#B91C35">
+<title>Cruciverba Studio</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
-<title>Generatore di cruciverba</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f6f4;--fg:#1a1a1a;--card:#fff;--line:#d8d8d4;--acc:#1a1a1a;--accfg:#fff;--err:#b3261e;--errbg:#fdecea}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161616;--fg:#eee;--card:#222;--line:#3a3a3a;--acc:#eee;--accfg:#161616;--err:#ffb4ab;--errbg:#3b1d1a}}
-:root[data-theme="dark"]{--bg:#161616;--fg:#eee;--card:#222;--line:#3a3a3a;--acc:#eee;--accfg:#161616;--err:#ffb4ab;--errbg:#3b1d1a}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{
+  --cherry:#B91C35;--cherry-dark:#9F1730;--pink-1:#FCECEF;--pink-2:#F9EEF0;--tile:#FCEFF1;
+  --bg:#FAF8F8;--card:#FFFFFF;--title:#30272A;--text:#4D4146;--muted:#766B70;--line:#F0E4E6;--line-2:#E6D6DA;--field:#FCFAFA;
+  --r-card:18px;--r-ctl:12px;
+  --font:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45}
-main{max-width:860px;margin:0 auto;padding:20px 16px 48px}
-h1{font-size:1.5rem;margin:0 0 4px}
-.sub{color:#777;margin:0 0 20px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
-h2{font-size:1.05rem;margin:0 0 10px}
-textarea{width:100%;min-height:140px;padding:10px;border:1px solid var(--line);border-radius:8px;font:inherit;background:var(--bg);color:var(--fg);resize:vertical}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
-button{font:inherit;padding:10px 18px;border-radius:8px;border:1px solid var(--acc);background:var(--acc);color:var(--accfg);cursor:pointer;font-weight:600}
-button.sec{background:transparent;color:var(--fg);border-color:var(--line)}
-button:disabled{opacity:.5;cursor:default}
-.hint{font-size:.85rem;color:#777;margin-top:6px}
-.err{background:var(--errbg);color:var(--err);border:2px solid var(--err);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-weight:600}
-.sheet{background:#fff;padding:12px;border-radius:8px;overflow-x:auto;text-align:center;border:1px solid var(--line)}
-.sheet svg{max-width:100%;height:auto}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+svg{display:block}
+.ico{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ico svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* header */
+.top{background:var(--bg);border-bottom:1px solid var(--line)}
+.top-in{max-width:960px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:12px}
+.mark{width:36px;height:36px;flex:none}
+.brand{font-weight:600;font-size:1.05rem;color:var(--title);letter-spacing:-.01em}
+
+main{max-width:960px;margin:0 auto;padding:44px 24px 72px}
+
+/* hero */
+.hero{text-align:center;margin-bottom:28px}
+.logo{width:116px;height:116px;margin:0 auto 24px}
+.hero h1{margin:0;font-size:clamp(1.9rem,5.2vw,2.9rem);line-height:1.12;font-weight:700;letter-spacing:-.03em;color:var(--title)}
+.hero p{margin:14px auto 0;max-width:34rem;font-size:clamp(1rem,2.4vw,1.1rem);color:var(--muted)}
+
+/* steps */
+.steps{list-style:none;margin:0 auto 32px;padding:0;display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;font-size:.82rem;font-weight:500}
+.steps li{display:flex;align-items:center;gap:8px;color:#A89DA2;transition:color .2s}
+.steps li b{font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.steps li+li::before{content:"";width:28px;height:1px;background:var(--line-2);margin-right:6px}
+.steps li.on{color:var(--cherry)}
+.steps li.on span{border-bottom:2px solid var(--cherry);padding-bottom:2px}
+.steps li.done{color:var(--muted)}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:32px;margin:0 auto 20px;box-shadow:0 1px 2px rgba(48,39,42,.04);animation:rise .35s ease both}
+.card-h{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.chip{width:42px;height:42px;border-radius:12px;background:var(--pink-1);color:var(--cherry);display:grid;place-items:center;flex:none}
+.card-h h2{margin:0;font-size:1.2rem;font-weight:600;letter-spacing:-.015em;color:var(--title);line-height:1.25}
+.card-h .sub{margin:2px 0 0;font-size:.88rem;color:var(--muted)}
+.card-h .grow{flex:1;min-width:0}
+.badge{background:var(--pink-1);color:var(--cherry-dark);font-size:.8rem;font-weight:600;padding:5px 12px;border-radius:999px;white-space:nowrap}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* form */
+textarea{display:block;width:100%;min-height:170px;padding:16px 18px;border:1px solid var(--line-2);border-radius:var(--r-ctl);background:var(--field);color:var(--title);font:inherit;font-size:1rem;line-height:1.6;resize:vertical;transition:border-color .15s,box-shadow .15s}
+textarea::placeholder{color:#A89DA2}
+textarea:focus{outline:none;border-color:var(--cherry);box-shadow:0 0 0 3px rgba(185,28,53,.1)}
+.meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 2px 0;font-size:.82rem;color:var(--muted)}
+.meta .count{color:var(--cherry-dark);font-weight:600}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 22px;border-radius:var(--r-ctl);border:1px solid transparent;font:inherit;font-size:.95rem;font-weight:600;cursor:pointer;transition:background-color .18s,border-color .18s,color .18s,transform .12s;text-decoration:none}
+.btn .ico{width:18px;height:18px}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible,.tile:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(185,28,53,.28)}
+.btn-primary{background:var(--cherry);color:#fff}
+.btn-primary:hover{background:var(--cherry-dark)}
+.btn-soft{background:var(--pink-1);color:var(--cherry-dark)}
+.btn-soft:hover{background:#F8DEE3}
+.btn-ghost{background:#fff;color:var(--text);border-color:var(--line-2)}
+.btn-ghost:hover{background:var(--bg);border-color:#D9C6CB}
+.actions{margin-top:22px}
+.actions .btn-primary{min-width:220px}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:24px}
+.controls .switch{margin-left:auto}
+
+/* switch */
+.switch{display:inline-flex;align-items:center;gap:10px;font-size:.9rem;color:var(--text);cursor:pointer;user-select:none}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.track{width:38px;height:22px;border-radius:999px;background:var(--line-2);position:relative;transition:background-color .2s;flex:none}
+.track::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.18);transition:transform .2s}
+.switch input:checked+.track{background:var(--cherry)}
+.switch input:checked+.track::after{transform:translateX(16px)}
+.switch input:focus-visible+.track{box-shadow:0 0 0 3px rgba(185,28,53,.28)}
+
+/* crossword preview: always black on white */
+.sheet{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px 20px;overflow-x:auto;text-align:center}
+.sheet svg{margin:0 auto}
+.stats{margin:0 0 16px;font-size:.88rem;color:var(--muted)}
+.stats strong{color:var(--title);font-weight:600}
+
+/* errors */
+.err{display:flex;gap:12px;align-items:flex-start;background:var(--pink-1);color:var(--cherry-dark);border:1.5px solid var(--cherry);border-radius:var(--r-ctl);padding:14px 16px;margin-bottom:16px;font-size:.92rem;font-weight:500;line-height:1.5}
+.err svg{width:20px;height:20px;flex:none;margin-top:1px;fill:none;stroke:var(--cherry);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* export tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tile{display:flex;align-items:center;gap:14px;width:100%;min-height:84px;padding:18px 20px;background:var(--tile);color:var(--cherry-dark);border:1px solid transparent;border-radius:var(--r-ctl);font:inherit;text-align:left;cursor:pointer;transition:background-color .18s,border-color .18s,transform .12s}
+.tile:hover{background:#FBE6EA;border-color:#F1CBD3}
+.tile:active{transform:translateY(1px)}
+.tile .ico{width:26px;height:26px;color:var(--cherry);stroke-width:1.75}
+.tile strong{display:block;font-size:.98rem;font-weight:600;line-height:1.3}
+.tile small{display:block;margin-top:2px;font-size:.8rem;font-weight:400;color:var(--muted)}
+.note{margin:16px 2px 0;font-size:.84rem;color:var(--muted)}
+
 .hide{display:none}
-.stats{font-weight:600;margin-bottom:10px}
-.stats span{font-weight:400;color:#777}
-label.chk{display:flex;align-items:center;gap:6px;font-size:.9rem}
+
+@media (max-width:640px){
+  .top-in{padding:12px 18px}
+  main{padding:30px 16px 56px}
+  .card{padding:22px 18px;border-radius:16px}
+  .card-h{margin-bottom:18px}
+  .logo{width:96px;height:96px;margin-bottom:20px}
+  .sheet{padding:16px 10px}
+  .tiles{grid-template-columns:1fr}
+  .actions .btn-primary{width:100%}
+  .controls .btn{flex:1 1 100%}
+  .controls .switch{margin-left:0;width:100%;justify-content:center;padding-top:4px}
+  .steps li+li::before{width:16px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<header class="top"><div class="top-in">
+<svg class="mark" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="112" fill="#B91C35"/><rect x="148" y="76" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="76" y="148" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="148" y="148" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="220" y="148" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="292" y="148" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="364" y="148" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="148" y="220" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="292" y="220" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="148" y="292" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="292" y="292" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="148" y="364" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="292" y="364" width="72" height="72" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/></svg>
+<span class="brand">Cruciverba Studio</span>
+</div></header>
+
 <main>
-<h1>Generatore di cruciverba</h1>
-<p class="sub">Inserisci le parole, controlla lo schema e scarica i PDF.</p>
+<section class="hero">
+<svg class="logo" viewBox="0 0 512 512" role="img" aria-label="Logo GIULIA" font-family="Inter,'Helvetica Neue',Arial,sans-serif"><rect width="512" height="512" rx="112" fill="#B91C35"/><rect x="120" y="86" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="127" y="106" font-size="17" font-weight="600" fill="#B91C35">1</text><rect x="52" y="154" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="59" y="174" font-size="17" font-weight="600" fill="#B91C35">2</text><text x="86.0" y="203.84" font-size="44" font-weight="700" text-anchor="middle" fill="#B91C35">G</text><rect x="120" y="154" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="154.0" y="203.84" font-size="44" font-weight="700" text-anchor="middle" fill="#B91C35">I</text><rect x="188" y="154" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="222.0" y="203.84" font-size="44" font-weight="700" text-anchor="middle" fill="#B91C35">U</text><rect x="256" y="154" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="290.0" y="203.84" font-size="44" font-weight="700" text-anchor="middle" fill="#B91C35">L</text><rect x="324" y="154" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="331" y="174" font-size="17" font-weight="600" fill="#B91C35">3</text><text x="358.0" y="203.84" font-size="44" font-weight="700" text-anchor="middle" fill="#B91C35">I</text><rect x="392" y="154" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><text x="426.0" y="203.84" font-size="44" font-weight="700" text-anchor="middle" fill="#B91C35">A</text><rect x="120" y="222" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="324" y="222" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="120" y="290" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="324" y="290" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="120" y="358" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/><rect x="324" y="358" width="68" height="68" rx="4" fill="#fff" stroke="#B91C35" stroke-width="6"/></svg>
+<h1>Le tue parole, un cruciverba unico.</h1>
+<p>Crea, personalizza e stampa il tuo cruciverba in pochi clic.</p>
+</section>
+
+<ol class="steps" aria-label="Fasi">
+<li class="on"><b>01</b><span>Parole</span></li>
+<li><b>02</b><span>Anteprima</span></li>
+<li><b>03</b><span>Esporta</span></li>
+</ol>
 
 <section class="card" id="s1">
-<h2>1. Inserisci le parole</h2>
-<textarea id="words" placeholder="Una parola per riga (oppure separate da virgola)&#10;es.&#10;DATABASE&#10;SEGNALE&#10;MODULAZIONE"></textarea>
-<div class="hint">Accenti e spazi vengono ignorati; servono almeno 2 parole di 2 lettere o più.</div>
-<div class="row"><button id="gen">Genera schema</button></div>
+<div class="card-h"><div class="chip"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span></div>
+<div class="grow"><h2>Inserisci le parole</h2><p class="sub">Una parola per riga</p></div></div>
+<textarea id="words" aria-label="Parole del cruciverba" placeholder="DATABASE&#10;SEGNALE&#10;MODULAZIONE"></textarea>
+<div class="meta"><span>Accenti e spazi vengono ignorati. Servono almeno 2 parole di 2 lettere o più.</span><span class="count" id="count">0 parole</span></div>
+<div class="actions"><button class="btn btn-primary" id="gen">Genera cruciverba <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></button></div>
 </section>
 
 <section class="card hide" id="s2">
-<h2>2. Anteprima dello schema</h2>
+<div class="card-h"><div class="chip"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></span></div>
+<div class="grow"><h2>Il tuo cruciverba</h2><p class="sub">Controlla lo schema prima di esportarlo</p></div>
+<span class="badge" id="badge">0 parole</span></div>
 <div id="warn"></div>
-<div class="stats" id="stats"></div>
+<p class="stats" id="stats"></p>
 <div class="sheet" id="preview"></div>
-<div class="row">
-<button id="ok">Approva</button>
-<button class="sec" id="regen">Rigenera struttura</button>
-<button class="sec" id="back">Modifica parole</button>
-<label class="chk"><input type="checkbox" id="showl" checked> Mostra lettere</label>
+<div class="controls">
+<button class="btn btn-primary" id="ok"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>Approva</button>
+<button class="btn btn-soft" id="regen"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></span>Rigenera struttura</button>
+<button class="btn btn-ghost" id="back"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></span>Modifica parole</button>
+<label class="switch"><input type="checkbox" id="showl" checked><span class="track"></span><span>Mostra lettere</span></label>
 </div>
 </section>
 
 <section class="card hide" id="s3">
-<h2>3. Scarica i PDF</h2>
-<div class="row">
-<button id="pdfSol">PDF con parole inserite</button>
-<button id="pdfBlank">PDF da risolvere</button>
+<div class="card-h"><div class="chip"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg></span></div>
+<div class="grow"><h2>Scarica il tuo cruciverba</h2><p class="sub">Due PDF in formato A4, pronti per la stampa</p></div></div>
+<div class="tiles">
+<button class="tile" id="pdfSol"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="m9 15 2 2 4-4"/></svg></span><span><strong>PDF con soluzioni</strong><small>Schema con le parole inserite</small></span></button>
+<button class="tile" id="pdfBlank"><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></span><span><strong>PDF da risolvere</strong><small>Schema vuoto con i numeri</small></span></button>
 </div>
-<div class="hint" id="dlmsg">I PDF sono vettoriali: restano nitidi a qualsiasi ingrandimento e in stampa.</div>
+<p class="note" id="dlmsg">I PDF sono vettoriali: restano nitidi a qualsiasi ingrandimento e in stampa.</p>
 </section>
 </main>
 
 <script>
 (function(){
 var $=function(i){return document.getElementById(i)};
+var ICON_WARN='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>';
 var state={words:[],res:null,sig:''};
 
 function parse(t){
@@ -165,7 +278,7 @@ function finalize(x){
 }
 
 function svg(res,letters){
-  var S=44,P=2,W=res.w*S+P*2,H=res.h*S+P*2,o='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="'+Math.min(W,760)+'" font-family="Arial,sans-serif">';
+  var S=44,P=2,W=res.w*S+P*2,H=res.h*S+P*2,o='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="'+W+'" style="display:block;margin:0 auto;width:100%;max-width:'+Math.min(res.w*56+4,760)+'px;height:auto" font-family="Arial,sans-serif">';
   for(var r=0;r<res.h;r++)for(var c=0;c<res.w;c++){
     if(!res.cells[r][c])continue;
     var x=P+c*S,y=P+r*S;
@@ -181,10 +294,11 @@ function render(){
   var res=state.res;
   $('preview').innerHTML=svg(res,$('showl').checked);
   var tot=state.words.length;
-  $('stats').innerHTML='Parole inserite: '+tot+' <span>— '+res.count+(res.count===1?' presente':' presenti')+' nello schema'+(res.failed.length?', '+res.failed.length+(res.failed.length===1?' esclusa':' escluse'):'')+'</span>';
+  $('badge').textContent=res.count+(res.count===1?' parola':' parole');
+  $('stats').innerHTML='Parole inserite: <strong>'+tot+'</strong> &middot; '+res.count+(res.count===1?' presente':' presenti')+' nello schema'+(res.failed.length?', '+res.failed.length+(res.failed.length===1?' esclusa':' escluse'):'');
   var wn=$('warn');
   if(res.failed.length){
-    wn.innerHTML='<div class="err">\u26A0 Impossibile inserire nello schema: '+res.failed.join(', ')+'. Dopo molti tentativi queste parole non hanno lettere in comune utilizzabili con le altre. Modifica le parole o prova a rigenerare.</div>';
+    wn.innerHTML='<div class="err" role="alert">'+ICON_WARN+'<span>Impossibile inserire nello schema: '+res.failed.join(', ')+'. Dopo molti tentativi queste parole non hanno lettere in comune utilizzabili con le altre. Modifica le parole o prova a rigenerare.</span></div>';
   }else wn.innerHTML='';
 }
 
@@ -241,6 +355,18 @@ function save(solution){
 }
 $('pdfSol').onclick=function(){save(true)};
 $('pdfBlank').onclick=function(){save(false)};
+
+/* --- UI: indicatore fasi e contatore parole (solo interfaccia) --- */
+var steps=document.querySelectorAll('.steps li');
+function updSteps(){
+  var n=!$('s3').classList.contains('hide')?3:(!$('s2').classList.contains('hide')?2:1);
+  steps.forEach(function(li,k){li.classList.toggle('on',k+1===n);li.classList.toggle('done',k+1<n);
+    if(k+1===n)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current')});
+}
+['s2','s3'].forEach(function(id){new MutationObserver(updSteps).observe($(id),{attributes:true,attributeFilter:['class']})});
+updSteps();
+function updCount(){var n=parse($('words').value).length;$('count').textContent=n+(n===1?' parola':' parole')}
+$('words').addEventListener('input',updCount);updCount();
 })();
 </script>
 </body>
