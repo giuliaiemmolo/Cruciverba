@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Generatore di cruciverba</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f6f4;--fg:#1a1a1a;--card:#fff;--line:#d8d8d4;--acc:#1a1a1a;--accfg:#fff;--err:#b3261e;--errbg:#fdecea}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161616;--fg:#eee;--card:#222;--line:#3a3a3a;--acc:#eee;--accfg:#161616;--err:#ffb4ab;--errbg:#3b1d1a}}
+:root[data-theme="dark"]{--bg:#161616;--fg:#eee;--card:#222;--line:#3a3a3a;--acc:#eee;--accfg:#161616;--err:#ffb4ab;--errbg:#3b1d1a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45}
+main{max-width:860px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.5rem;margin:0 0 4px}
+.sub{color:#777;margin:0 0 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
+h2{font-size:1.05rem;margin:0 0 10px}
+textarea{width:100%;min-height:140px;padding:10px;border:1px solid var(--line);border-radius:8px;font:inherit;background:var(--bg);color:var(--fg);resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+button{font:inherit;padding:10px 18px;border-radius:8px;border:1px solid var(--acc);background:var(--acc);color:var(--accfg);cursor:pointer;font-weight:600}
+button.sec{background:transparent;color:var(--fg);border-color:var(--line)}
+button:disabled{opacity:.5;cursor:default}
+.hint{font-size:.85rem;color:#777;margin-top:6px}
+.err{background:var(--errbg);color:var(--err);border:2px solid var(--err);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-weight:600}
+.sheet{background:#fff;padding:12px;border-radius:8px;overflow-x:auto;text-align:center;border:1px solid var(--line)}
+.sheet svg{max-width:100%;height:auto}
+.hide{display:none}
+.stats{font-weight:600;margin-bottom:10px}
+.stats span{font-weight:400;color:#777}
+label.chk{display:flex;align-items:center;gap:6px;font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+<h1>Generatore di cruciverba</h1>
+<p class="sub">Inserisci le parole, controlla lo schema e scarica i PDF.</p>
+
+<section class="card" id="s1">
+<h2>1. Inserisci le parole</h2>
+<textarea id="words" placeholder="Una parola per riga (oppure separate da virgola)&#10;es.&#10;DATABASE&#10;SEGNALE&#10;MODULAZIONE"></textarea>
+<div class="hint">Accenti e spazi vengono ignorati; servono almeno 2 parole di 2 lettere o più.</div>
+<div class="row"><button id="gen">Genera schema</button></div>
+</section>
+
+<section class="card hide" id="s2">
+<h2>2. Anteprima dello schema</h2>
+<div id="warn"></div>
+<div class="stats" id="stats"></div>
+<div class="sheet" id="preview"></div>
+<div class="row">
+<button id="ok">Approva</button>
+<button class="sec" id="regen">Rigenera struttura</button>
+<button class="sec" id="back">Modifica parole</button>
+<label class="chk"><input type="checkbox" id="showl" checked> Mostra lettere</label>
+</div>
+</section>
+
+<section class="card hide" id="s3">
+<h2>3. Scarica i PDF</h2>
+<div class="row">
+<button id="pdfSol">PDF con parole inserite</button>
+<button id="pdfBlank">PDF da risolvere</button>
+</div>
+<div class="hint" id="dlmsg">I PDF sono vettoriali: restano nitidi a qualsiasi ingrandimento e in stampa.</div>
+</section>
+</main>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var state={words:[],res:null,sig:''};
+
+function parse(t){
+  var seen={},out=[];
+  t.split(/[\n,;]+/).forEach(function(x){
+    var w=x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z]/g,'');
+    if(w.length>=2&&!seen[w]){seen[w]=1;out.push(w)}
+  });
+  return out;
+}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+
+function attempt(words){
+  var grid=new Map(),placed=[],bb={r0:0,r1:0,c0:0,c1:0};
+  var order=shuffle(words.slice()).sort(function(a,b){return b.length-a.length+(Math.random()-.5)*3});
+  function key(r,c){return r+','+c}
+  function put(w,r,c,d){
+    for(var k=0;k<w.length;k++){var rr=r+(d?k:0),cc=c+(d?0:k);grid.set(key(rr,cc),w[k])}
+    placed.push({w:w,r:r,c:c,d:d});
+    var er=r+(d?w.length-1:0),ec=c+(d?0:w.length-1);
+    if(placed.length==1){bb={r0:r,r1:er,c0:c,c1:ec}}
+    else{bb={r0:Math.min(bb.r0,r),r1:Math.max(bb.r1,er),c0:Math.min(bb.c0,c),c1:Math.max(bb.c1,ec)}}
+  }
+  function valid(w,r,c,d){
+    var dr=d?1:0,dc=d?0:1;
+    if(grid.has(key(r-dr,c-dc))||grid.has(key(r+dr*w.length,c+dc*w.length)))return -1;
+    var cross=0,nw=0;
+    for(var k=0;k<w.length;k++){
+      var rr=r+dr*k,cc=c+dc*k,ch=grid.get(key(rr,cc));
+      if(ch){if(ch!==w[k])return -1;cross++}
+      else{nw++;if(grid.has(key(rr+dc,cc+dr))||grid.has(key(rr-dc,cc-dr)))return -1}
+    }
+    return(cross>0&&nw>0)?cross:-1;
+  }
+  put(order[0],0,0,0);
+  var pending=order.slice(1),progress=true;
+  while(pending.length&&progress){
+    progress=false;var rest=[];
+    for(var p=0;p<pending.length;p++){
+      var w=pending[p],best=null,bs=-1e9;
+      grid.forEach(function(ch,k){
+        for(var i=0;i<w.length;i++){
+          if(w[i]!==ch)continue;
+          var rc=k.split(','),r0=+rc[0],c0=+rc[1];
+          for(var d=0;d<2;d++){
+            var r=r0-(d?i:0),c=c0-(d?0:i),x=valid(w,r,c,d);
+            if(x<0)continue;
+            var er=r+(d?w.length-1:0),ec=c+(d?0:w.length-1);
+            var h=Math.max(bb.r1,er)-Math.min(bb.r0,r)+1,wd=Math.max(bb.c1,ec)-Math.min(bb.c0,c)+1;
+            var s=x*3-h*wd*.25-Math.abs(h-wd)*.5+Math.random()*2;
+            if(s>bs){bs=s;best={r:r,c:c,d:d}}
+          }
+        }
+      });
+      if(best){put(w,best.r,best.c,best.d);progress=true}else rest.push(w);
+    }
+    pending=rest;
+  }
+  var h=bb.r1-bb.r0+1,wd=bb.c1-bb.c0+1;
+  return{placed:placed,failed:pending,grid:grid,bb:bb,h:h,w:wd,score:placed.length*10000-h*wd-Math.abs(h-wd)};
+}
+
+function build(words){
+  var all=[];
+  for(var i=0;i<300;i++)all.push(attempt(words));
+  all.sort(function(a,b){return b.score-a.score});
+  var top=all.filter(function(x){return x.score>=all[0].score-3});
+  var cand=top.filter(function(x){return sig(x)!==state.sig});
+  if(!cand.length)cand=all.filter(function(x){return x.placed.length===all[0].placed.length&&sig(x)!==state.sig});
+  if(!cand.length)cand=top;
+  var pick=cand[Math.floor(Math.random()*Math.min(cand.length,5))];
+  return finalize(pick);
+}
+function sig(x){return x.placed.map(function(p){return p.w+p.r+'.'+p.c+p.d}).sort().join('|')}
+function finalize(x){
+  var cells=[],num={},n=0,g=x.grid,bb=x.bb;
+  function has(r,c){return g.has((r+bb.r0)+','+(c+bb.c0))}
+  for(var r=0;r<x.h;r++){
+    cells.push([]);
+    for(var c=0;c<x.w;c++){
+      var ch=g.get((r+bb.r0)+','+(c+bb.c0))||'';
+      cells[r].push(ch);
+      if(ch){
+        var a=!has(r,c-1)&&has(r,c+1),d=!has(r-1,c)&&has(r+1,c);
+        if(a||d)num[r+','+c]=++n;
+      }
+    }
+  }
+  return{cells:cells,num:num,h:x.h,w:x.w,failed:x.failed,sig:sig(x),count:x.placed.length};
+}
+
+function svg(res,letters){
+  var S=44,P=2,W=res.w*S+P*2,H=res.h*S+P*2,o='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="'+Math.min(W,760)+'" font-family="Arial,sans-serif">';
+  for(var r=0;r<res.h;r++)for(var c=0;c<res.w;c++){
+    if(!res.cells[r][c])continue;
+    var x=P+c*S,y=P+r*S;
+    o+='<rect x="'+x+'" y="'+y+'" width="'+S+'" height="'+S+'" fill="#fff" stroke="#000" stroke-width="1.6"/>';
+    var n=res.num[r+','+c];
+    if(n)o+='<text x="'+(x+3)+'" y="'+(y+12)+'" font-size="11" fill="#000">'+n+'</text>';
+    if(letters)o+='<text x="'+(x+S/2)+'" y="'+(y+S/2+11)+'" font-size="26" text-anchor="middle" fill="#000">'+res.cells[r][c]+'</text>';
+  }
+  return o+'</svg>';
+}
+
+function render(){
+  var res=state.res;
+  $('preview').innerHTML=svg(res,$('showl').checked);
+  var tot=state.words.length;
+  $('stats').innerHTML='Parole inserite: '+tot+' <span>— '+res.count+(res.count===1?' presente':' presenti')+' nello schema'+(res.failed.length?', '+res.failed.length+(res.failed.length===1?' esclusa':' escluse'):'')+'</span>';
+  var wn=$('warn');
+  if(res.failed.length){
+    wn.innerHTML='<div class="err">\u26A0 Impossibile inserire nello schema: '+res.failed.join(', ')+'. Dopo molti tentativi queste parole non hanno lettere in comune utilizzabili con le altre. Modifica le parole o prova a rigenerare.</div>';
+  }else wn.innerHTML='';
+}
+
+function generate(){
+  state.res=build(state.words);state.sig=state.res.sig;
+  render();
+  $('s2').classList.remove('hide');$('s3').classList.add('hide');
+  $('s2').scrollIntoView({behavior:'smooth'});
+}
+
+$('gen').onclick=function(){
+  var w=parse($('words').value);
+  if(w.length<2){alert('Inserisci almeno 2 parole di 2 lettere o più.');return}
+  state.words=w;state.sig='';generate();
+};
+$('regen').onclick=function(){$('s3').classList.add('hide');generate()};
+$('back').onclick=function(){$('s2').classList.add('hide');$('s3').classList.add('hide');$('words').focus()};
+$('showl').onchange=render;
+$('ok').onclick=function(){
+  $('s3').classList.remove('hide');$('s3').scrollIntoView({behavior:'smooth'});
+};
+
+function makePdf(solution){
+  var res=state.res,J=window.jspdf&&window.jspdf.jsPDF;
+  if(!J)return null;
+  var land=res.w>res.h,doc=new J({orientation:land?'l':'p',unit:'mm',format:'a4'});
+  var PW=land?297:210,PH=land?210:297,M=15;
+  var cs=Math.min((PW-2*M)/res.w,(PH-2*M)/res.h,18);
+  var ox=(PW-cs*res.w)/2,oy=(PH-cs*res.h)/2;
+  doc.setDrawColor(0,0,0);doc.setTextColor(0,0,0);doc.setFillColor(255,255,255);
+  doc.setLineWidth(Math.max(.25,cs*.04));
+  for(var r=0;r<res.h;r++)for(var c=0;c<res.w;c++){
+    var ch=res.cells[r][c];if(!ch)continue;
+    var x=ox+c*cs,y=oy+r*cs;
+    doc.rect(x,y,cs,cs,'S');
+    var n=res.num[r+','+c];
+    if(n){doc.setFont('helvetica','normal');doc.setFontSize(cs*.9*.9);doc.text(String(n),x+cs*.08,y+cs*.3)}
+    if(solution){doc.setFont('helvetica','normal');doc.setFontSize(cs*2.2);doc.text(ch,x+cs/2,y+cs*.76,{align:'center'})}
+  }
+  return doc;
+}
+function save(solution){
+  var msg=$('dlmsg');
+  try{
+    var doc=makePdf(solution);
+    if(!doc){msg.textContent='Libreria PDF non caricata: controlla la connessione e ricarica la pagina.';return}
+    var blob=doc.output('blob'),url=URL.createObjectURL(blob),a=document.createElement('a');
+    a.href=url;a.download=solution?'cruciverba-soluzione.pdf':'cruciverba-da-risolvere.pdf';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(url)},4000);
+  }catch(e){
+    msg.textContent='Download non riuscito'+(e&&e.message?': '+e.message:'')+'.';
+  }
+}
+$('pdfSol').onclick=function(){save(true)};
+$('pdfBlank').onclick=function(){save(false)};
+})();
+</script>
+</body>
+</html>
