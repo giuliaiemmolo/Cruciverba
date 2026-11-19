@@ -213,7 +213,7 @@ body[data-page="0"] .head{display:none}
 <button class="add" id="add"><i class="ico" data-i="plus"></i>Aggiungi parola</button></div>
 <div class="stack"><div class="card"><div class="ch"><span class="chip"><i class="ico" data-i="grid"></i></span><div><h2>Anteprima</h2></div><span class="badge" id="b1">0 parole inserite</span></div>
 <div class="sheet" id="pv1"></div><p class="lw" id="lw"></p>
-<div class="tools"><button id="tre"><i class="ico" data-i="re"></i>Rigenera<br>struttura</button><button id="teye"><i class="ico" data-i="eye"></i><span id="tel">Nascondi<br>lettere</span></button></div></div></div>
+<div class="tools"><button id="tre"><i class="ico" data-i="re"></i>Rigenera<br>struttura</button><button id="tback" class="hide"><i class="ico" data-i="back"></i>Disposizione<br>precedente</button><button id="teye"><i class="ico" data-i="eye"></i><span id="tel">Nascondi<br>lettere</span></button></div></div></div>
 </div>
 <div class="bar"><button class="btn ghost" id="reset"><i class="ico" data-i="back"></i>Ricomincia da capo</button><button class="btn pri" id="go2"><i class="ico" data-i="check"></i>Approva cruciverba<i class="ico" data-i="next"></i></button></div>
 </section>
@@ -224,6 +224,7 @@ body[data-page="0"] .head{display:none}
 
 <div class="side2"><div class="card ctl">
 <button id="re2"><i class="ico" data-i="re"></i>Rigenera schema</button>
+<button id="back2l" class="hide"><i class="ico" data-i="back"></i>Torna alla disposizione precedente</button>
 <div class="line"><span><i class="ico" data-i="eye"></i>Mostra soluzioni</span><label class="sw"><input type="checkbox" id="sol"><i></i></label></div>
 <div class="line"><button class="zb" data-z="out" aria-label="Riduci"><i class="ico" data-i="zo"></i></button><b>Zoom</b><button class="zb" data-z="in" aria-label="Ingrandisci"><i class="ico" data-i="zi"></i></button></div>
 <button id="back2" style="background:#fff;border-color:var(--c)"><i class="ico" data-i="pen"></i>Modifica parole</button>
@@ -547,7 +548,7 @@ var ICONS={pen:'<path d="M21.2 6.8a1 1 0 0 0-4-4L3.8 16.2a2 2 0 0 0-.5.8L2 21.4a
 function ic(n){return'<svg viewBox="0 0 24 24" aria-hidden="true">'+ICONS[n]+'</svg>'}
 document.querySelectorAll('[data-i]').forEach(function(e){e.innerHTML=ic(e.dataset.i)});
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-var state={pap:false,fill:false,page:1,mode:'w',letters:true,zoom:1,words:[],defs:{},res:null,lv:null,ok:false,seen:{},sig:'',dm:false,ft:'pdf'};
+var state={pap:false,fill:false,page:1,mode:'w',letters:true,zoom:1,words:[],defs:{},res:null,lv:null,ok:false,seen:{},sig:'',dm:false,ft:'pdf',hist:[]};
 var rows=[{w:'',d:''}];
 var T=[['Crea il tuo <em>Cruciverba</em>','Inserisci le parole, genera lo schema in un click e scarica il tuo cruciverba pronto da stampare.'],['Genera e <em>controlla</em>','Verifica lo schema, rigenera una nuova disposizione se vuoi e approva il cruciverba quando sei soddisfatta.'],['Scarica e <em>stampa</em>','Personalizza il tuo cruciverba e scaricalo pronto da stampare.'],['Come <em>funziona</em>','Tutto quello che serve per creare e stampare il tuo cruciverba, passo dopo passo.'],['<em>Informazioni</em>','']];
 
@@ -630,22 +631,40 @@ function defsMap(){var m={};rows.forEach(function(r){var w=normWord(r.w);if(w&&!
 var EMPTY='<div class="empty"><i class="ico" data-i="grid"></i><p>Inserisci almeno una parola per vedere qui l’anteprima del cruciverba.</p></div>';
 function wkey(ws){return ws.join('|')}
 var lt;function live(){clearTimeout(lt);lt=setTimeout(doLive,220)}
-function doLive(){
-  var p=parse(),n=p.words.length;
+function doLive(keep){
+  var p=parse(),n=p.words.length,prev=(keep===true&&state.lv&&state.lvKey===wkey(p.words))?state.lv:null;
+  if(!prev)state.hist=[];
   $('b1').textContent=n+(n===1?' parola inserita':' parole inserite');
   if(!n){state.lv=null;$('lw').textContent='';return paintLive()}
   try{
     var r=finalize(build(p.words,{},{minN:6,base:1,hard:120,maxN:20}),p.words);
+    if(prev&&prev.sig!==r.sig)pushHist(prev);
     state.lv=r;state.lvKey=wkey(p.words);$('lw').textContent=r.failed.length?'Non ancora incrociate: '+r.failed.map(function(f){return f.w}).join(', ')+'.':'';
-  }catch(x){state.lv=null}
+  }catch(x){state.lv=null;state.hist=[]}
   paintLive();
 }
+function pushHist(r){state.hist.push(r);if(state.hist.length>30)state.hist.shift()}
 function paintLive(){
+  histBtns();
   $('pv1').innerHTML=state.lv?svg(state.lv,state.letters):EMPTY;
   var e=$('pv1').querySelector('[data-i]');if(e)e.innerHTML=ic('grid');
   fit();
 }
-$('tre').onclick=doLive;
+$('tre').onclick=function(){doLive(true)};
+function histBtns(){var off=!state.hist.length;$('tback').classList.toggle('hide',off);$('back2l').classList.toggle('hide',off)}
+function histBack(){
+  var prev=state.hist.pop();if(!prev)return histBtns();
+  state.lv=prev;
+  if(state.page===2){
+    prev.entries.forEach(function(e){e.def=state.dm?(state.defs[e.w]||''):''});
+    state.res=prev;state.sig=prev.sig;state.ok=false;paint2();fit();
+  }else{
+    $('lw').textContent=prev.failed.length?'Non ancora incrociate: '+prev.failed.map(function(f){return f.w}).join(', ')+'.':'';
+    paintLive();
+  }
+  histBtns();
+}
+$('tback').onclick=histBack;$('back2l').onclick=histBack;
 $('teye').onclick=function(){state.letters=!state.letters;$('tel').innerHTML=state.letters?'Nascondi<br>lettere':'Mostra<br>lettere';paintLive()};
 $('reset').onclick=function(){openModal('Ricominciare da capo?','Tutte le parole inserite verranno cancellate.','Cancella tutto',function(){rows=[{w:'',d:''}];state.res=null;state.ok=false;drawRows();doLive();go(1);focusRow(0)})};
 $('go2').onclick=function(){
@@ -678,6 +697,7 @@ function run(b){
       if(out.repeated){state.seen={};toast('Hai già visto tutte le strutture trovate: da qui si ripetono.')}
       var r=finalize(out,state.words);
       r.entries.forEach(function(e){e.def=state.dm?(state.defs[e.w]||''):''});
+      if(state.page===2&&state.res&&state.res.sig!==r.sig&&state.lvKey===wkey(state.words))pushHist(state.res);
       state.res=r;state.sig=r.sig;state.seen[r.sig]=1;state.ok=false;state.lv=r;state.lvKey=wkey(state.words);
       if(state.page===2){paint2();fit()}else go(2);
     }finally{b.disabled=false;b.innerHTML=lab}
@@ -691,6 +711,7 @@ function clHtml(){var s=split();return['Orizzontali','Verticali'].map(function(t
 
 /* ---------- pagina 2 ---------- */
 function paint2(){
+  histBtns();
   var r=state.res,n=state.words.length,ok={};
   r.entries.forEach(function(e){ok[e.w]=e.n});
   $('pv2').innerHTML=svg(r,$('sol').checked);
