@@ -148,6 +148,37 @@ body[data-page="0"] .head{display:none}
 .pg .bd{position:absolute;left:4cqw;right:4cqw;top:32cqw;bottom:4cqw;border:.3cqw dashed #EBCDD3;border-radius:2cqw;display:grid;place-items:center;color:#C9A0AA;font-size:1.9cqw;text-align:center;padding:2cqw}.pg .bd img{max-width:52cqw;max-height:70cqw;object-fit:contain}
 #p6 .bar{margin-top:26px}#pBack[disabled]{opacity:.45;pointer-events:none}
 @media(max-width:1000px){.hm{grid-template-columns:1fr}.stp.five li{width:70px}.stp.five li span{display:none}}
+
+.papbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 16px;margin-bottom:18px;border:1.5px solid var(--c);border-radius:14px;background:var(--p1);color:var(--cd);font-weight:600}.papbar .lnk{margin-left:auto}
+.paprun .seg-box{display:none}
+.cfg textarea{width:100%;min-height:140px;padding:12px 14px;border:1px solid var(--ln);border-radius:12px;font:inherit;resize:vertical;box-sizing:border-box;background:#fff}
+.hint{display:block;color:var(--m);margin-top:8px;line-height:1.4}
+.upv img+img{margin-left:-6px}
+.phg{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px;margin-top:12px}.phg div{position:relative}.phg img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:1px solid var(--ln);display:block}
+.phg button{position:absolute;top:4px;right:4px;border:0;border-radius:50%;width:22px;height:22px;background:#fff;color:var(--c);cursor:pointer;font-weight:800;line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.pg .bd{display:flex;flex-wrap:wrap;gap:2cqw;align-content:center;justify-content:center;top:24cqw}.pg .bd img{max-width:40cqw;max-height:46cqw;object-fit:contain}.pg .bd img.hide{display:none}#pgPhs{display:contents}#pgPhs img{width:12cqw;height:12cqw;object-fit:cover}
+.pg .hd{font-family:Helvetica,Arial,'Liberation Sans',sans-serif}
+.pg .uni{letter-spacing:0}.pg .lau{line-height:1.3}.pg .nm{font-family:'Times New Roman',Times,serif;letter-spacing:0;line-height:1.25}.pg .dt{font-family:'Times New Roman',Times,serif;line-height:1.3}
+.ped-grid{display:grid;grid-template-columns:310px minmax(0,1fr);gap:26px;align-items:start}
+.ped-side{max-height:calc(100vh - 100px);overflow:auto;position:sticky;top:76px}.ped-side .btn{width:100%;margin-top:12px}.ped-side .btn.sm{margin-top:0;width:auto;height:38px;padding:0 16px}
+.rngrow{display:flex;align-items:center;gap:10px}.rngrow input{flex:1;accent-color:var(--c)}.rngrow output{min-width:48px;font-weight:700;color:var(--t)}
+.edrow{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:10px;cursor:pointer;font-size:.92rem}.edrow:hover{background:#FFF4F6}.edrow.on{background:var(--p1);font-weight:700}.edrow small{margin-left:auto;color:var(--m);white-space:nowrap}.edrow input{accent-color:var(--c)}
+.edsel{margin-top:10px;padding:10px 12px;border:1px solid var(--ln);border-radius:12px;background:#FFF8F9}.edbt{display:flex;gap:8px;margin-top:8px}
+.chks{font-size:.86rem;line-height:1.45;color:var(--m)}.chks div{margin-bottom:4px}.chks .wn{color:#B4142F}
+.zbar{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-weight:700;color:var(--t)}.zb{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--c);background:#fff;color:var(--c);font-size:1.2rem;font-weight:800;cursor:pointer;line-height:1}
+.stage{background:#F3E3E7;border-radius:14px;padding:14px;overflow:auto;max-height:calc(100vh - 150px)}
+.pg.ed{max-width:none;margin:0 auto;overflow:visible;touch-action:none}.layer{position:absolute;inset:0}#edGuides{pointer-events:none;z-index:90}
+.eb{position:absolute;cursor:grab;user-select:none;box-sizing:border-box;outline:1px solid transparent;touch-action:none}.eb:hover{outline:1px dashed var(--c)}.eb.sel{outline:2px solid var(--c);z-index:50}.eb.bad{outline:2px solid #E11D48;background:rgba(225,29,72,.07)}
+.eb>img{width:100%;height:100%;display:block;pointer-events:none}.eb .tx{position:absolute;inset:0;pointer-events:none}
+.eb .tl{position:absolute;white-space:pre;color:#111;font-family:Helvetica,Arial,'Liberation Sans',sans-serif}
+.rs{position:absolute;display:none;width:15px;height:15px;background:var(--c);border:2px solid #fff;border-radius:4px;box-sizing:border-box}.eb.sel .rs{display:block}.rs.se{right:-8px;bottom:-8px;cursor:nwse-resize}.rs.e{right:-8px;top:50%;margin-top:-8px;cursor:ew-resize}
+.egv,.egh{position:absolute;background:#F43F5E}.egv{top:0;bottom:0;width:1px}.egh{left:0;right:0;height:1px}
+@media(max-width:1000px){.ped-grid{grid-template-columns:1fr}.ped-side{position:static;max-height:none}}
+
+.edrow.off{cursor:grab;background:#FFF8F9;border:1px dashed var(--ln);touch-action:none;margin-bottom:6px}.edrow .gr{color:var(--c);font-weight:800;width:14px}.edrow .lnk{font-size:.82rem;padding:0;margin-left:6px}
+.edghost{position:fixed;z-index:300;pointer-events:none;padding:8px 14px;border-radius:12px;background:var(--c);color:#fff;font-weight:700;box-shadow:0 8px 22px rgba(0,0,0,.28)}
+.stage.drop{outline:3px dashed var(--c);outline-offset:-3px}
+.edhint{position:absolute;left:0;right:0;top:46%;text-align:center;color:#B58A94;font-size:2.1cqw;line-height:1.5;pointer-events:none}
 </style>
 </head>
 <body>
@@ -160,6 +191,7 @@ body[data-page="0"] .head{display:none}
 <div class="wrap">
 <header class="top"><div class="name" data-go="0" role="button" tabindex="0" title="Torna alla home">Cruciverba by Giuggi</div><button data-guide><i class="ico" data-i="help"></i><span>Guida</span></button><button data-info><i class="ico" data-i="info"></i><span>Info</span></button><button data-soon><i class="ico" data-i="set"></i><span>Impostazioni</span></button></header>
 <main>
+<div class="papbar hide" id="papbar"><span>Stai creando il cruciverba per il papiro. Quando approvi lo schema torni al papiro.</span><button type="button" class="lnk" id="papbarX">Annulla e torna al papiro</button></div>
 <div class="head"><span class="pill">• Strumento gratuito &nbsp; • nessuna registrazione</span><h1 id="h1"></h1>
 <ol class="stp" id="stp"><li data-go="1"><b></b><span>Inserisci<br>le parole</span></li><li data-go="2"><b></b><span>Genera<br>e controlla</span></li><li data-go="3"><b></b><span>Scarica<br>e stampa</span></li></ol>
 <ol class="stp five hide" id="stp2"><li data-ps="1"><b></b><span>Dati<br>del papiro</span></li><li data-ps="2"><b></b><span>Inserisci<br>caricatura</span></li><li data-ps="3"><b></b><span>Crea / inserisci<br>cruciverba</span></li><li data-ps="4"><b></b><span>Inserisci<br>foto</span></li><li data-ps="5"><b></b><span>Monta<br>il papiro</span></li></ol>
@@ -257,7 +289,7 @@ body[data-page="0"] .head{display:none}
 </section>
 
 <section id="p6" class="hide">
-<div class="g1">
+<div class="g1" id="pgrid">
 <div class="card" id="pcard">
 <div id="pf1"><div class="ch"><span class="chip"><i class="ico" data-i="doc"></i></span><div><h2>Parte superiore</h2><p>Questi dati compaiono in alto nel papiro.</p></div></div>
 <div class="cfg">
@@ -272,14 +304,42 @@ body[data-page="0"] .head{display:none}
 </div></div>
 <div id="pf2" class="hide"><div class="ch"><span class="chip"><i class="ico" data-i="up"></i></span><div><h2>Caricatura</h2><p>Carica l’immagine da inserire nel papiro.</p></div></div>
 <div class="cfg"><label class="up" for="pCar"><i class="ico" data-i="up"></i><span>Carica la caricatura</span></label><input type="file" id="pCar" accept="image/*" hidden>
-<div class="upv hide" id="pCarV"><img id="pCarI" alt=""><div><b id="pCarT"></b><small id="pCarS"></small><br><button type="button" class="lnk" id="pCarX">Rimuovi</button></div></div></div></div>
-<div id="pfx" class="hide"><div class="ch"><span class="chip"><i class="ico" data-i="layers"></i></span><div><h2 id="pxT"></h2><p>Prossimo passaggio del lavoro</p></div></div><p class="pxp" id="pxP"></p></div>
+<div class="upv hide" id="pCarV"><img id="pCarI" alt=""><div><b id="pCarT"></b><small id="pCarS"></small><button type="button" class="lnk" id="pCarX">Rimuovi</button></div></div></div></div>
+<div id="pf3" class="hide"><div class="ch"><span class="chip"><i class="ico" data-i="grid"></i></span><div><h2>Il cruciverba</h2><p>Crealo adesso oppure inserisci un PNG già fatto.</p></div></div>
+<div class="cfg"><div class="seg" id="xwMode"><button class="on" data-x="crea">Crea il cruciverba</button><button data-x="ins">Inserisci un PNG</button></div>
+<div id="xwCrea"><p class="pxp">Scrivi parole e definizioni, genera lo schema e approvalo: tornerai qui con il cruciverba (con e senza soluzioni) e le definizioni già divise in orizzontali e verticali.</p>
+<button class="btn pri" id="xwGo"><span id="xwGoT">Crea il cruciverba</span><i class="ico" data-i="next"></i></button></div>
+<div id="xwIns" class="hide"><label class="l">PNG con le soluzioni</label><label class="up" for="xwF1"><i class="ico" data-i="up"></i><span>Carica il PNG con le soluzioni</span></label><input type="file" id="xwF1" accept="image/*" hidden>
+<label class="l">PNG senza soluzioni</label><label class="up" for="xwF0"><i class="ico" data-i="up"></i><span>Carica il PNG senza soluzioni</span></label><input type="file" id="xwF0" accept="image/*" hidden></div>
+<div class="upv hide" id="xwV"><img id="xwI1" alt=""><img id="xwI0" alt=""><div><b id="xwT"></b><small id="xwS"></small></div></div>
+<div id="xwDefs" class="hide"><label class="l" for="xwHz">Definizioni orizzontali</label><textarea id="xwHz" placeholder="4. Prima definizione&#10;5. Seconda definizione"></textarea>
+<label class="l" for="xwVt">Definizioni verticali</label><textarea id="xwVt" placeholder="1. Prima definizione&#10;2. Seconda definizione"></textarea>
+<small class="hint">Una definizione per riga, con il numero davanti. Puoi correggerle anche dopo aver creato il cruciverba.</small></div></div></div>
+<div id="pf4" class="hide"><div class="ch"><span class="chip"><i class="ico" data-i="up"></i></span><div><h2>Foto</h2><p>Aggiungi le foto da inserire nel papiro (facoltativo).</p></div></div>
+<div class="cfg"><label class="up" for="pPh"><i class="ico" data-i="up"></i><span>Carica una o più foto</span></label><input type="file" id="pPh" accept="image/*" multiple hidden>
+<div class="phg" id="phg"></div><p class="pxp" id="phN"></p></div></div>
 </div>
 <div class="stack"><div class="card"><div class="ch"><span class="chip"><i class="ico" data-i="grid"></i></span><div><h2>Anteprima del papiro</h2></div><span class="badge">Formato A0</span></div>
-<div class="pgbox"><div class="pg"><div class="hd"><div class="lgb l"><img id="pgL" alt=""></div><div class="lgb r"><img id="pgR" alt=""></div>
-<div class="uni" id="pgUni"></div><div class="lau" id="pgLau"></div><div class="nm" id="pgNm"></div><div class="dt" id="pgDt"></div></div>
-<div class="bd"><span id="pgPh">Qui andranno caricatura, cruciverba e definizioni</span><img id="pgCar" class="hide" alt=""></div></div></div></div></div>
+<div class="pgbox"><div class="pg"><div class="hd"><div class="lgb l"><img alt=""></div><div class="lgb r"><img alt=""></div><div class="uni"></div><div class="lau"></div><div class="nm"></div><div class="dt"></div></div>
+<div class="bd"><span id="pgPh">Qui andranno caricatura, cruciverba e definizioni</span><img id="pgCar" class="hide" alt=""><img id="pgXw" class="hide" alt=""><div id="pgPhs"></div></div></div></div></div></div>
 </div>
+<div id="ped" class="hide"><div class="ped-grid">
+<div class="card ped-side"><div class="ch"><span class="chip"><i class="ico" data-i="layers"></i></span><div><h2>Montaggio</h2><p>Trascina e ridimensiona gli elementi.</p></div></div>
+<div class="cfg">
+<label class="l" for="edFs">Dimensione del testo</label><div class="rngrow"><input type="range" id="edFs" min="9" max="26" step="0.5" value="15"><output id="edFsV">15 pt</output></div>
+<small class="hint">Il testo non viene mai rimpicciolito in automatico: se manca spazio, sposta o togli qualcosa.</small>
+<label class="l">Elementi</label><small class="hint" style="margin:0 0 8px">Trascina un elemento nella pagina, oppure premi “Aggiungi”.</small><div id="edList"></div>
+<div id="edSel" class="edsel hide"><b id="edSelT"></b><div class="edbt"><button type="button" class="btn sm" id="edCtr">Centra</button><button type="button" class="btn sm hide" id="edFit">Adatta</button></div></div>
+<label class="l">Cruciverba mostrato</label><div class="seg" id="edVer"><button class="on" data-v="1">Con soluzioni</button><button data-v="0">Senza</button></div>
+<label class="l">Controlli</label><div id="edChecks" class="chks"></div>
+<button type="button" class="btn" id="edAuto">Disponi automaticamente</button>
+<button type="button" class="btn pri" id="edPdf1"><i class="ico" data-i="dl"></i><span>PDF con soluzioni</span></button>
+<button type="button" class="btn pri" id="edPdf0"><i class="ico" data-i="dl"></i><span>PDF senza soluzioni</span></button>
+</div></div>
+<div><div class="zbar"><span>Zoom</span><button type="button" class="zb" id="edZo" aria-label="Riduci">−</button><button type="button" class="zb" id="edZi" aria-label="Ingrandisci">+</button><button type="button" class="lnk" id="edZf">Adatta alla larghezza</button></div>
+<div class="stage" id="edStage"><div class="pg ed" id="edPage"><div class="hd"><div class="lgb l"><img alt=""></div><div class="lgb r"><img alt=""></div><div class="uni"></div><div class="lau"></div><div class="nm"></div><div class="dt"></div></div><div class="layer" id="edLayer"></div><div class="layer" id="edGuides"></div><div class="edhint" id="edHint">Trascina qui gli elementi dalla lista,<br>oppure premi “Disponi automaticamente”.</div></div></div></div>
+<div class="edghost hide" id="edGhost"></div>
+</div></div>
 <div class="bar"><button class="btn" id="pBack"><i class="ico" data-i="back"></i><span>Indietro</span></button><button class="btn pri" id="pNext"><span>Avanti</span><i class="ico" data-i="next"></i></button></div>
 </section>
 
@@ -486,7 +546,7 @@ var ICONS={pen:'<path d="M21.2 6.8a1 1 0 0 0-4-4L3.8 16.2a2 2 0 0 0-.5.8L2 21.4a
 function ic(n){return'<svg viewBox="0 0 24 24" aria-hidden="true">'+ICONS[n]+'</svg>'}
 document.querySelectorAll('[data-i]').forEach(function(e){e.innerHTML=ic(e.dataset.i)});
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-var state={fill:false,page:1,mode:'w',letters:true,zoom:1,words:[],defs:{},res:null,lv:null,ok:false,seen:{},sig:'',dm:false,ft:'pdf'};
+var state={pap:false,fill:false,page:1,mode:'w',letters:true,zoom:1,words:[],defs:{},res:null,lv:null,ok:false,seen:{},sig:'',dm:false,ft:'pdf'};
 var rows=[{w:'',d:''}];
 var T=[['Crea il tuo <em>Cruciverba</em>','Inserisci le parole, genera lo schema in un click e scarica il tuo cruciverba pronto da stampare.'],['Genera e <em>controlla</em>','Verifica lo schema, rigenera una nuova disposizione se vuoi e approva il cruciverba quando sei soddisfatta.'],['Scarica e <em>stampa</em>','Personalizza il tuo cruciverba e scaricalo pronto da stampare.'],['Come <em>funziona</em>','Tutto quello che serve per creare e stampare il tuo cruciverba, passo dopo passo.'],['<em>Informazioni</em>','']];
 
@@ -508,10 +568,12 @@ window.addEventListener('resize',fit);
 
 /* navigazione */
 function go(n){
+  if(state.pap&&n===3)return toast('Approva il cruciverba per tornare al papiro.');
+  if(n!==1&&n!==2)state.pap=false;
   if(n<4&&n>1&&!state.res)return toast('Prima inserisci le parole e approva lo schema.');
   if(n<4&&n>2&&!state.ok)return toast('Approva il cruciverba per passare al download.');
   state.page=n;state.fill=false;state.zoom=1;if(n<4)state.prev=n;
-  $('stp').classList.toggle('hide',n<1||n>3);$('stp2').classList.toggle('hide',n!==6);document.body.dataset.page=n;
+  $('papbar').classList.toggle('hide',!(state.pap&&(n===1||n===2)));document.body.classList.toggle('paprun',!!state.pap);$('stp').classList.toggle('hide',n<1||n>3);$('stp2').classList.toggle('hide',n!==6);document.body.dataset.page=n;
   document.querySelectorAll('.top [data-guide]').forEach(function(b){b.classList.toggle('on',n===4)});document.querySelectorAll('.top [data-info]').forEach(function(b){b.classList.toggle('on',n===5)});
   [0,1,2,3,4,5,6].forEach(function(i){$('p'+i).classList.toggle('hide',i!==n)});
   document.body.classList.toggle('cmp',n>1);
@@ -524,6 +586,7 @@ function go(n){
 document.addEventListener('click',function(e){
   var b=e.target.closest('[data-go],[data-soon],[data-z],[data-guide],[data-info],[data-ps]');if(!b)return;
   if(b.dataset.ps)return papGo(+b.dataset.ps);
+  if(b.dataset.nav==='cruc'||b.dataset.nav==='home')state.pap=false;
   if(b.dataset.guide!==undefined)return go(4);if(b.dataset.info!==undefined)return go(5);
   if(b.dataset.z){if(b.dataset.z==='fit'){state.zoom=1;state.fill=true}else state.zoom=Math.max(.5,Math.min(4,state.zoom*(b.dataset.z==='in'?1.25:.8)));fit();return}
   if(b.dataset.soon!==undefined)toast('Questa sezione verrà sviluppata più avanti.');else go(+b.dataset.go);
@@ -628,7 +691,7 @@ $('sol').onchange=paint2;
 $('re2').onclick=function(){run(this)};
 $('back2').onclick=function(){go(1)};
 $('ap2').onclick=function(){
-  var r=state.res;function done(){state.ok=true;go(3);toast('Schema approvato: ora puoi scaricarlo.')}
+  var r=state.res;function done(){state.ok=true;if(state.pap)return papCapture();go(3);toast('Schema approvato: ora puoi scaricarlo.')}
   if(r.failed.length)openModal('Approvare uno schema incompleto?','Lo schema contiene '+r.count+' parole su '+state.words.length+'. Non saranno nel download: '+r.failed.map(function(f){return f.w}).join(', ')+'.','Approva comunque',done);else done();
 };
 
@@ -653,18 +716,21 @@ $('ft').onclick=function(e){var b=e.target.closest('[data-f]');if(!b)return;stat
 
 function dl(blob,name){var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('Download avviato: '+name)}
 
-function makePng(s){
+function xwCanvas(s){
   var r=state.res,S=120,P=6,c=document.createElement('canvas');
   c.width=r.w*S+2*P;c.height=r.h*S+2*P;
-  var g=c.getContext('2d');g.lineWidth=5;g.strokeStyle='#000';g.fillStyle='#000';g.lineJoin='miter';
+  var g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.lineWidth=5;g.strokeStyle='#000';g.fillStyle='#000';g.lineJoin='miter';
   for(var i=0;i<r.h;i++)for(var j=0;j<r.w;j++){
     var ch=r.cells[i][j];if(!ch)continue;
     var x=P+j*S,y=P+i*S,n=r.num[i+','+j];
-    g.strokeRect(x,y,S,S);
+    g.fillStyle='#fff';g.fillRect(x,y,S,S);g.fillStyle='#000';g.strokeRect(x,y,S,S);
     if(n){g.font='bold 30px Arial,sans-serif';g.textAlign='left';g.textBaseline='top';g.fillText(String(n),x+9,y+7)}
     if(s){g.font='bold 76px Arial,sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(ch,x+S/2,y+S/2+6)}
   }
-  c.toBlob(function(b){dl(b,s?'cruciverba-soluzione.png':'cruciverba-vuoto.png')},'image/png');
+  return c;
+}
+function makePng(s){
+  xwCanvas(s).toBlob(function(b){dl(b,s?'cruciverba-soluzione.png':'cruciverba-vuoto.png')},'image/png');
 }
 
 /* PDF: dimensione delle caselle automatica, definizioni sotto lo schema (o su pagine nuove se sono tante) */
@@ -718,32 +784,81 @@ $('dlb').onclick=function(){try{state.ft==='png'?makePng(sol()):makePdf(sol())}c
 
 
 /* ---------- papiro ---------- */
-var pap={step:1,d:{logo:'',uni:'',gen:'Laureata',course:'',name:'',date:''},car:null};
+var AW=841,AH=1189,AM=25;
+var pap={step:1,d:{logo:'',uni:'',gen:'Laureata',course:'',name:'',date:''},car:null,xw:null,xmode:'crea',photos:[],pid:0};
+var ED={fs:15,blocks:[],sel:null,zoom:1,ver:1,top:200,k:1,drag:null};
 var PT=[['Dati del <em>papiro</em>','Inserisci i dati della parte superiore: loghi, università, laureata e data.'],
  ['La <em>caricatura</em>','Carica la caricatura da inserire nel papiro.'],
  ['Il <em>cruciverba</em>','Crea il cruciverba oppure inserisci quello già fatto.'],
  ['Le <em>foto</em>','Aggiungi le foto da inserire negli spazi del papiro.'],
  ['Monta il <em>papiro</em>','Sistema le varie sezioni sotto la parte superiore già impostata.']];
-var PX={3:['Il cruciverba','Potrai creare il cruciverba direttamente oppure inserire il PNG di uno già fatto. Se lo crei, il PNG approvato e i due blocchi di definizioni (verticali e orizzontali) arrivano in automatico; se inserisci un PNG, dovrai scrivere a mano le definizioni. Il papiro avrà sempre sia la versione con le soluzioni sia quella senza.'],
- 4:['Le foto','Qui caricherai le foto da inserire negli spazi liberi del papiro.'],
- 5:['Monta il papiro','Qui monterai il papiro: la parte superiore è già pronta e le varie sezioni (definizioni, cruciverba, caricatura, foto) si spostano e si incastrano, con esportazione in formato A0.']};
 function fmtDate(v){if(!v)return'';var p=v.split('-');if(p.length<3)return'';var t=new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'}).split(' ');if(t[1])t[1]=t[1].charAt(0).toUpperCase()+t[1].slice(1);return t.join(' ')}
+function rdFile(f){return new Promise(function(res){var r=new FileReader();r.onload=function(){res(r.result)};r.readAsDataURL(f)})}
+function ldImg(u){return new Promise(function(res){var im=new Image();im.onload=function(){res(im)};im.onerror=function(){res(null)};im.src=u})}
+function shrink(u,im,max){var m=Math.max(im.naturalWidth,im.naturalHeight);if(m<=max)return u;var k=max/m,c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);var g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.92)}
+function lines(v){return v.split(/\n+/).map(function(x){return x.trim()}).filter(Boolean)}
+function ensureXw(){if(!pap.xw)pap.xw={hz:[],vt:[],src1:'',src0:'',w1:0,h1:0,w0:0,h0:0,made:false};return pap.xw}
+
+/* intestazione (anteprima e montaggio) */
+function paintHdr(el){
+  var d=pap.d;
+  function set(sel,t,ph){var e=el.querySelector(sel);e.textContent=t||ph;e.classList.toggle('empty',!t)}
+  set('.uni',d.uni.trim().toUpperCase(),'NOME DELL’UNIVERSITÀ');
+  var c=d.course.trim(),l=el.querySelector('.lau');l.innerHTML=esc(d.gen)+' in <i>'+esc(c||'corso di laurea')+'</i>';l.classList.toggle('empty',!c);
+  set('.nm',d.name.trim().toUpperCase(),'NOME DEL LAUREATO');
+  set('.dt',fmtDate(d.date),'Data della laurea');
+  el.querySelectorAll('.lgb').forEach(function(g){var im=g.firstChild;if(d.logo)im.src=d.logo;else im.removeAttribute('src');im.style.display=d.logo?'block':'none';g.classList.toggle('has',!!d.logo)});
+}
 function paintPap(){
   var d=pap.d;
-  function set(id,t,ph){var e=$(id);e.textContent=t||ph;e.classList.toggle('empty',!t)}
-  set('pgUni',d.uni.trim().toUpperCase(),'NOME DELL’UNIVERSITÀ');
-  var c=d.course.trim();$('pgLau').innerHTML=esc(d.gen)+' in <i>'+esc(c||'corso di laurea')+'</i>';$('pgLau').classList.toggle('empty',!c);
-  set('pgNm',d.name.trim().toUpperCase(),'NOME DEL LAUREATO');
-  set('pgDt',fmtDate(d.date),'Data della laurea');
-  ['pgL','pgR'].forEach(function(id){var e=$(id);if(d.logo)e.src=d.logo;else e.removeAttribute('src');e.style.display=d.logo?'block':'none';e.parentNode.classList.toggle('has',!!d.logo)});
+  document.querySelectorAll('#pgrid .pg,#edPage').forEach(paintHdr);
   $('pLogoV').classList.toggle('hide',!d.logo);if(d.logo)$('pLogoI').src=d.logo;
-  var car=pap.car;$('pgCar').classList.toggle('hide',!car);$('pgPh').classList.toggle('hide',!!car);if(car)$('pgCar').src=car.src;
+  var car=pap.car,X=pap.xw,has=!!(X&&X.src1);
+  $('pgCar').classList.toggle('hide',!car);if(car)$('pgCar').src=car.src;
+  $('pgXw').classList.toggle('hide',!has);if(has)$('pgXw').src=X.src1;
+  $('pgPhs').innerHTML=pap.photos.map(function(p){return'<img src="'+p.src+'" alt="">'}).join('');
+  $('pgPh').classList.toggle('hide',!!(car||has||pap.photos.length));
   $('pCarV').classList.toggle('hide',!car);
   if(car){$('pCarI').src=car.src;$('pCarT').textContent=car.w+' × '+car.h+' px';
     $('pCarS').textContent='A 100 ppi si stampa bene fino a circa '+Math.round(car.w/100*2.54)+' cm di larghezza.'}
+  papXwUI();papPhUI();
 }
+/* fase 3 */
+function papXwUI(){
+  var X=pap.xw,m=pap.xmode;
+  $('xwCrea').classList.toggle('hide',m!=='crea');$('xwIns').classList.toggle('hide',m!=='ins');
+  [].forEach.call($('xwMode').children,function(b){b.classList.toggle('on',b.dataset.x===m)});
+  $('xwGoT').textContent=X&&X.made?'Rifai il cruciverba':'Crea il cruciverba';
+  var any=!!(X&&(X.src1||X.src0));
+  $('xwV').classList.toggle('hide',!any);
+  $('xwI1').style.display=X&&X.src1?'block':'none';$('xwI0').style.display=X&&X.src0?'block':'none';
+  if(X&&X.src1)$('xwI1').src=X.src1;if(X&&X.src0)$('xwI0').src=X.src0;
+  if(any){$('xwT').textContent=(X.made?'Cruciverba creato':'Cruciverba inserito');
+    $('xwS').textContent=(X.src1?'con soluzioni':'')+(X.src1&&X.src0?' e ':'')+(X.src0?'senza soluzioni':'')+' · '+X.hz.length+' orizzontali, '+X.vt.length+' verticali'}
+  $('xwDefs').classList.toggle('hide',!(any||m==='ins'));
+  if(document.activeElement!==$('xwHz'))$('xwHz').value=X?X.hz.join('\n'):'';
+  if(document.activeElement!==$('xwVt'))$('xwVt').value=X?X.vt.join('\n'):'';
+}
+function xwMiss(){var X=pap.xw,m=[];if(!X||!X.src1)m.push('PNG con le soluzioni');if(!X||!X.src0)m.push('PNG senza soluzioni');if(!X||(!X.hz.length&&!X.vt.length))m.push('definizioni');return m}
+function papCapture(){
+  var sp=split();function f(l){return l.map(function(x){return x.n+'. '+ctext(x)})}
+  var c1=xwCanvas(true),c0=xwCanvas(false),X=ensureXw();
+  X.src1=c1.toDataURL('image/png');X.src0=c0.toDataURL('image/png');X.w1=X.w0=c1.width;X.h1=X.h0=c1.height;X.hz=f(sp[0]);X.vt=f(sp[1]);X.made=true;
+  state.pap=false;pap.step=3;go(6);toast('Cruciverba aggiunto al papiro.');
+}
+function xwUp(which,file){if(!file)return;rdFile(file).then(function(u){return ldImg(u).then(function(im){if(!im)return toast('Immagine non leggibile.');var X=ensureXw();X['src'+which]=u;X['w'+which]=im.naturalWidth;X['h'+which]=im.naturalHeight;X.made=false;paintPap()})})}
+/* fase 4 */
+function papPhUI(){
+  $('phg').innerHTML=pap.photos.map(function(p){return'<div><img src="'+p.src+'" alt=""><button type="button" data-rm="'+p.id+'" aria-label="Rimuovi">×</button></div>'}).join('');
+  $('phN').textContent=pap.photos.length?pap.photos.length+(pap.photos.length===1?' foto caricata.':' foto caricate.'):'Nessuna foto caricata: puoi anche andare avanti senza.';
+}
+$('phg').onclick=function(e){var b=e.target.closest('[data-rm]');if(!b)return;pap.photos=pap.photos.filter(function(p){return p.id!==b.dataset.rm});paintPap()};
+$('pPh').onchange=function(){var fs=[].slice.call(this.files);this.value='';
+  fs.reduce(function(pr,f){return pr.then(function(){return rdFile(f).then(function(u){return ldImg(u).then(function(im){if(!im)return;pap.photos.push({id:'ph'+(++pap.pid),src:shrink(u,im,3200),w:im.naturalWidth,h:im.naturalHeight})})})})},Promise.resolve()).then(paintPap)};
+
+/* navigazione fasi */
 function papMiss(){var d=pap.d,m=[],ids=[];
-  if(!d.logo){m.push('logo')}
+  if(!d.logo)m.push('logo');
   if(!d.uni.trim()){m.push('nome università');ids.push('pUni')}
   if(!d.date){m.push('data');ids.push('pDate')}
   if(!d.course.trim()){m.push('corso di laurea');ids.push('pCourse')}
@@ -754,24 +869,247 @@ function papMiss(){var d=pap.d,m=[],ids=[];
 function papGo(k){
   if(k>1){var m=papMiss();if(m.length){toast('Per continuare compila: '+m.join(', ')+'.');k=1}}
   if(k>2&&!pap.car){toast('Carica la caricatura per continuare.');k=2}
+  if(k>3){var x=xwMiss();if(x.length){toast('Per continuare manca: '+x.join(', ')+'.');k=3}}
   pap.step=k;
-  $('pf1').classList.toggle('hide',k!==1);$('pf2').classList.toggle('hide',k!==2);$('pfx').classList.toggle('hide',k<3);
-  if(k>=3){$('pxT').textContent=PX[k][0];$('pxP').textContent=PX[k][1]}
+  [1,2,3,4].forEach(function(i){$('pf'+i).classList.toggle('hide',i!==k)});
+  $('pgrid').classList.toggle('hide',k===5);$('ped').classList.toggle('hide',k!==5);
   $('h1').innerHTML=PT[k-1][0];$('sub').textContent=PT[k-1][1];
   document.querySelectorAll('#stp2 li').forEach(function(li,i){li.className=i+1===k?'on':'';li.firstChild.innerHTML=i+1<k?ic('check'):String(i+1)});
   $('pBack').disabled=k===1;$('pNext').classList.toggle('hide',k===5);
   paintPap();
+  if(k===5)edEnter();
 }
 $('pBack').onclick=function(){if(pap.step>1)papGo(pap.step-1)};
 $('pNext').onclick=function(){papGo(pap.step+1)};
-function readImg(file,cb){if(!file)return;var r=new FileReader();r.onload=function(){cb(r.result)};r.readAsDataURL(file)}
-$('pLogo').onchange=function(){readImg(this.files[0],function(u){pap.d.logo=u;paintPap()});this.value=''};
+$('pLogo').onchange=function(){var f=this.files[0];this.value='';if(f)rdFile(f).then(function(u){pap.d.logo=u;paintPap()})};
 $('pLogoX').onclick=function(){pap.d.logo='';paintPap()};
-$('pCar').onchange=function(){readImg(this.files[0],function(u){var im=new Image();im.onload=function(){pap.car={src:u,w:im.naturalWidth,h:im.naturalHeight};paintPap()};im.src=u});this.value=''};
+$('pCar').onchange=function(){var f=this.files[0];this.value='';if(f)rdFile(f).then(function(u){return ldImg(u).then(function(im){if(!im)return toast('Immagine non leggibile.');pap.car={src:u,w:im.naturalWidth,h:im.naturalHeight};paintPap()})})};
 $('pCarX').onclick=function(){pap.car=null;paintPap()};
 [['pUni','uni'],['pCourse','course'],['pName','name'],['pDate','date']].forEach(function(p){$(p[0]).oninput=function(){pap.d[p[1]]=this.value;this.classList.remove('bad');paintPap()}});
 document.querySelectorAll('#pGen button').forEach(function(b){b.onclick=function(){pap.d.gen=b.dataset.g;document.querySelectorAll('#pGen button').forEach(function(x){x.classList.toggle('on',x===b)});paintPap()}});
+$('xwMode').onclick=function(e){var b=e.target.closest('[data-x]');if(!b)return;pap.xmode=b.dataset.x;papXwUI()};
+$('xwGo').onclick=function(){state.pap=true;state.mode='d';[].forEach.call($('mode').children,function(x){x.classList.toggle('on',x.dataset.m==='d')});drawRows();go(1)};
+$('papbarX').onclick=function(){state.pap=false;pap.step=3;go(6)};
+$('xwF1').onchange=function(){var f=this.files[0];this.value='';xwUp(1,f)};
+$('xwF0').onchange=function(){var f=this.files[0];this.value='';xwUp(0,f)};
+$('xwHz').oninput=function(){ensureXw().hz=lines(this.value);var t=$('xwS');if(pap.xw.src1||pap.xw.src0)papXwUI()};
+$('xwVt').oninput=function(){ensureXw().vt=lines(this.value);if(pap.xw.src1||pap.xw.src0)papXwUI()};
 document.querySelector('.top .name').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go(0)}};
+
+/* ---------- montaggio ---------- */
+var _mc=document.createElement('canvas').getContext('2d');
+function tw(t,st,f,fam){_mc.font=(st==='bold'?'bold ':st==='italic'?'italic ':'')+'100px '+(fam==='serif'?"'Times New Roman',Times,serif":"Helvetica,Arial,sans-serif");return _mc.measureText(t).width/100*f}
+function wrapT(t,st,f,maxW,fam){var ws=t.split(/\s+/).filter(Boolean),out=[],cur='';ws.forEach(function(w){var x=cur?cur+' '+w:w;if(cur&&tw(x,st,f,fam)>maxW){out.push(cur);cur=w}else cur=x});if(cur)out.push(cur);return out}
+function edFind(id){for(var i=0;i<ED.blocks.length;i++)if(ED.blocks[i].id===id)return ED.blocks[i]}
+function edText(b){
+  var X=pap.xw,items=b.id==='hz'?X.hz:X.vt;
+  if(b._lay&&b._lk===b.w+'|'+ED.fs)return b._lay;
+  var f=ED.fs*.3528,pad=2,maxW=b.w-2*pad,ls=[],y=pad,hf=f*1.15;
+  ls.push({t:b.title,bold:1,c:1,y:y,f:hf});y+=hf*1.3+f*.6;
+  items.forEach(function(p){wrapT(p,'',f,maxW).forEach(function(l){ls.push({t:l,y:y,f:f});y+=f*1.3});y+=f*.45});
+  b._lay={lines:ls,h:y-f*.45+pad};b._lk=b.w+'|'+ED.fs;return b._lay}
+function hdrLayout(){
+  var d=pap.d,cq=AW/100,textW=66*cq,ops=[],y=2.6*cq;
+  function base(f,lh){return y+(lh-1.117*f)/2+.905*f}
+  function put(text,st,f,mul,fam,color){var lh=f*mul;wrapT(text,st,f,textW,fam).forEach(function(l){ops.push({text:l,st:st,f:f,fam:fam,color:color,y:base(f,lh),w:tw(l,st,f,fam)});y+=lh})}
+  put((d.uni||'').trim().toUpperCase(),'bold',2.7*cq,1.15,'sans',[193,39,45]);
+  y+=1.6*cq;
+  var f=2.15*cq,lh=f*1.3,toks=[{t:d.gen,s:''},{t:'in',s:''}].concat((d.course||'').trim().split(/\s+/).filter(Boolean).map(function(w){return{t:w,s:'italic'}}));
+  var sp=tw(' ','',f,'sans'),cur=[],cw=0,rows=[];
+  toks.forEach(function(k){var w=tw(k.t,k.s,f,'sans'),add=(cur.length?sp:0)+w;if(cur.length&&cw+add>textW){rows.push({toks:cur,w:cw});cur=[];cw=0;add=w}cur.push(k);cw+=add});
+  if(cur.length)rows.push({toks:cur,w:cw});
+  rows.forEach(function(r){ops.push({toks:r.toks,sp:sp,f:f,fam:'sans',color:[42,42,42],y:base(f,lh),w:r.w});y+=lh});
+  y+=2.2*cq;put((d.name||'').trim().toUpperCase(),'',3.5*cq,1.25,'serif',[28,28,28]);
+  y+=1.4*cq;put(fmtDate(d.date),'italic',1.9*cq,1.3,'serif',[42,42,42]);
+  return{ops:ops,bottom:Math.max(y,2.6*cq+11.5*cq)}}
+function edSync(){
+  var X=pap.xw,want=[];
+  if(pap.car)want.push({id:'car',t:'img',label:'Caricatura',fit:'contain',ar:pap.car.h/pap.car.w});
+  if(X&&X.src1)want.push({id:'xw',t:'img',label:'Cruciverba',fit:'contain',ar:X.h1/X.w1});
+  if(X&&X.hz.length)want.push({id:'hz',t:'txt',label:'Definizioni orizzontali',title:'ORIZZONTALI'});
+  if(X&&X.vt.length)want.push({id:'vt',t:'txt',label:'Definizioni verticali',title:'VERTICALI'});
+  pap.photos.forEach(function(p,i){want.push({id:p.id,t:'img',label:'Foto '+(i+1),fit:'cover',ar:p.h/p.w})});
+  ED.blocks=ED.blocks.filter(function(b){return want.some(function(w){return w.id===b.id})});
+  want.forEach(function(w){var b=edFind(w.id);
+    if(!b){b=Object.assign({x:0,y:0,w:0,h:0,vis:false},w);edInit(b);ED.blocks.push(b)}
+    else{b.label=w.label;if(w.ar&&b.ar!==w.ar){b.ar=w.ar;if(b.fit==='contain'&&b.w)b.h=b.w*b.ar}if(b.t==='txt'){b._lay=null;b.title=w.title}}});
+  if(ED.sel&&!edFind(ED.sel))ED.sel=null;
+  ED.top=hdrLayout().bottom+3*AW/100;
+}
+function isPh(b){return b.id.indexOf('ph')===0}
+function edInit(b){
+  if(b.id==='car'){b.w=Math.min(415,AW-2*AM-2*188);b.h=b.w*b.ar;if(b.h>560){b.h=560;b.w=b.h/b.ar}}
+  else if(b.id==='xw'){b.w=540;b.h=b.w*b.ar}
+  else if(b.t==='txt'){b.w=180;b.h=0;b._lay=null}
+  else{b.w=110;b.h=110}}
+/* nessuna sovrapposizione: ogni posizione va controllata */
+function edOKr(ex,x,y,w,h){
+  if(x<AM-.01||y<ED.top-.01||x+w>AW-AM+.01||y+h>AH-AM+.01)return false;
+  for(var i=0;i<ED.blocks.length;i++){var o=ED.blocks[i];if(o===ex||!o.vis)continue;
+    if(x<o.x+o.w-.01&&x+w>o.x+.01&&y<o.y+o.h-.01&&y+h>o.y+.01)return false}
+  return true}
+function edSpot(ex,w,h,cx,cy){var best=null,bd=1e12;
+  for(var y=ED.top;y<=AH-AM-h+.01;y+=5)for(var x=AM;x<=AW-AM-w+.01;x+=5){var dx=x+w/2-cx,dy=y+h/2-cy,d=dx*dx+dy*dy;if(d<bd&&edOKr(ex,x,y,w,h)){bd=d;best={x:x,y:y}}}
+  return best}
+function edPref(b,w,h){var car=edFind('car'),top=ED.top;
+  if(b.id==='car')return[AW/2,top+h/2];
+  if(b.id==='hz')return[AM+w/2,top+h/2];
+  if(b.id==='vt')return[AW-AM-w/2,top+h/2];
+  if(b.id==='xw'){var cy=car&&car.vis?car.y+car.h+16:top;return[AW/2,cy+h/2]}
+  var i=ED.blocks.filter(isPh).indexOf(b);return[AM+w/2+(i%6)*(w+8),AH-AM-h/2-Math.floor(i/6)*(h+8)]}
+function edAdd(b,cx,cy){
+  var w0=b.w,h0=b.h,tries=[];
+  if(b.t==='txt'){[w0,180,230,280,340,420,520,640].forEach(function(w){if(tries.indexOf(w)<0)tries.push(w)})}
+  else{var mn=isPh(b)?70:150;[1,.88,.76,.66,.58,.5].forEach(function(f){if(w0*f>=mn-.01)tries.push(f)})}
+  for(var i=0;i<tries.length;i++){
+    if(b.t==='txt'){b.w=tries[i];b.h=edText(b).h}
+    else{b.w=w0*tries[i];b.h=b.fit==='contain'?b.w*b.ar:h0*tries[i]}
+    var pr=cx==null?edPref(b,b.w,b.h):[cx,cy],sp=edSpot(b,b.w,b.h,pr[0],pr[1]);
+    if(sp){b.x=sp.x;b.y=sp.y;b.vis=true;ED.sel=b.id;return b.t==='img'&&tries[i]<1?'reduced':'ok'}}
+  b.w=w0;b.h=h0;if(b.t==='txt')b._lay=null;
+  return'fail'}
+function edMsg(b,r){if(r==='fail')toast('Non c’è spazio per «'+b.label+'» senza sovrapporre altro: togli o riduci qualcosa.');else if(r==='reduced')toast('«'+b.label+'» è stata rimpicciolita per farla entrare.')}
+function edAutoAll(){
+  var order=['car','xw','hz','vt'].map(edFind).filter(Boolean).concat(ED.blocks.filter(isPh)),skip=[],red=[];
+  ED.blocks.forEach(function(b){b.vis=false;edInit(b)});
+  order.forEach(function(b){var r=edAdd(b);if(r==='fail')skip.push(b.label);else if(r==='reduced')red.push(b.label)});
+  ED.sel=null;edRender();
+  if(skip.length)toast('Non c’era spazio per: '+skip.join(', ')+'. Sono rimasti fuori dalla pagina.');
+  else if(red.length)toast('Per farli entrare ho rimpicciolito: '+red.join(', ')+'.');
+}
+function edEnter(){edSync();edLayoutPage();edRender()}
+function edLayoutPage(){var st=$('edStage'),w=Math.max(280,(st.clientWidth-28)*ED.zoom);$('edPage').style.width=w+'px'}
+function edSrc(b){var X=pap.xw;if(b.id==='car')return pap.car.src;if(b.id==='xw')return ED.ver?X.src1:(X.src0||X.src1);var p=pap.photos.filter(function(q){return q.id===b.id})[0];return p?p.src:''}
+function edRender(){
+  var pg=$('edPage'),L=$('edLayer'),k=pg.clientWidth/AW;ED.k=k;
+  var ids={};
+  ED.blocks.forEach(function(b){
+    var el=L.querySelector('[data-id="'+b.id+'"]');
+    if(!b.vis){if(el)el.remove();return}
+    ids[b.id]=1;
+    if(b.t==='txt')b.h=edText(b).h;
+    if(!el){el=document.createElement('div');el.dataset.id=b.id;el.className='eb '+b.t;el.innerHTML=(b.t==='img'?'<img alt="">':'<div class="tx"></div>')+'<i class="rs '+(b.t==='img'?'se':'e')+'"></i>';L.appendChild(el)}
+    el.style.left=b.x*k+'px';el.style.top=b.y*k+'px';el.style.width=b.w*k+'px';el.style.height=b.h*k+'px';
+    if(b.t==='img'){var im=el.firstChild,sr=edSrc(b);if(el._src!==sr){el._src=sr;im.src=sr}im.style.objectFit=b.fit}
+    else{var lay=b._lay;if(el._lay!==lay||el._k!==k){el._lay=lay;el._k=k;
+      el.firstChild.innerHTML=lay.lines.map(function(l){var st='top:'+l.y*k+'px;font-size:'+l.f*k+'px;line-height:'+l.f*1.3*k+'px;'+(l.bold?'font-weight:700;':'')+(l.c?'left:0;width:100%;text-align:center':'left:'+2*k+'px');return'<div class="tl" style="'+st+'">'+esc(l.t)+'</div>'}).join('')}}
+    el.classList.toggle('sel',ED.sel===b.id);
+  });
+  [].slice.call(L.children).forEach(function(el){if(!ids[el.dataset.id])el.remove()});
+  edChecks();edList();edSelUI();
+}
+function edPos(b){var el=$('edLayer').querySelector('[data-id="'+b.id+'"]');if(el){el.style.left=b.x*ED.k+'px';el.style.top=b.y*ED.k+'px'}}
+function edChecks(){
+  var vis=ED.blocks.filter(function(b){return b.vis}),msg=[];
+  vis.forEach(function(b){b._bad=false});
+  vis.forEach(function(b){
+    if(b.x<-.5||b.y<-.5||b.x+b.w>AW+.5||b.y+b.h>AH+.5){b._bad=true;msg.push(b.label+' esce dalla pagina.')}
+    else if(b.y<ED.top-3){b._bad=true;msg.push(b.label+' invade la parte superiore.')}});
+  for(var i=0;i<vis.length;i++)for(var j=i+1;j<vis.length;j++){var a=vis[i],c=vis[j];
+    var ox=Math.min(a.x+a.w,c.x+c.w)-Math.max(a.x,c.x),oy=Math.min(a.y+a.h,c.y+c.h)-Math.max(a.y,c.y);
+    if(ox>1&&oy>1){a._bad=c._bad=true;msg.push(a.label+' e '+c.label+' si sovrappongono.')}}
+  $('edChecks').innerHTML=msg.length?msg.slice(0,8).map(function(m){return'<div class="wn">⚠ '+esc(m)+'</div>'}).join(''):'<div>✓ Nulla esce dalla pagina e nulla si sovrappone.</div>';
+  vis.forEach(function(b){var el=$('edLayer').querySelector('[data-id="'+b.id+'"]');if(el)el.classList.toggle('bad',!!b._bad)});
+}
+function edList(){
+  $('edList').innerHTML=ED.blocks.map(function(b){return'<div class="edrow'+(ED.sel===b.id?' on':'')+(b.vis?'':' off')+'" data-id="'+b.id+'"><span class="gr">'+(b.vis?'':'⠿')+'</span><span>'+esc(b.label)+'</span><small>'+(b.vis?Math.round(b.w)+' × '+Math.round(b.h)+' mm':'fuori pagina')+'</small><button type="button" class="lnk">'+(b.vis?'Togli':'Aggiungi')+'</button></div>'}).join('')||'<div class="hint">Nessun elemento da montare.</div>';
+  $('edHint').classList.toggle('hide',ED.blocks.some(function(b){return b.vis}));
+}
+function edSelUI(){
+  var b=ED.sel&&edFind(ED.sel);$('edSel').classList.toggle('hide',!b);if(!b)return;
+  $('edSelT').textContent=b.label;
+  var photo=b.id.indexOf('ph')===0;$('edFit').classList.toggle('hide',!photo);
+  if(photo)$('edFit').textContent=b.fit==='cover'?'Mostra intera':'Ritaglia';
+}
+function edSelect(id){ED.sel=id;[].forEach.call($('edLayer').children,function(el){el.classList.toggle('sel',el.dataset.id===id)});edList();edSelUI()}
+function edCands(ex){var xs=[AM,AW/2,AW-AM],ys=[ED.top,AH-AM];ED.blocks.forEach(function(o){if(o===ex||!o.vis)return;xs.push(o.x,o.x+o.w,o.x+o.w/2);ys.push(o.y,o.y+o.h,o.y+o.h/2)});return{xs:xs,ys:ys}}
+function edSnap(b,nx,ny){
+  var c=edCands(b),th=7/ED.k,dx=null,dy=null,gx=null,gy=null,mx=th,my=th;
+  [nx,nx+b.w/2,nx+b.w].forEach(function(e){c.xs.forEach(function(v){var d=v-e;if(Math.abs(d)<mx){mx=Math.abs(d);dx=d;gx=v}})});
+  [ny,ny+b.h/2,ny+b.h].forEach(function(e){c.ys.forEach(function(v){var d=v-e;if(Math.abs(d)<my){my=Math.abs(d);dy=d;gy=v}})});
+  return{x:nx+(dx||0),y:ny+(dy||0),gx:gx,gy:gy}}
+function edSnapR(b,x0,w){var c=edCands(b),th=7/ED.k,best=th,r=x0+w;c.xs.forEach(function(v){var d=v-(x0+w);if(Math.abs(d)<best){best=Math.abs(d);r=v}});return r-x0}
+function edGuides(s){var G=$('edGuides'),k=ED.k;G.innerHTML=s?(s.gx!=null?'<div class="egv" style="left:'+s.gx*k+'px"></div>':'')+(s.gy!=null?'<div class="egh" style="top:'+s.gy*k+'px"></div>':''):''}
+$('edLayer').addEventListener('pointerdown',function(e){
+  var el=e.target.closest('.eb');if(!el){edSelect(null);return}
+  var b=edFind(el.dataset.id);if(!b)return;
+  var rs=e.target.closest('.rs');edSelect(b.id);
+  ED.drag={id:b.id,mode:rs?(rs.classList.contains('e')?'e':'se'):'move',sx:e.clientX,sy:e.clientY,x:b.x,y:b.y,w:b.w,h:b.h};
+  e.preventDefault()});
+var ldrag=null;
+$('edList').addEventListener('pointerdown',function(e){var r=e.target.closest('.edrow');if(!r||e.target.closest('button'))return;var b=edFind(r.dataset.id);if(!b||b.vis)return;ldrag={id:b.id,moved:false,sx:e.clientX,sy:e.clientY};e.preventDefault()});
+function edOver(e){var r=$('edPage').getBoundingClientRect();return e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom}
+document.addEventListener('pointermove',function(e){
+  if(ldrag){var g=$('edGhost');if(!ldrag.moved&&Math.abs(e.clientX-ldrag.sx)+Math.abs(e.clientY-ldrag.sy)>6){ldrag.moved=true;g.textContent=edFind(ldrag.id).label;g.classList.remove('hide')}
+    if(ldrag.moved){g.style.left=e.clientX+14+'px';g.style.top=e.clientY+14+'px';$('edStage').classList.toggle('drop',edOver(e))}return}
+  var d=ED.drag;if(!d)return;var b=edFind(d.id);if(!b)return;var k=ED.k,dx=(e.clientX-d.sx)/k,dy=(e.clientY-d.sy)/k;
+  if(d.mode==='move'){
+    var tx=Math.min(Math.max(d.x+dx,AM),AW-AM-b.w),ty=Math.min(Math.max(d.y+dy,ED.top),AH-AM-b.h);
+    var s=edSnap(b,tx,ty),c=[[s.x,s.y],[s.x,b.y],[b.x,s.y]];
+    for(var i=0;i<c.length;i++){if(edOKr(b,c[i][0],c[i][1],b.w,b.h)){b.x=c[i][0];b.y=c[i][1];break}}
+    edPos(b);edGuides(s)}
+  else{var ow=b.w,oh=b.h,nw,nh;
+    if(d.mode==='e'){nw=Math.max(60,edSnapR(b,d.x,d.w+dx));b.w=nw;nh=edText(b).h}
+    else{nw=Math.max(20,edSnapR(b,d.x,d.w+dx));nh=b.fit==='contain'?nw*b.ar:Math.max(20,d.h+dy);b.w=nw}
+    if(edOKr(b,b.x,b.y,nw,nh)){b.w=nw;b.h=nh}else{b.w=ow;b.h=oh}
+    edRender()}});
+document.addEventListener('pointerup',function(e){
+  if(ldrag){var l=ldrag;ldrag=null;$('edGhost').classList.add('hide');$('edStage').classList.remove('drop');
+    if(l.moved&&edOver(e)){var b=edFind(l.id),r=$('edPage').getBoundingClientRect(),res=edAdd(b,(e.clientX-r.left)/ED.k,(e.clientY-r.top)/ED.k);edMsg(b,res);edRender()}return}
+  if(ED.drag){ED.drag=null;edGuides(null);edRender()}});
+$('edLayer').addEventListener('click',function(e){});
+document.addEventListener('keydown',function(e){
+  if(state.page!==6||pap.step!==5||!ED.sel)return;if(/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  var b=edFind(ED.sel),st=e.shiftKey?10:1,m={ArrowLeft:[-st,0],ArrowRight:[st,0],ArrowUp:[0,-st],ArrowDown:[0,st]}[e.key];if(!b||!m)return;
+  e.preventDefault();if(edOKr(b,b.x+m[0],b.y+m[1],b.w,b.h)){b.x+=m[0];b.y+=m[1];edPos(b);edChecks()}});
+$('edList').onclick=function(e){var r=e.target.closest('.edrow');if(!r)return;var b=edFind(r.dataset.id);if(!b)return;
+  if(e.target.closest('button')){if(b.vis){b.vis=false;if(ED.sel===b.id)ED.sel=null}else{edMsg(b,edAdd(b))}edRender();return}
+  if(b.vis)edSelect(b.id)};
+$('edCtr').onclick=function(){var b=edFind(ED.sel);if(!b)return;b.x=(AW-b.w)/2;edRender()};
+$('edFit').onclick=function(){var b=edFind(ED.sel);if(!b)return;if(b.fit==='cover'){b.fit='contain';b.h=b.w*b.ar}else b.fit='cover';edRender()};
+$('edFs').oninput=function(){var old=ED.fs;ED.fs=+this.value;
+  ED.blocks.forEach(function(b){if(b.t==='txt')b._lay=null});
+  var bad=ED.blocks.some(function(b){if(!(b.vis&&b.t==='txt'))return false;b.h=edText(b).h;return!edOKr(b,b.x,b.y,b.w,b.h)});
+  if(bad){ED.fs=old;this.value=old;ED.blocks.forEach(function(b){if(b.t==='txt'){b._lay=null;if(b.vis)b.h=edText(b).h}});toast('Con questa dimensione il testo non entra senza sovrapporsi: togli o riduci qualcosa.')}
+  $('edFsV').textContent=ED.fs+' pt';edRender()};
+$('edVer').onclick=function(e){var b=e.target.closest('[data-v]');if(!b)return;ED.ver=+b.dataset.v;[].forEach.call($('edVer').children,function(x){x.classList.toggle('on',x===b)});edRender()};
+$('edAuto').onclick=function(){if(ED.blocks.some(function(b){return b.vis}))openModal('Disporre tutto in automatico?','Gli elementi già nella pagina verranno riposizionati e le modifiche fatte a mano andranno perse. Se non c’è spazio per tutto, quello che non entra resta fuori (le foto per prime).','Disponi',edAutoAll);else edAutoAll()};
+function edZoom(f){ED.zoom=Math.max(.5,Math.min(3,f));edLayoutPage();edRender()}
+$('edZi').onclick=function(){edZoom(ED.zoom*1.25)};$('edZo').onclick=function(){edZoom(ED.zoom*.8)};$('edZf').onclick=function(){edZoom(1)};
+window.addEventListener('resize',function(){if(state.page===6&&pap.step===5){edLayoutPage();edRender()}});
+
+/* ---------- PDF A0 del papiro ---------- */
+function prepImg(src,dw,dh,fit,png){
+  return ldImg(src).then(function(im){
+    var nw=im.naturalWidth,nh=im.naturalHeight,ar=nh/nw,bar=dh/dw,outW,outH,ox=0,oy=0,sx=0,sy=0,sw=nw,sh=nh;
+    if(fit==='cover'){if(ar>bar){sh=nw*bar;sy=(nh-sh)/2}else{sw=nh/bar;sx=(nw-sw)/2}outW=dw;outH=dh}
+    else{if(ar>bar){outH=dh;outW=dh/ar;ox=(dw-outW)/2}else{outW=dw;outH=outW*ar;oy=(dh-outH)/2}}
+    var pm=Math.min(200/25.4,sw/outW),cw=Math.max(2,Math.round(outW*pm)),ch=Math.max(2,Math.round(outH*pm)),lim=Math.max(cw,ch);
+    if(lim>3600){cw=Math.round(cw*3600/lim);ch=Math.round(ch*3600/lim)}
+    var c=document.createElement('canvas');c.width=cw;c.height=ch;var g=c.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,cw,ch);g.drawImage(im,sx,sy,sw,sh,0,0,cw,ch);
+    return{data:c.toDataURL(png?'image/png':'image/jpeg',.92),fmt:png?'PNG':'JPEG',ox:ox,oy:oy,w:outW,h:outH}})}
+function slug(t){return String(t||'papiro').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'papiro'}
+async function papPdf(sol){
+  var J=window.jspdf&&window.jspdf.jsPDF;if(!J)return toast('Libreria PDF non caricata: controlla la connessione e ricarica la pagina.');
+  var bt=[$('edPdf1'),$('edPdf0')];bt.forEach(function(b){b.disabled=true});
+  try{
+    var doc=new J({orientation:'p',unit:'mm',format:'a0',compress:true}),cq=AW/100,L=hdrLayout();
+    L.ops.forEach(function(o){
+      var fam=o.fam==='serif'?'times':'helvetica';doc.setFontSize(o.f/.3528);doc.setTextColor(o.color[0],o.color[1],o.color[2]);
+      if(o.toks){var x=AW/2-o.w/2;o.toks.forEach(function(k){doc.setFont(fam,k.s==='italic'?'italic':'normal');doc.text(k.t,x,o.y);x+=tw(k.t,k.s,o.f,'sans')+o.sp})}
+      else{doc.setFont(fam,o.st==='bold'?'bold':o.st==='italic'?'italic':'normal');doc.text(o.text,AW/2,o.y,{align:'center'})}});
+    if(pap.d.logo){var lg=await prepImg(pap.d.logo,11.5*cq,11.5*cq,'contain',true);
+      doc.addImage(lg.data,lg.fmt,3*cq+lg.ox,2.6*cq+lg.oy,lg.w,lg.h);doc.addImage(lg.data,lg.fmt,AW-3*cq-11.5*cq+lg.ox,2.6*cq+lg.oy,lg.w,lg.h)}
+    for(var i=0;i<ED.blocks.length;i++){var b=ED.blocks[i];if(!b.vis)continue;
+      if(b.t==='txt'){var lay=edText(b);doc.setTextColor(17,17,17);
+        lay.lines.forEach(function(l){doc.setFont('helvetica',l.bold?'bold':'normal');doc.setFontSize(l.f/.3528);var by=b.y+l.y+l.f*.9965;if(l.c)doc.text(l.t,b.x+b.w/2,by,{align:'center'});else doc.text(l.t,b.x+2,by)})}
+      else{var X=pap.xw,src=b.id==='xw'?(sol?X.src1:(X.src0||X.src1)):edSrc(b);
+        var im=await prepImg(src,b.w,b.h,b.fit,b.id==='xw');doc.addImage(im.data,im.fmt,b.x+im.ox,b.y+im.oy,im.w,im.h)}}
+    dl(doc.output('blob'),'papiro-'+slug(pap.d.name)+(sol?'-con-soluzioni':'-senza-soluzioni')+'.pdf');
+  }catch(e){toast('Creazione del PDF non riuscita: '+e.message)}
+  finally{bt.forEach(function(b){b.disabled=false})}
+}
+$('edPdf1').onclick=function(){papPdf(true)};$('edPdf0').onclick=function(){papPdf(false)};
 drawRows();doLive();go(0);
 })();
 </script>
