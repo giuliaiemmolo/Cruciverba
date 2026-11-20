@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
 :root{--c:#A8132F;--cd:#8C0F27;--p1:#FCE6EA;--bg:#FEF3F5;--t:#3A0F1A;--tx:#5A4249;--m:#7A5F67;--ln:#F3D9DE;--f:"Plus Jakarta Sans",system-ui,sans-serif}
 *{box-sizing:border-box}
@@ -180,6 +181,30 @@ body[data-page="0"] .head{display:none}
 .edghost{position:fixed;z-index:300;pointer-events:none;padding:8px 14px;border-radius:12px;background:var(--c);color:#fff;font-weight:700;box-shadow:0 8px 22px rgba(0,0,0,.28)}
 .stage.drop{outline:3px dashed var(--c);outline-offset:-3px}
 .edhint{position:absolute;left:0;right:0;top:46%;text-align:center;color:#B58A94;font-size:2.1cqw;line-height:1.5;pointer-events:none}
+
+.top{position:relative}
+body[data-page="7"] .head,body[data-page="0"] .sbar{display:none}
+.btn.sm{height:38px;padding:0 16px;font-size:.9rem;width:auto;margin:0}.btn.sm .ico{width:18px;height:18px}
+.amenu{position:absolute;right:26px;top:58px;z-index:70;min-width:210px;background:#fff;border:1px solid var(--ln);border-radius:14px;box-shadow:0 12px 30px rgba(58,15,26,.18);padding:8px}
+.amenu button{display:block;width:100%;text-align:left;border:0;background:none;padding:10px 12px;border-radius:10px;font:inherit;font-weight:600;color:var(--t);cursor:pointer}.amenu button:hover{background:var(--p1)}.amail{padding:8px 12px;color:var(--m);font-size:.85rem;word-break:break-all}
+.sbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 18px;padding:8px 10px 8px 18px;background:#fff;border:1px solid var(--ln);border-radius:999px;box-shadow:0 4px 14px rgba(168,19,47,.06)}
+.sbar input{border:0;outline:0;background:transparent;font:inherit;font-weight:700;color:var(--t);min-width:180px;flex:1;padding:6px 0}
+.sbst{color:var(--m);font-size:.88rem;white-space:nowrap}.sbst.ok{color:#1F7A3E}.sbst.er{color:#B4142F}.sbst.lk{cursor:pointer;text-decoration:underline;color:var(--c)}
+.sbar .btn.sm .ico{width:18px;height:18px}
+.fh.sh{justify-content:space-between;margin:34px 0 18px}.fh.sh::after{content:none}
+.dg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:22px}
+.dcard{position:relative;background:#fff;border:1px solid var(--ln);border-radius:18px;padding:12px 12px 14px;cursor:pointer;transition:transform .15s,box-shadow .15s;box-shadow:0 6px 18px rgba(168,19,47,.07)}.dcard:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(168,19,47,.14)}
+.dth{aspect-ratio:1;background:#FFF4F6;border-radius:12px;display:grid;place-items:center;overflow:hidden;color:#D8A9B3}.dth img{width:100%;height:100%;object-fit:contain;display:block}.dg.p .dth{aspect-ratio:841/1189}
+.dnm{margin-top:10px;font-weight:800;color:var(--t);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ddt{color:var(--m);font-size:.82rem;margin-top:2px}
+.dmn{position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:var(--c);font-size:1.3rem;font-weight:800;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.dmenu{position:fixed;z-index:80;min-width:170px;background:#fff;border:1px solid var(--ln);border-radius:14px;box-shadow:0 12px 30px rgba(58,15,26,.22);padding:6px}.dmenu button{display:block;width:100%;text-align:left;border:0;background:none;padding:10px 12px;border-radius:10px;font:inherit;font-weight:600;color:var(--t);cursor:pointer}.dmenu button:hover{background:var(--p1)}.dmenu .dng{color:#B4142F}
+.dempty{grid-column:1/-1;color:var(--m);padding:10px 2px}
+.bzmsg h2{margin:0 0 8px;color:var(--t)}.bzmsg p{color:var(--m);margin:0 0 14px;line-height:1.5}
+.mb input[type=text],.mb input[type=email],.mb input[type=password]{width:100%;padding:12px 14px;border:1px solid var(--ln);border-radius:12px;margin:6px 0;font:inherit;box-sizing:border-box}
+.lgerr{color:#B4142F;font-weight:600;min-height:1.2em;margin:4px 0 8px}
+#pkModal>div{max-width:640px}.pklist{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;max-height:60vh;overflow:auto;margin:12px 0}
+.pki{border:1px solid var(--ln);border-radius:14px;background:#fff;padding:8px;cursor:pointer;text-align:left;font:inherit}.pki:hover{border-color:var(--c);background:var(--p1)}.pki img{width:100%;aspect-ratio:1;object-fit:contain;background:#FFF4F6;border-radius:10px;display:block}.pki b{display:block;margin-top:6px;color:var(--t);font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pki small{color:var(--m)}
+@media(max-width:1000px){.sbar{border-radius:20px}}
 </style>
 </head>
 <body>
@@ -188,11 +213,13 @@ body[data-page="0"] .head{display:none}
 <button data-go="0" data-nav="home"><i class="ico" data-i="home"></i><span>Home</span></button>
 <button data-go="6" data-nav="pap"><i class="ico" data-i="doc"></i><span>Crea papiro</span></button>
 <button data-go="1" data-nav="cruc"><i class="ico" data-i="grid"></i><span>Crea cruciverba</span></button>
+<button data-go="7" data-nav="bozze"><i class="ico" data-i="folder"></i><span>Le mie bozze</span></button>
 </aside>
 <div class="wrap">
-<header class="top"><div class="name" data-go="0" role="button" tabindex="0" title="Torna alla home">Cruciverba by Giuggi</div><button data-guide><i class="ico" data-i="help"></i><span>Guida</span></button><button data-info><i class="ico" data-i="info"></i><span>Info</span></button><button data-soon><i class="ico" data-i="set"></i><span>Impostazioni</span></button></header>
+<header class="top"><div class="name" data-go="0" role="button" tabindex="0" title="Torna alla home">Cruciverba by Giuggi</div><button data-guide><i class="ico" data-i="help"></i><span>Guida</span></button><button data-info><i class="ico" data-i="info"></i><span>Info</span></button><button id="acct"><i class="ico" data-i="user"></i><span id="acctT">Accedi</span></button><div class="amenu hide" id="amenu"><div class="amail" id="amail"></div><button type="button" data-go="7">Le mie bozze</button><button type="button" id="aout">Esci</button></div></header>
 <main>
 <div class="papbar hide" id="papbar"><span>Stai creando il cruciverba per il papiro. Quando approvi lo schema torni al papiro.</span><button type="button" class="lnk" id="papbarX">Annulla e torna al papiro</button></div>
+<div class="sbar hide" id="sbar"><input id="sbName" type="text" maxlength="80" placeholder="Senza titolo" aria-label="Nome della bozza" autocomplete="off"><span class="sbst" id="sbSt"></span><button type="button" class="btn sm" id="sbSave"><i class="ico" data-i="save"></i><span>Salva</span></button><button type="button" class="lnk" id="sbNew">Nuovo</button></div>
 <div class="head"><span class="pill">• Strumento gratuito &nbsp; • nessuna registrazione</span><h1 id="h1"></h1>
 <ol class="stp" id="stp"><li data-go="1"><b></b><span>Inserisci<br>le parole</span></li><li data-go="2"><b></b><span>Genera<br>e controlla</span></li><li data-go="3"><b></b><span>Scarica<br>e stampa</span></li></ol>
 <ol class="stp five hide" id="stp2"><li data-ps="1"><b></b><span>Dati<br>del papiro</span></li><li data-ps="2"><b></b><span>Inserisci<br>caricatura</span></li><li data-ps="3"><b></b><span>Crea / inserisci<br>cruciverba</span></li><li data-ps="4"><b></b><span>Inserisci<br>foto</span></li><li data-ps="5"><b></b><span>Monta<br>il papiro</span></li></ol>
@@ -270,6 +297,8 @@ body[data-page="0"] .head{display:none}
 <details><summary>Qual è la differenza tra Solo parole e Con definizioni?</summary><p>Con “Solo parole” inserisci soltanto l’elenco delle parole e ottieni lo schema numerato. Con “Con definizioni” scrivi anche l’indizio di ogni parola, che compare sotto lo schema nel PDF.</p></details>
 <details><summary>Come scarico il cruciverba?</summary><p>Dopo aver approvato lo schema vai alla terza pagina: scegli PDF o PNG, imposta titolo, formato e orientamento, decidi se scaricarlo senza o con soluzioni e premi “Scarica”.</p></details>
 <details><summary>Perché una parola risulta esclusa?</summary><p>Non è stato possibile incrociarla con le altre. Prova a rigenerare lo schema oppure aggiungi parole che abbiano lettere in comune.</p></details>
+<details><summary>Come salvo le mie bozze?</summary><p>Accedi dal pulsante in alto a destra. Il cruciverba si salva con “Salva” (poi le modifiche si salvano da sole), il papiro si salva da solo e ha anche il pulsante “Salva”. Trovi tutto in “Le mie bozze”, dove puoi riaprire, rinominare, duplicare ed eliminare.</p></details>
+<details><summary>Posso usare un cruciverba salvato nel papiro?</summary><p>Sì: nella fase del cruciverba scegli “Usa un salvato”. Resta collegato, quindi se lo modifichi si aggiorna anche nel papiro. Con “Scollega e tieni una copia” il papiro ne conserva una copia indipendente.</p></details>
 </div></div>
 </section>
 
@@ -283,7 +312,7 @@ body[data-page="0"] .head{display:none}
 <li><span class="n">2</span><div><b>Genera e controlla</b><span>Crea lo schema, verifica il risultato, rigenera la struttura se vuoi e apporta le modifiche.</span></div></li>
 <li><span class="n">3</span><div><b>Scarica e stampa</b><span>Approva il cruciverba e scarica i PDF, con o senza soluzioni, pronti da stampare.</span></div></li></ol></div>
 <div class="card"><div class="ih"><span class="ichip"><i class="ico" data-i="shield"></i></span><h2>Privacy</h2></div>
-<div class="row2"><div class="tx"><p><b>La tua privacy è importante.</b></p><ul class="chk"><li><i class="ico" data-i="check"></i><span>Le parole e le definizioni che inserisci non vengono salvate sui nostri server.</span></li><li><i class="ico" data-i="check"></i><span>Non è richiesta alcuna registrazione.</span></li></ul></div><svg class="ill sm" viewBox="0 0 140 140" aria-hidden="true"><circle cx="76" cy="78" r="52" fill="#FBDDE3"/><rect x="44" y="62" width="52" height="46" rx="9" fill="#fff" stroke="#B91C35" stroke-width="4"/><path d="M54 62 V50 a16 16 0 0 1 32 0 V62" fill="none" stroke="#B91C35" stroke-width="4"/><circle cx="70" cy="82" r="5" fill="#B91C35"/><path d="M70 85 V94" stroke="#B91C35" stroke-width="4" stroke-linecap="round"/><path d="M20 38 L34 44 M34 20 L40 32" stroke="#B91C35" stroke-width="3.5" stroke-linecap="round"/></svg></div></div>
+<div class="row2"><div class="tx"><p><b>La tua privacy è importante.</b></p><ul class="chk"><li><i class="ico" data-i="check"></i><span>Senza accesso, nulla di ciò che inserisci viene salvato. Se accedi e salvi una bozza, resta nel tuo spazio personale.</span></li><li><i class="ico" data-i="check"></i><span>Non è richiesta alcuna registrazione.</span></li></ul></div><svg class="ill sm" viewBox="0 0 140 140" aria-hidden="true"><circle cx="76" cy="78" r="52" fill="#FBDDE3"/><rect x="44" y="62" width="52" height="46" rx="9" fill="#fff" stroke="#B91C35" stroke-width="4"/><path d="M54 62 V50 a16 16 0 0 1 32 0 V62" fill="none" stroke="#B91C35" stroke-width="4"/><circle cx="70" cy="82" r="5" fill="#B91C35"/><path d="M70 85 V94" stroke="#B91C35" stroke-width="4" stroke-linecap="round"/><path d="M20 38 L34 44 M34 20 L40 32" stroke="#B91C35" stroke-width="3.5" stroke-linecap="round"/></svg></div></div>
 <div class="card"><div class="ih"><span class="ichip"><i class="ico" data-i="send"></i></span><h2>Contatti</h2></div>
 <p>Hai domande, suggerimenti o vuoi segnalarci un problema?<br>Scrivici: saremo felici di aiutarti!</p>
 <div class="row2"><a class="btn pri" id="mailbtn" href="mailto:"><i class="ico" data-i="mail"></i>Scrivici</a><svg class="ill sm" viewBox="0 0 190 130" aria-hidden="true"><circle cx="120" cy="66" r="48" fill="#FBDDE3"/><g transform="rotate(12 120 66)"><rect x="82" y="40" width="74" height="52" rx="6" fill="#fff" stroke="#B91C35" stroke-width="3.5"/><path d="M84 44 L119 70 L154 44" fill="none" stroke="#B91C35" stroke-width="3.5" stroke-linejoin="round"/></g><path d="M12 110 C30 124 62 118 84 96" fill="none" stroke="#B91C35" stroke-width="2.5" stroke-dasharray="5 6" stroke-linecap="round"/><circle cx="44" cy="100" r="10" fill="none" stroke="#B91C35" stroke-width="2.5" stroke-dasharray="4 4"/><path d="M148 22 L160 14 M158 38 L174 38" stroke="#B91C35" stroke-width="3.5" stroke-linecap="round"/></svg></div></div>
@@ -308,11 +337,12 @@ body[data-page="0"] .head{display:none}
 <div class="cfg"><label class="up" for="pCar"><i class="ico" data-i="up"></i><span>Carica la caricatura</span></label><input type="file" id="pCar" accept="image/*" hidden>
 <div class="upv hide" id="pCarV"><img id="pCarI" alt=""><div><b id="pCarT"></b><small id="pCarS"></small><button type="button" class="lnk" id="pCarX">Rimuovi</button></div></div></div></div>
 <div id="pf3" class="hide"><div class="ch"><span class="chip"><i class="ico" data-i="grid"></i></span><div><h2>Il cruciverba</h2><p>Crealo adesso oppure inserisci un PNG già fatto.</p></div></div>
-<div class="cfg"><div class="seg" id="xwMode"><button class="on" data-x="crea">Crea il cruciverba</button><button data-x="ins">Inserisci un PNG</button></div>
+<div class="cfg"><div class="seg" id="xwMode"><button class="on" data-x="crea">Crea il cruciverba</button><button data-x="ins">Carica i file</button><button data-x="sav">Usa un salvato</button></div>
 <div id="xwCrea"><p class="pxp">Scrivi parole e definizioni, genera lo schema e approvalo: tornerai qui con il cruciverba (con e senza soluzioni) e le definizioni già divise in orizzontali e verticali.</p>
 <button class="btn pri" id="xwGo"><span id="xwGoT">Crea il cruciverba</span><i class="ico" data-i="next"></i></button></div>
 <div id="xwIns" class="hide"><label class="l">PNG con le soluzioni</label><label class="up" for="xwF1"><i class="ico" data-i="up"></i><span>Carica il PNG con le soluzioni</span></label><input type="file" id="xwF1" accept="image/*" hidden>
 <label class="l">PNG senza soluzioni</label><label class="up" for="xwF0"><i class="ico" data-i="up"></i><span>Carica il PNG senza soluzioni</span></label><input type="file" id="xwF0" accept="image/*" hidden></div>
+<div id="xwSav" class="hide"><p class="pxp" id="xwSavP"></p><button class="btn pri" id="xwPick"><span id="xwPickT">Scegli un cruciverba salvato</span></button><div id="xwLink" class="edsel hide"><b id="xwLinkT"></b><div class="edbt"><button type="button" class="btn sm" id="xwUnl">Scollega e tieni una copia</button></div></div></div>
 <div class="upv hide" id="xwV"><img id="xwI1" alt=""><img id="xwI0" alt=""><div><b id="xwT"></b><small id="xwS"></small></div></div>
 <div id="xwDefs" class="hide"><label class="l" for="xwHz">Definizioni orizzontali</label><textarea id="xwHz" placeholder="4. Prima definizione&#10;5. Seconda definizione"></textarea>
 <label class="l" for="xwVt">Definizioni verticali</label><textarea id="xwVt" placeholder="1. Prima definizione&#10;2. Seconda definizione"></textarea>
@@ -345,6 +375,20 @@ body[data-page="0"] .head{display:none}
 <div class="bar"><button class="btn" id="pBack"><i class="ico" data-i="back"></i><span>Indietro</span></button><button class="btn pri" id="pNext"><span>Avanti</span><i class="ico" data-i="next"></i></button></div>
 </section>
 
+<section id="p7" class="hide">
+<div class="ph"><div class="tt"><h1>Le mie bozze</h1><svg class="sq" viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 8 C60 2 130 4 236 5" stroke="#EDA9B6" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M26 12 C90 8 150 10 214 11" stroke="#F6CBD3" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div><p class="pd">Riprendi, rinomina o elimina i papiri e i cruciverba che hai salvato.</p></div>
+<div id="bzMsg" class="card bzmsg hide"></div>
+<div id="bzBody" class="hide">
+<div class="fh sh"><h2>Papiri</h2><button type="button" class="btn sm" id="bzNewP"><i class="ico" data-i="plus"></i><span>Nuovo papiro</span></button></div>
+<div class="dg" id="bzP"></div>
+<div class="fh sh"><h2>Cruciverba</h2><button type="button" class="btn sm" id="bzNewC"><i class="ico" data-i="plus"></i><span>Nuovo cruciverba</span></button></div>
+<div class="dg" id="bzC"></div>
+</div>
+<div class="dmenu hide" id="dmenu"><button type="button" data-a="open">Apri</button><button type="button" data-a="ren">Rinomina</button><button type="button" data-a="dup">Duplica</button><button type="button" data-a="del" class="dng">Elimina</button></div>
+</section>
+<div class="mb hide" id="lgModal" role="dialog" aria-modal="true"><div><h3>Accedi</h3><p id="lgInfo"></p><input type="email" id="lgMail" placeholder="Email" autocomplete="username"><input type="password" id="lgPw" placeholder="Password" autocomplete="current-password"><p class="lgerr" id="lgErr"></p><div class="ma"><button class="btn ghost" id="lgNo">Annulla</button><button class="btn pri" id="lgYes">Entra</button></div></div></div>
+<div class="mb hide" id="nmModal" role="dialog" aria-modal="true"><div><h3 id="nmT"></h3><input type="text" id="nmIn" maxlength="80" autocomplete="off"><div class="ma"><button class="btn ghost" id="nmNo">Annulla</button><button class="btn pri" id="nmYes">OK</button></div></div></div>
+<div class="mb hide" id="pkModal" role="dialog" aria-modal="true"><div><h3>Scegli un cruciverba salvato</h3><div class="pklist" id="pkList"></div><div class="ma"><button class="btn ghost" id="pkNo">Annulla</button></div></div></div>
 </main></div>
 <div class="toasts" id="toasts" aria-live="polite"></div>
 <div class="mb hide" id="modal" role="dialog" aria-modal="true"><div><h3 id="mT"></h3><p id="mB"></p><div class="ma"><button class="btn ghost" id="mNo">Annulla</button><button class="btn pri" id="mYes">Conferma</button></div></div></div>
@@ -544,7 +588,7 @@ function svg(res,letters){
 }
 
 /* ---------- app ---------- */
-var ICONS={pen:'<path d="M21.2 6.8a1 1 0 0 0-4-4L3.8 16.2a2 2 0 0 0-.5.8L2 21.4a.5.5 0 0 0 .6.6l4.4-1.3a2 2 0 0 0 .8-.5z"/><path d="m15 5 4 4"/>',grid:'<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>',dl:'<path d="M12 15V3M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5"/>',folder:'<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.600 3.900A2 2 0 0 0 7.900 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/>',help:'<circle cx="12" cy="12" r="10"/><path d="M9.100 9a3 3 0 0 1 5.800 1c0 2-3 3-3 3M12 17h.01"/>',info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.900 4.900 7 7M17 17l2.100 2.100M4.900 19.100 7 17M17 7l2.100-2.100"/>',plus:'<path d="M5 12h14M12 5v14"/>',re:'<path d="M3 12a9 9 0 0 1 15-6.700L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.700L3 16M8 16H3v5"/>',eye:'<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',exp:'<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>',back:'<path d="m12 19-7-7 7-7M19 12H5"/>',next:'<path d="M5 12h14M12 5l7 7-7 7"/>',check:'<path d="M20 6 9 17l-5-5"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',ok:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',warn:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>',zi:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.300-4.300M11 8v6M8 11h6"/>',zo:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.300-4.300M8 11h6"/>',search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.300-4.300"/>',shield:'<path d="M20 13c0 5-3.500 7.500-7.700 8.900a1 1 0 0 1-.6 0C7.500 20.500 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.500-1.200 6.200-2.700a1.200 1.200 0 0 1 1.600 0C14.500 3.800 17 5 19 5a1 1 0 0 1 1 1z"/>',send:'<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',mail:'<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.970 5.700a1.940 1.940 0 0 1-2.060 0L2 7"/>',layers:'<path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/>',home:'<path d="M3 10.500 12 3l9 7.500"/><path d="M5 9.500V21h14V9.500"/><path d="M10 21v-6h4v6"/>',doc:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h2"/>',up:'<path d="M12 15V3M7 8l5-5 5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>',trash:'<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>'};
+var ICONS={pen:'<path d="M21.2 6.8a1 1 0 0 0-4-4L3.8 16.2a2 2 0 0 0-.5.8L2 21.4a.5.5 0 0 0 .6.6l4.4-1.3a2 2 0 0 0 .8-.5z"/><path d="m15 5 4 4"/>',grid:'<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>',dl:'<path d="M12 15V3M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5"/>',folder:'<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9L9.600 3.900A2 2 0 0 0 7.900 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/>',help:'<circle cx="12" cy="12" r="10"/><path d="M9.100 9a3 3 0 0 1 5.800 1c0 2-3 3-3 3M12 17h.01"/>',info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',set:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.900 4.900 7 7M17 17l2.100 2.100M4.900 19.100 7 17M17 7l2.100-2.100"/>',plus:'<path d="M5 12h14M12 5v14"/>',re:'<path d="M3 12a9 9 0 0 1 15-6.700L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.700L3 16M8 16H3v5"/>',eye:'<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',exp:'<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>',back:'<path d="m12 19-7-7 7-7M19 12H5"/>',next:'<path d="M5 12h14M12 5l7 7-7 7"/>',check:'<path d="M20 6 9 17l-5-5"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',ok:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',warn:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>',zi:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.300-4.300M11 8v6M8 11h6"/>',zo:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.300-4.300M8 11h6"/>',search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.300-4.300"/>',shield:'<path d="M20 13c0 5-3.500 7.500-7.700 8.900a1 1 0 0 1-.6 0C7.500 20.500 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.500-1.200 6.200-2.700a1.200 1.200 0 0 1 1.600 0C14.500 3.800 17 5 19 5a1 1 0 0 1 1 1z"/>',send:'<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',mail:'<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.970 5.700a1.940 1.940 0 0 1-2.060 0L2 7"/>',layers:'<path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/>',home:'<path d="M3 10.500 12 3l9 7.500"/><path d="M5 9.500V21h14V9.500"/><path d="M10 21v-6h4v6"/>',doc:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M8 9h2"/>',up:'<path d="M12 15V3M7 8l5-5 5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/>',save:'<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/>',trash:'<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>'};
 function ic(n){return'<svg viewBox="0 0 24 24" aria-hidden="true">'+ICONS[n]+'</svg>'}
 document.querySelectorAll('[data-i]').forEach(function(e){e.innerHTML=ic(e.dataset.i)});
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -557,7 +601,7 @@ var yes=null;
 function openModal(t,b,l,f){$('mT').textContent=t;$('mB').textContent=b;$('mYes').textContent=l;yes=f;$('modal').classList.remove('hide')}
 function closeModal(){$('modal').classList.add('hide');yes=null}
 $('mNo').onclick=closeModal;$('mYes').onclick=function(){var f=yes;closeModal();if(f)f()};
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModal();['lgModal','nmModal','pkModal','amenu','dmenu'].forEach(function(i){var el=$(i);if(el)el.classList.add('hide')})}});
 
 /* zoom */
 function fit(){document.querySelectorAll('.sheet svg').forEach(function(s){
@@ -577,12 +621,13 @@ function go(n){
   state.page=n;state.fill=false;state.zoom=1;if(n<4)state.prev=n;
   $('papbar').classList.toggle('hide',!(state.pap&&(n===1||n===2)));document.body.classList.toggle('paprun',!!state.pap);$('stp').classList.toggle('hide',n<1||n>3);$('stp2').classList.toggle('hide',n!==6);document.body.dataset.page=n;
   document.querySelectorAll('.top [data-guide]').forEach(function(b){b.classList.toggle('on',n===4)});document.querySelectorAll('.top [data-info]').forEach(function(b){b.classList.toggle('on',n===5)});
-  [0,1,2,3,4,5,6].forEach(function(i){$('p'+i).classList.toggle('hide',i!==n)});
+  [0,1,2,3,4,5,6,7].forEach(function(i){$('p'+i).classList.toggle('hide',i!==n)});
   document.body.classList.toggle('cmp',n>1);
   if(T[n-1]){$('h1').innerHTML=T[n-1][0];$('sub').textContent=T[n-1][1]}
   document.querySelectorAll('#stp li').forEach(function(li,k){li.className=k+1===n?'on':'';li.firstChild.innerHTML=k+1<n?ic('check'):String(k+1)});
-  var nav=n===0?'home':n===6?'pap':(n>=1&&n<=3)?'cruc':'';document.querySelectorAll('.side [data-nav]').forEach(function(b){b.classList.toggle('on',b.dataset.nav===nav)});
-  if(n===1)paintLive();if(n===2)paint2();if(n===3)paint3();if(n===6)papGo(pap.step);
+  var nav=n===0?'home':n===6?'pap':n===7?'bozze':(n>=1&&n<=3)?'cruc':'';document.querySelectorAll('.side [data-nav]').forEach(function(b){b.classList.toggle('on',b.dataset.nav===nav)});
+  if(n===1)paintLive();if(n===2)paint2();if(n===3)paint3();if(n===6){papGo(pap.step);papRefreshLink()}if(n===7)bzLoad();
+  $('amenu').classList.add('hide');sbUI();
   fit();window.scrollTo(0,0);
 }
 document.addEventListener('keydown',function(e){var c=e.target.closest&&e.target.closest('.hc[data-go]');if(c&&c===e.target&&(e.key==='Enter'||e.key===' ')){e.preventDefault();c.click()}});
@@ -666,7 +711,7 @@ function histBack(){
 }
 $('tback').onclick=histBack;$('back2l').onclick=histBack;
 $('teye').onclick=function(){state.letters=!state.letters;$('tel').innerHTML=state.letters?'Nascondi<br>lettere':'Mostra<br>lettere';paintLive()};
-$('reset').onclick=function(){openModal('Ricominciare da capo?','Tutte le parole inserite verranno cancellate.','Cancella tutto',function(){rows=[{w:'',d:''}];state.res=null;state.ok=false;drawRows();doLive();go(1);focusRow(0)})};
+$('reset').onclick=function(){openModal('Ricominciare da capo?','Tutte le parole inserite verranno cancellate. Le bozze già salvate non vengono toccate.','Cancella tutto',function(){cru.id=null;cru.name='';cru.named=false;cru.sig='';rows=[{w:'',d:''}];state.res=null;state.ok=false;drawRows();doLive();go(1);focusRow(0)})};
 $('go2').onclick=function(){
   for(var q=0;q<rows.length;q++)if(isShort(q))return shortAlert(q);
   var p=parse();
@@ -861,27 +906,31 @@ function paintPap(){
 /* fase 3 */
 function papXwUI(){
   var X=pap.xw,m=pap.xmode;
-  $('xwCrea').classList.toggle('hide',m!=='crea');$('xwIns').classList.toggle('hide',m!=='ins');
+  $('xwCrea').classList.toggle('hide',m!=='crea');$('xwIns').classList.toggle('hide',m!=='ins');$('xwSav').classList.toggle('hide',m!=='sav');
   [].forEach.call($('xwMode').children,function(b){b.classList.toggle('on',b.dataset.x===m)});
   $('xwGoT').textContent=X&&X.made?'Rifai il cruciverba':'Crea il cruciverba';
   var any=!!(X&&(X.src1||X.src0));
   $('xwV').classList.toggle('hide',!any);
   $('xwI1').style.display=X&&X.src1?'block':'none';$('xwI0').style.display=X&&X.src0?'block':'none';
   if(X&&X.src1)$('xwI1').src=X.src1;if(X&&X.src0)$('xwI0').src=X.src0;
-  if(any){$('xwT').textContent=(X.made?'Cruciverba creato':'Cruciverba inserito');
+  if(any){$('xwT').textContent=(X.kind==='linked'?'Cruciverba collegato':X.kind==='made'?'Cruciverba creato':'Cruciverba inserito');
     $('xwS').textContent=(X.src1?'con soluzioni':'')+(X.src1&&X.src0?' e ':'')+(X.src0?'senza soluzioni':'')+' · '+X.hz.length+' orizzontali, '+X.vt.length+' verticali'}
   $('xwDefs').classList.toggle('hide',!(any||m==='ins'));
   if(document.activeElement!==$('xwHz'))$('xwHz').value=X?X.hz.join('\n'):'';
   if(document.activeElement!==$('xwVt'))$('xwVt').value=X?X.vt.join('\n'):'';
+  var lk=!!(X&&X.kind==='linked');$('xwHz').readOnly=lk;$('xwVt').readOnly=lk;
+  $('xwSavP').textContent=loggedIn()?'Scegli uno dei cruciverba che hai salvato: resta collegato, quindi se lo modifichi si aggiorna anche nel papiro.':'Accedi per usare i cruciverba che hai salvato.';
+  $('xwPickT').textContent=loggedIn()?(lk?'Cambia cruciverba':'Scegli un cruciverba salvato'):'Accedi';
+  $('xwLink').classList.toggle('hide',!lk);if(lk)$('xwLinkT').textContent='Collegato a «'+(X.cname||'cruciverba salvato')+'»';
 }
 function xwMiss(){var X=pap.xw,m=[];if(!X||!X.src1)m.push('PNG con le soluzioni');if(!X||!X.src0)m.push('PNG senza soluzioni');if(!X||(!X.hz.length&&!X.vt.length))m.push('definizioni');return m}
 function papCapture(){
   var sp=split();function f(l){return l.map(function(x){return x.n+'. '+ctext(x)})}
   var c1=xwCanvas(true),c0=xwCanvas(false),X=ensureXw();
-  X.src1=c1.toDataURL('image/png');X.src0=c0.toDataURL('image/png');X.w1=X.w0=c1.width;X.h1=X.h0=c1.height;X.hz=f(sp[0]);X.vt=f(sp[1]);X.made=true;
+  X.src1=c1.toDataURL('image/png');X.src0=c0.toDataURL('image/png');X.w1=X.w0=c1.width;X.h1=X.h0=c1.height;X.hz=f(sp[0]);X.vt=f(sp[1]);X.made=true;X.kind='made';X.cid=null;X.cd=cruData();
   state.pap=false;pap.step=3;go(6);toast('Cruciverba aggiunto al papiro.');
 }
-function xwUp(which,file){if(!file)return;rdFile(file).then(function(u){return ldImg(u).then(function(im){if(!im)return toast('Immagine non leggibile.');var X=ensureXw();X['src'+which]=u;X['w'+which]=im.naturalWidth;X['h'+which]=im.naturalHeight;X.made=false;paintPap()})})}
+function xwUp(which,file){if(!file)return;rdFile(file).then(function(u){return ldImg(u).then(function(im){if(!im)return toast('Immagine non leggibile.');var X=ensureXw();X['src'+which]=u;X['w'+which]=im.naturalWidth;X['h'+which]=im.naturalHeight;X.made=false;X.kind='upload';X.cid=null;X.cd=null;paintPap()})})}
 /* fase 4 */
 function papPhUI(){
   $('phg').innerHTML=pap.photos.map(function(p){return'<div><img src="'+p.src+'" alt=""><button type="button" data-rm="'+p.id+'" aria-label="Rimuovi">×</button></div>'}).join('');
@@ -923,7 +972,7 @@ $('pCarX').onclick=function(){pap.car=null;paintPap()};
 [['pUni','uni'],['pCourse','course'],['pName','name'],['pDate','date']].forEach(function(p){$(p[0]).oninput=function(){pap.d[p[1]]=this.value;this.classList.remove('bad');paintPap()}});
 document.querySelectorAll('#pGen button').forEach(function(b){b.onclick=function(){pap.d.gen=b.dataset.g;document.querySelectorAll('#pGen button').forEach(function(x){x.classList.toggle('on',x===b)});paintPap()}});
 $('xwMode').onclick=function(e){var b=e.target.closest('[data-x]');if(!b)return;pap.xmode=b.dataset.x;papXwUI()};
-$('xwGo').onclick=function(){state.pap=true;state.mode='d';[].forEach.call($('mode').children,function(x){x.classList.toggle('on',x.dataset.m==='d')});drawRows();go(1)};
+$('xwGo').onclick=function(){cru.id=null;cru.sig='';cru.named=false;state.pap=true;state.mode='d';[].forEach.call($('mode').children,function(x){x.classList.toggle('on',x.dataset.m==='d')});drawRows();go(1)};
 $('papbarX').onclick=function(){state.pap=false;pap.step=3;go(6)};
 $('xwF1').onchange=function(){var f=this.files[0];this.value='';xwUp(1,f)};
 $('xwF0').onchange=function(){var f=this.files[0];this.value='';xwUp(0,f)};
@@ -966,7 +1015,7 @@ function edSync(){
   pap.photos.forEach(function(p,i){want.push({id:p.id,t:'img',label:'Foto '+(i+1),fit:'cover',ar:p.h/p.w})});
   ED.blocks=ED.blocks.filter(function(b){return want.some(function(w){return w.id===b.id})});
   want.forEach(function(w){var b=edFind(w.id);
-    if(!b){b=Object.assign({x:0,y:0,w:0,h:0,vis:false},w);edInit(b);ED.blocks.push(b)}
+    if(!b){b=Object.assign({x:0,y:0,w:0,h:0,vis:false},w);edInit(b);var sv=ED._saved&&ED._saved[w.id];if(sv){b.vis=!!sv.vis;b.x=sv.x;b.y=sv.y;b.w=sv.w;b.h=sv.h;if(sv.fit)b.fit=sv.fit;b._lay=null}ED.blocks.push(b)}
     else{b.label=w.label;if(w.ar&&b.ar!==w.ar){b.ar=w.ar;if(b.fit==='contain'&&b.w)b.h=b.w*b.ar}if(b.t==='txt'){b._lay=null;b.title=w.title}}});
   if(ED.sel&&!edFind(ED.sel))ED.sel=null;
   ED.top=hdrLayout().bottom+3*AW/100;
@@ -1145,6 +1194,309 @@ async function papPdf(sol){
   finally{bt.forEach(function(b){b.disabled=false})}
 }
 $('edPdf1').onclick=function(){papPdf(true)};$('edPdf0').onclick=function(){papPdf(false)};
+
+/* ================= account e bozze (Supabase) ================= */
+var SB_URL='https://fnhvxnknpsdgzbadhaay.supabase.co';   /* indirizzo del progetto, es. https://abcdxyz.supabase.co */
+var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZuaHZ4bmtucHNkZ3piYWRoYWF5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUxMjk1NzQsImV4cCI6MjExMDcwNTU3NH0.TdjsGlmYXJqA8MzY7qWu-kcsu9nNZC6klPHozcP-1fs';   /* chiave pubblica "anon" (quella "service_role" non va mai messa qui) */
+var BK='bozze',sb=null,me=null,UP={};
+var cru={id:null,name:'',named:false,sig:'',seen:'',chg:0,saving:false,err:false};
+pap.id=null;pap.name='';pap.nameAuto=true;pap.sig='';pap.seen='';pap.chg=0;pap.saving=false;pap.err=false;
+function loggedIn(){return !!(sb&&me)}
+function uid(){return(window.crypto&&crypto.randomUUID)?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0;return(c==='x'?r:(r&3|8)).toString(16)})}
+function d2b(u){var p=u.split(','),m=/data:([^;,]+)/.exec(p[0])[1],bin=atob(p[1]),a=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return new Blob([a],{type:m})}
+function b2d(b){return new Promise(function(res){var r=new FileReader();r.onload=function(){res(r.result)};r.readAsDataURL(b)})}
+function extOf(u){var m=/data:image\/(\w+)/.exec(u);return m?(m[1]==='jpeg'?'jpg':m[1]):'png'}
+function isig(u){return u.length+':'+u.slice(-40)}
+function errMsg(e){return e&&e.message?e.message:'riprova più tardi'}
+function nowName(k){return(k==='papiro'?'Papiro':'Cruciverba')+' del '+new Date().toLocaleDateString('it-IT',{day:'numeric',month:'long'})}
+function fmtMod(iso){var d=new Date(iso),n=new Date(),hm=d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}),y=new Date(n.getFullYear(),n.getMonth(),n.getDate()-1);
+  if(d.toDateString()===n.toDateString())return'Modificato oggi, '+hm;if(d.toDateString()===y.toDateString())return'Modificato ieri, '+hm;
+  return'Modificato il '+d.toLocaleDateString('it-IT',{day:'numeric',month:'long'})}
+
+function sbInit(){
+  if(!SB_URL||!SB_KEY||!(window.supabase&&window.supabase.createClient)){acctUI();return}
+  sb=window.supabase.createClient(SB_URL,SB_KEY);
+  sb.auth.getSession().then(function(r){me=r.data&&r.data.session?r.data.session.user:null;acctUI();if(state.page===7)bzLoad()});
+  sb.auth.onAuthStateChange(function(ev,session){var was=!!me;me=session?session.user:null;acctUI();if(!!me!==was&&state.page===7)bzLoad()});
+}
+function acctUI(){
+  var t=me&&me.email?me.email.split('@')[0]:'Accedi';if(t.length>14)t=t.slice(0,13)+'…';
+  $('acctT').textContent=t;$('amail').textContent=me?me.email:'';
+  if(!me)$('amenu').classList.add('hide');
+  sbUI();if($('p6')&&!$('p6').classList.contains('hide'))papXwUI();
+}
+$('acct').onclick=function(e){e.stopPropagation();if(!me){openLogin();return}$('amenu').classList.toggle('hide')};
+document.addEventListener('click',function(e){if(!e.target.closest('#amenu,#acct'))$('amenu').classList.add('hide');if(!e.target.closest('#dmenu,.dmn'))$('dmenu').classList.add('hide')});
+$('aout').onclick=function(){$('amenu').classList.add('hide');if(!sb)return;sb.auth.signOut().then(function(){me=null;acctUI();toast('Hai effettuato l’uscita.');if(state.page===7)bzLoad()})};
+/* accesso */
+function openLogin(msg){
+  if(!sb){toast('Il salvataggio non è ancora configurato: vedi SETUP-SUPABASE.md.');return}
+  $('lgInfo').textContent=msg||'Accedi per salvare e riprendere le tue bozze.';$('lgErr').textContent='';$('lgModal').classList.remove('hide');$('lgMail').focus()}
+function doLogin(){
+  var e=$('lgMail').value.trim(),p=$('lgPw').value;if(!e||!p){$('lgErr').textContent='Inserisci email e password.';return}
+  $('lgYes').disabled=true;$('lgErr').textContent='';
+  sb.auth.signInWithPassword({email:e,password:p}).then(function(r){
+    $('lgYes').disabled=false;
+    if(r.error){$('lgErr').textContent='Email o password non corrette.';return}
+    me=r.data.user;$('lgPw').value='';$('lgModal').classList.add('hide');toast('Accesso effettuato.');acctUI();if(state.page===7)bzLoad()
+  }).catch(function(x){$('lgYes').disabled=false;$('lgErr').textContent='Connessione non riuscita: '+errMsg(x)})}
+$('lgYes').onclick=doLogin;$('lgNo').onclick=function(){$('lgModal').classList.add('hide')};
+$('lgPw').onkeydown=function(e){if(e.key==='Enter')doLogin()};$('lgMail').onkeydown=function(e){if(e.key==='Enter')$('lgPw').focus()};
+/* finestra per il nome */
+var nmCb=null;
+function askName(t,v,cb){$('nmT').textContent=t;$('nmIn').value=v||'';nmCb=cb;$('nmModal').classList.remove('hide');$('nmIn').focus();$('nmIn').select()}
+function nmOk(){var v=$('nmIn').value.trim();if(!v)return;var f=nmCb;nmCb=null;$('nmModal').classList.add('hide');if(f)f(v)}
+$('nmYes').onclick=nmOk;$('nmNo').onclick=function(){nmCb=null;$('nmModal').classList.add('hide')};$('nmIn').onkeydown=function(e){if(e.key==='Enter')nmOk()};
+
+/* immagini nello spazio privato */
+function upImg(id,key,u){
+  if(!u)return Promise.resolve(null);
+  var ck=id+'/'+key,sg=isig(u);if(UP[ck]&&UP[ck].sig===sg)return Promise.resolve(UP[ck].path);
+  var path=me.id+'/'+id+'/'+key+'.'+extOf(u),b=d2b(u);
+  return sb.storage.from(BK).upload(path,b,{upsert:true,contentType:b.type}).then(function(r){if(r.error)throw r.error;UP[ck]={sig:sg,path:path};return path})}
+function dnImg(id,key,path){
+  return sb.storage.from(BK).download(path).then(function(r){if(r.error)throw r.error;return b2d(r.data)}).then(function(u){UP[id+'/'+key]={sig:isig(u),path:path};return u})}
+
+/* ---- dati del cruciverba ---- */
+function cruHas(){return rows.some(function(r){return r.w.trim()})}
+function cruData(){var r=state.res||state.lv;return{v:1,mode:state.mode,letters:state.letters,rows:rows.map(function(x){return{w:x.w,d:x.d}}),res:r||null,page:state.res?2:1,ok:!!state.ok}}
+function cruSig(){var r=state.res||state.lv;return JSON.stringify([state.mode,rows,r&&r.sig,!!state.res,cru.name])}
+function xwDerive(cd){
+  var r=JSON.parse(JSON.stringify(cd.res)),dm=cd.mode==='d',m={};
+  (cd.rows||[]).forEach(function(x){var w=normWord(x.w);if(w&&!(w in m))m[w]=(x.d||'').trim()});
+  r.entries.forEach(function(e){e.def=dm?(m[e.w]||''):''});
+  var sv=state.res;state.res=r;
+  try{var sp=split();function f(l){return l.map(function(x){return x.n+'. '+ctext(x)})}
+    var c1=xwCanvas(true),c0=xwCanvas(false);
+    return{src1:c1.toDataURL('image/png'),src0:c0.toDataURL('image/png'),w1:c1.width,h1:c1.height,w0:c0.width,h0:c0.height,hz:f(sp[0]),vt:f(sp[1])}
+  }finally{state.res=sv}}
+function thumbOf(c,max){var k=Math.min(1,max/Math.max(c.width,c.height)),t=document.createElement('canvas');t.width=Math.round(c.width*k);t.height=Math.round(c.height*k);var g=t.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,t.width,t.height);g.drawImage(c,0,0,t.width,t.height);return t.toDataURL('image/jpeg',.75)}
+function cruThumb(res){if(!res)return null;var sv=state.res;state.res=res;try{return thumbOf(xwCanvas(true),260)}finally{state.res=sv}}
+function cruSave(manual){
+  if(!loggedIn()){if(manual)openLogin('Accedi per salvare il cruciverba.');return Promise.resolve()}
+  if(!cruHas()){if(manual)toast('Inserisci almeno una parola prima di salvare.');return Promise.resolve()}
+  if(!cru.id&&!cru.named){if(!manual)return Promise.resolve();askName('Nome del cruciverba',cru.name||nowName('cruciverba'),function(n){cru.name=n;cru.named=true;cruSave(true)});return Promise.resolve()}
+  if(cru.saving)return Promise.resolve();
+  cru.saving=true;var isNew=!cru.id;if(isNew)cru.id=uid();var id=cru.id,sg=cruSig(),data=cruData(),nm=cru.name||nowName('cruciverba');
+  var th=null;try{th=cruThumb(data.res)}catch(x){}
+  var q=isNew?sb.from(BK).insert({id:id,tipo:'cruciverba',nome:nm,dati:data,anteprima:th}):sb.from(BK).update({nome:nm,dati:data,anteprima:th}).eq('id',id);
+  return q.then(function(r){if(r.error)throw r.error;cru.sig=sg;cru.err=false;cru.saving=false;sbUI();if(manual)toast('Cruciverba salvato.')})
+   .catch(function(e){cru.saving=false;cru.err=true;if(isNew)cru.id=null;sbUI();if(manual)toast('Salvataggio non riuscito: '+errMsg(e))})}
+function cdLoad(cd){
+  rows=(cd.rows&&cd.rows.length?cd.rows:[{w:'',d:''}]).map(function(r){return{w:r.w||'',d:r.d||''}});
+  state.mode=cd.mode||'w';state.letters=cd.letters!==false;
+  [].forEach.call($('mode').children,function(x){x.classList.toggle('on',x.dataset.m===state.mode)});
+  $('tel').innerHTML=state.letters?'Nascondi<br>lettere':'Mostra<br>lettere';
+  drawRows();
+  var p=parse();state.words=p.words;state.defs=defsMap();state.dm=state.mode==='d';state.hist=[];state.seen={};state.pap=false;
+  var r=cd.res||null;
+  if(r){r.entries.forEach(function(e){e.def=state.dm?(state.defs[e.w]||''):''});state.res=cd.page===2?r:null;state.lv=r;state.lvKey=wkey(p.words);state.sig=r.sig;state.seen[r.sig]=1;state.ok=!!cd.ok;
+    var n=p.words.length;$('b1').textContent=n+(n===1?' parola inserita':' parole inserite');$('lw').textContent=r.failed&&r.failed.length?'Non ancora incrociate: '+r.failed.map(function(f){return f.w}).join(', ')+'.':''}
+  else{state.res=null;state.lv=null;state.ok=false}
+  go(r&&cd.page===2?2:1)}
+function cruOpen(id){
+  toast('Apro il cruciverba…');
+  sb.from(BK).select('id,nome,dati').eq('id',id).single().then(function(r){
+    if(r.error||!r.data)return toast('Non riesco ad aprire la bozza.');
+    cdLoad(r.data.dati);cru.id=id;cru.name=r.data.nome;cru.named=true;cru.err=false;cru.sig=cruSig();cru.seen=cru.sig;sbUI()
+  }).catch(function(e){toast('Non riesco ad aprire la bozza: '+errMsg(e))})}
+function cruNew(){
+  var go_=function(){cru.id=null;cru.name='';cru.named=false;cru.sig='';rows=[{w:'',d:''}];state.res=null;state.lv=null;state.ok=false;state.pap=false;drawRows();doLive();go(1);focusRow(0)};
+  if(cruHas()&&(!loggedIn()||!cru.id||cruSig()!==cru.sig))openModal('Nuovo cruciverba','Il cruciverba attuale non è salvato: se continui andrà perso.','Continua',go_);else go_()}
+
+/* ---- dati del papiro ---- */
+function papHas(){var d=pap.d;return!!(d.uni.trim()||d.name.trim()||d.course.trim()||d.date||d.logo||pap.car||pap.xw||pap.photos.length)}
+function papName(){return pap.nameAuto?'Papiro – '+(pap.d.name.trim()||'senza titolo'):(pap.name||'Papiro')}
+function papSig(){var d=pap.d,X=pap.xw;
+  return JSON.stringify([pap.step,pap.xmode,d.uni,d.gen,d.course,d.name,d.date,d.logo.length,pap.car&&pap.car.src.length,pap.photos.map(function(p){return p.id+':'+p.src.length}),
+    X&&[X.kind,X.cid,X.hz,X.vt,X.src1&&X.src1.length,X.src0&&X.src0.length,X.cd&&X.cd.res&&X.cd.res.sig],ED.fs,
+    ED.blocks.map(function(b){return[b.id,b.vis,Math.round(b.x*10),Math.round(b.y*10),Math.round(b.w*10),b.fit]}),papName()])}
+function papReset(){
+  pap.step=1;pap.d={logo:'',uni:'',gen:'Laureata',course:'',name:'',date:''};pap.car=null;pap.xw=null;pap.xmode='crea';pap.photos=[];pap.pid=0;
+  pap.id=null;pap.name='';pap.nameAuto=true;pap.sig='';pap.seen='';pap.err=false;
+  ED.blocks=[];ED._saved=null;ED.sel=null;ED.fs=15;ED.ver=1;ED.zoom=1;papFields()}
+function papFields(){
+  $('pUni').value=pap.d.uni;$('pCourse').value=pap.d.course;$('pName').value=pap.d.name;$('pDate').value=pap.d.date;
+  [].forEach.call($('pGen').children,function(x){x.classList.toggle('on',x.dataset.g===pap.d.gen)});
+  $('edFs').value=ED.fs;$('edFsV').textContent=ED.fs+' pt';
+  [].forEach.call($('edVer').children,function(x){x.classList.toggle('on',+x.dataset.v===ED.ver)})}
+function papPack(id){
+  var d=pap.d,X=pap.xw,jobs=[],o={v:1,step:pap.step,xmode:pap.xmode,pid:pap.pid,d:{uni:d.uni,gen:d.gen,course:d.course,name:d.name,date:d.date,logo:null},car:null,xw:null,photos:[],
+    ED:{fs:ED.fs,ver:ED.ver,blocks:ED.blocks.map(function(b){return{id:b.id,vis:b.vis,x:b.x,y:b.y,w:b.w,h:b.h,fit:b.fit}})}};
+  if(d.logo)jobs.push(upImg(id,'logo',d.logo).then(function(p){o.d.logo=p}));
+  if(pap.car)jobs.push(upImg(id,'car',pap.car.src).then(function(p){o.car={ref:p,w:pap.car.w,h:pap.car.h}}));
+  pap.photos.forEach(function(ph,i){jobs.push(upImg(id,ph.id,ph.src).then(function(p){o.photos[i]={id:ph.id,ref:p,w:ph.w,h:ph.h}}))});
+  if(X){var k=X.kind||'upload';o.xw={kind:k,cid:X.cid||null,cname:X.cname||'',cd:X.cd||null,hz:X.hz,vt:X.vt,w1:X.w1,h1:X.h1,w0:X.w0,h0:X.h0,src1:null,src0:null};
+    if(k==='upload'){jobs.push(upImg(id,'xw1',X.src1).then(function(p){o.xw.src1=p}));jobs.push(upImg(id,'xw0',X.src0).then(function(p){o.xw.src0=p}))}}
+  return Promise.all(jobs).then(function(){return o})}
+function papThumb(){
+  var W=240,H=Math.round(W*1189/841),c=document.createElement('canvas');c.width=W;c.height=H;var g=c.getContext('2d'),k=W/AW,d=pap.d;
+  g.fillStyle='#fff';g.fillRect(0,0,W,H);g.strokeStyle='#E7CBD1';g.strokeRect(.5,.5,W-1,H-1);g.textAlign='center';
+  g.fillStyle='#C1272D';g.font='bold '+(W*.028)+'px Arial';g.fillText((d.uni||'').toUpperCase().slice(0,42),W/2,W*.065);
+  g.fillStyle='#222';g.font=(W*.036)+'px Times New Roman';g.fillText((d.name||'').toUpperCase().slice(0,36),W/2,W*.125);
+  var jobs=[];
+  ED.blocks.forEach(function(b){if(!b.vis)return;
+    if(b.t==='img'){jobs.push(ldImg(edSrc(b)).then(function(im){return{b:b,im:im}}))}
+    else{g.fillStyle='#F1ECEC';g.fillRect(b.x*k,b.y*k,b.w*k,b.h*k);g.fillStyle='#C9C0C2';for(var y=b.y*k+4;y<(b.y+b.h)*k-3;y+=4)g.fillRect(b.x*k+3,y,b.w*k-6,1.5)}});
+  return Promise.all(jobs).then(function(a){a.forEach(function(o){if(!o.im)return;var b=o.b,bx=b.x*k,by=b.y*k,bw=b.w*k,bh=b.h*k,iw=o.im.naturalWidth,ih=o.im.naturalHeight;
+      if(b.fit==='cover'){var ar=ih/iw,br=bh/bw,sx=0,sy=0,sw=iw,sh=ih;if(ar>br){sh=iw*br;sy=(ih-sh)/2}else{sw=ih/br;sx=(iw-sw)/2}g.drawImage(o.im,sx,sy,sw,sh,bx,by,bw,bh)}
+      else{var s2=Math.min(bw/iw,bh/ih);g.drawImage(o.im,bx+(bw-iw*s2)/2,by+(bh-ih*s2)/2,iw*s2,ih*s2)}});
+    return c.toDataURL('image/jpeg',.7)})}
+function papSave(manual){
+  if(!loggedIn()){if(manual)openLogin('Accedi per salvare il papiro.');return Promise.resolve()}
+  if(!papHas()){if(manual)toast('Inserisci almeno qualche dato prima di salvare.');return Promise.resolve()}
+  if(pap.saving)return Promise.resolve();
+  pap.saving=true;var isNew=!pap.id;if(isNew)pap.id=uid();var id=pap.id,sg=papSig(),nm=papName();sbUI();
+  return papPack(id).then(function(dati){return papThumb().catch(function(){return null}).then(function(th){
+    return isNew?sb.from(BK).insert({id:id,tipo:'papiro',nome:nm,dati:dati,anteprima:th}):sb.from(BK).update({nome:nm,dati:dati,anteprima:th}).eq('id',id)})})
+   .then(function(r){if(r.error)throw r.error;pap.sig=sg;pap.err=false;pap.saving=false;sbUI();if(manual)toast('Papiro salvato.')})
+   .catch(function(e){pap.saving=false;pap.err=true;if(isNew)pap.id=null;sbUI();if(manual)toast('Salvataggio non riuscito: '+errMsg(e))})}
+function papResolveXw(){
+  var X=pap.xw;if(!X)return Promise.resolve();
+  if(X.kind==='linked'&&X.cid){
+    return sb.from(BK).select('nome,dati,modificata_il').eq('id',X.cid).maybeSingle().then(function(r){
+      if(r.data&&r.data.dati&&r.data.dati.res){X.cd=r.data.dati;X.cname=r.data.nome;X.cdAt=r.data.modificata_il;Object.assign(X,xwDerive(X.cd))}
+      else if(!r.error){toast('Il cruciverba collegato non esiste più: nel papiro resta una copia.');X.kind='made';X.cid=null}
+      else if(X.cd)Object.assign(X,xwDerive(X.cd));
+    }).catch(function(){if(X.cd)Object.assign(X,xwDerive(X.cd))})}
+  if(X.kind==='made'&&X.cd&&X.cd.res){var dv=xwDerive(X.cd);X.src1=dv.src1;X.src0=dv.src0;X.w1=dv.w1;X.h1=dv.h1;X.w0=dv.w0;X.h0=dv.h0}
+  return Promise.resolve()}
+function papUnpack(o,id){
+  papReset();
+  pap.step=o.step||1;pap.xmode=o.xmode||'crea';pap.pid=o.pid||0;
+  Object.assign(pap.d,{uni:o.d.uni||'',gen:o.d.gen||'Laureata',course:o.d.course||'',name:o.d.name||'',date:o.d.date||''});
+  var jobs=[];
+  if(o.d.logo)jobs.push(dnImg(id,'logo',o.d.logo).then(function(u){pap.d.logo=u}));
+  if(o.car)jobs.push(dnImg(id,'car',o.car.ref).then(function(u){pap.car={src:u,w:o.car.w,h:o.car.h}}));
+  (o.photos||[]).forEach(function(p,i){jobs.push(dnImg(id,p.id,p.ref).then(function(u){pap.photos[i]={id:p.id,src:u,w:p.w,h:p.h}}))});
+  if(o.xw){var X=ensureXw();Object.assign(X,{kind:o.xw.kind,cid:o.xw.cid,cname:o.xw.cname,cd:o.xw.cd,hz:o.xw.hz||[],vt:o.xw.vt||[],w1:o.xw.w1,h1:o.xw.h1,w0:o.xw.w0,h0:o.xw.h0,made:o.xw.kind==='made'});
+    if(o.xw.kind==='upload'){if(o.xw.src1)jobs.push(dnImg(id,'xw1',o.xw.src1).then(function(u){X.src1=u}));if(o.xw.src0)jobs.push(dnImg(id,'xw0',o.xw.src0).then(function(u){X.src0=u}))}}
+  return Promise.all(jobs).then(function(){pap.photos=pap.photos.filter(Boolean);return papResolveXw()}).then(function(){
+    var sv={};((o.ED&&o.ED.blocks)||[]).forEach(function(b){sv[b.id]=b});ED._saved=sv;ED.fs=(o.ED&&o.ED.fs)||15;ED.ver=o.ED&&o.ED.ver!=null?o.ED.ver:1;
+    papFields();edSync()})}
+function papOpen(id){
+  toast('Apro il papiro…');
+  sb.from(BK).select('id,nome,dati').eq('id',id).single().then(function(r){
+    if(r.error||!r.data)throw r.error||new Error('bozza non trovata');
+    return papUnpack(r.data.dati,id).then(function(){
+      pap.id=id;var auto='Papiro – '+(pap.d.name.trim()||'senza titolo');pap.nameAuto=(r.data.nome===auto);pap.name=pap.nameAuto?'':r.data.nome;pap.err=false;pap.sig=papSig();pap.seen=pap.sig;
+      state.pap=false;go(6)})
+  }).catch(function(e){toast('Non riesco ad aprire il papiro: '+errMsg(e))})}
+function papNew(){papReset();state.pap=false;go(6)}
+function papNewAsk(){
+  if(papHas()&&(!loggedIn()||!pap.id||papSig()!==pap.sig))openModal('Nuovo papiro','Il papiro attuale non è salvato: se continui andrà perso.','Continua',papNew);else papNew()}
+function papRefreshLink(){
+  var X=pap.xw;if(!X||X.kind!=='linked'||!loggedIn()||pap.refreshing)return;pap.refreshing=true;
+  sb.from(BK).select('nome,dati,modificata_il').eq('id',X.cid).maybeSingle().then(function(r){
+    pap.refreshing=false;if(r.error)return;
+    if(!r.data){X.kind='made';X.cid=null;toast('Il cruciverba collegato è stato eliminato: nel papiro resta una copia.');paintPap();return}
+    if(r.data.modificata_il!==X.cdAt&&r.data.dati&&r.data.dati.res){X.cd=r.data.dati;X.cname=r.data.nome;X.cdAt=r.data.modificata_il;Object.assign(X,xwDerive(X.cd));edSync();if(pap.step===5)edRender();paintPap()}
+  }).catch(function(){pap.refreshing=false})}
+/* scelta di un cruciverba salvato */
+function pkOpen(){
+  if(!loggedIn()){openLogin('Accedi per usare i cruciverba salvati.');return}
+  $('pkList').innerHTML='<p>Caricamento…</p>';$('pkModal').classList.remove('hide');
+  sb.from(BK).select('id,nome,anteprima,modificata_il').eq('tipo','cruciverba').order('modificata_il',{ascending:false}).then(function(r){
+    if(r.error){$('pkList').innerHTML='<p>Non riesco a caricare i cruciverba.</p>';return}
+    var a=r.data||[];$('pkList').innerHTML=a.length?a.map(function(x){return'<button type="button" class="pki" data-id="'+x.id+'">'+(x.anteprima?'<img src="'+x.anteprima+'" alt="">':'')+'<b>'+esc(x.nome)+'</b><small>'+fmtMod(x.modificata_il)+'</small></button>'}).join(''):'<p>Non hai ancora cruciverba salvati.</p>'})}
+$('pkList').onclick=function(e){var b=e.target.closest('.pki');if(!b)return;$('pkModal').classList.add('hide');linkXw(b.dataset.id)};
+$('pkNo').onclick=function(){$('pkModal').classList.add('hide')};
+function linkXw(id){
+  sb.from(BK).select('id,nome,dati,modificata_il').eq('id',id).single().then(function(r){
+    if(r.error||!r.data)return toast('Cruciverba non trovato.');
+    var cd=r.data.dati;if(!cd||!cd.res)return toast('Questo cruciverba non ha ancora uno schema: aprilo e generalo.');
+    var X=ensureXw();Object.assign(X,{kind:'linked',cid:id,cname:r.data.nome,cd:cd,cdAt:r.data.modificata_il,made:false},xwDerive(cd));
+    paintPap();toast('Cruciverba collegato.')
+  }).catch(function(e){toast('Non riesco a collegarlo: '+errMsg(e))})}
+$('xwPick').onclick=function(){if(loggedIn())pkOpen();else openLogin('Accedi per usare i cruciverba salvati.')};
+$('xwUnl').onclick=function(){var X=pap.xw;if(X&&X.kind==='linked'){X.kind='made';X.cid=null;X.made=true;paintPap();toast('Scollegato: il papiro tiene una copia.')}};
+
+/* ---- barra di salvataggio ---- */
+function sbCtx(){if(state.pap)return null;if(state.page>=1&&state.page<=3)return'cru';if(state.page===6)return'pap';return null}
+function sbUI(){
+  var c=sbCtx(),bar=$('sbar');if(!bar)return;bar.classList.toggle('hide',!c);if(!c)return;
+  var o=c==='cru'?cru:pap,has=c==='cru'?cruHas():papHas(),sg=c==='cru'?cruSig():papSig(),st=$('sbSt'),cls='sbst',t;
+  if(!sb){t='Salvataggio non configurato'}
+  else if(!me){t='Accedi per salvare';cls+=' lk'}
+  else if(o.saving)t='Salvataggio…';
+  else if(o.err){t='Errore di salvataggio, riprovo';cls+=' er'}
+  else if(!o.id)t=has?(c==='cru'?'Non ancora salvato':'Salvo tra un attimo…'):'Bozza nuova';
+  else if(sg!==o.sig)t='Modifiche non salvate…';
+  else{t='Salvato ✓';cls+=' ok'}
+  st.textContent=t;st.className=cls;
+  var nm=c==='cru'?(cru.name||''):papName();if(document.activeElement!==$('sbName'))$('sbName').value=nm;
+  $('sbName').placeholder=c==='cru'?'Nome del cruciverba':'Nome del papiro';
+}
+$('sbName').oninput=function(){var v=this.value;
+  if(sbCtx()==='cru'){cru.name=v.trim();if(cru.name)cru.named=true}
+  else{pap.name=v.trim();pap.nameAuto=!v.trim()}};
+$('sbSt').onclick=function(){if(sb&&!me)openLogin()};
+$('sbSave').onclick=function(){var c=sbCtx();if(c==='cru')cruSave(true);else if(c==='pap')papSave(true)};
+$('sbNew').onclick=function(){var c=sbCtx();if(c==='cru')cruNew();else if(c==='pap')papNewAsk()};
+/* salvataggio automatico: parte quando i dati restano fermi per un paio di secondi */
+setInterval(function(){
+  if(!loggedIn()){sbUI();return}
+  if(papHas()){var sg=papSig();if(sg!==pap.sig){if(sg!==pap.seen){pap.seen=sg;pap.chg=Date.now()}else if(Date.now()-pap.chg>1800&&!pap.saving)papSave(false)}else pap.seen=sg}
+  if(cru.id&&!state.pap&&cruHas()){var s2=cruSig();if(s2!==cru.sig){if(s2!==cru.seen){cru.seen=s2;cru.chg=Date.now()}else if(Date.now()-cru.chg>1800&&!cru.saving)cruSave(false)}else cru.seen=s2}
+  sbUI()},1000);
+window.addEventListener('beforeunload',function(e){if(loggedIn()&&((papHas()&&papSig()!==pap.sig)||(cru.id&&cruSig()!==cru.sig))){e.preventDefault();e.returnValue=''}});
+
+/* ---- pagina "Le mie bozze" ---- */
+var BZ={rows:[],loading:false};
+function bzLoad(){
+  bzRender();if(!loggedIn())return;
+  BZ.loading=true;
+  sb.from(BK).select('id,tipo,nome,anteprima,modificata_il').order('modificata_il',{ascending:false}).then(function(r){
+    BZ.loading=false;if(r.error){toast('Non riesco a caricare le bozze: '+errMsg(r.error));BZ.rows=[]}else BZ.rows=r.data||[];bzRender()
+  }).catch(function(e){BZ.loading=false;toast('Non riesco a caricare le bozze: '+errMsg(e))})}
+function bzCards(tipo){
+  var a=BZ.rows.filter(function(r){return r.tipo===tipo});
+  if(!a.length)return'<div class="dempty">'+(BZ.loading?'Caricamento…':(tipo==='papiro'?'Nessun papiro salvato.':'Nessun cruciverba salvato.'))+'</div>';
+  return a.map(function(r){return'<div class="dcard" data-id="'+r.id+'" data-t="'+r.tipo+'"><div class="dth">'+(r.anteprima?'<img src="'+r.anteprima+'" alt="">':ic(tipo==='papiro'?'doc':'grid'))+'</div><div class="dnm" title="'+esc(r.nome)+'">'+esc(r.nome)+'</div><div class="ddt">'+fmtMod(r.modificata_il)+'</div><button type="button" class="dmn" aria-label="Opzioni">⋯</button></div>'}).join('')}
+function bzRender(){
+  var msg=$('bzMsg'),body=$('bzBody');
+  if(!sb){msg.classList.remove('hide');body.classList.add('hide');msg.innerHTML='<h2>Salvataggio non configurato</h2><p>Per usare l’accesso e le bozze serve un progetto Supabase: segui le istruzioni di SETUP-SUPABASE.md e inserisci indirizzo e chiave nelle righe SB_URL e SB_KEY all’inizio del blocco “account e bozze” dello script.</p>';return}
+  if(!me){msg.classList.remove('hide');body.classList.add('hide');msg.innerHTML='<h2>Accedi per vedere le tue bozze</h2><p>Dopo l’accesso trovi qui i papiri e i cruciverba salvati, che puoi riprendere, rinominare, duplicare ed eliminare.</p><button class="btn pri" id="bzLogin"><span>Accedi</span></button>';return}
+  msg.classList.add('hide');body.classList.remove('hide');
+  $('bzP').className='dg p';$('bzP').innerHTML=bzCards('papiro');$('bzC').className='dg';$('bzC').innerHTML=bzCards('cruciverba')}
+$('p7').addEventListener('click',function(e){
+  if(e.target.closest('#bzLogin'))return openLogin();
+  var mn=e.target.closest('.dmn');
+  if(mn){e.stopPropagation();var cd=mn.closest('.dcard'),m=$('dmenu'),r=mn.getBoundingClientRect();m.dataset.id=cd.dataset.id;m.dataset.t=cd.dataset.t;m.style.top=Math.min(r.bottom+4,window.innerHeight-190)+'px';m.style.left=Math.max(8,r.right-170)+'px';m.classList.remove('hide');return}
+  var cd2=e.target.closest('.dcard');if(cd2&&!e.target.closest('#dmenu'))return bzOpen(cd2.dataset.id,cd2.dataset.t)});
+function bzOpen(id,t){t==='papiro'?papOpen(id):cruOpen(id)}
+$('dmenu').onclick=function(e){var b=e.target.closest('[data-a]');if(!b)return;var id=this.dataset.id,t=this.dataset.t;this.classList.add('hide');
+  if(b.dataset.a==='open')bzOpen(id,t);else if(b.dataset.a==='ren')bzRename(id);else if(b.dataset.a==='dup')bzDup(id);else bzDelete(id)};
+function bzRow(id){return BZ.rows.filter(function(r){return r.id===id})[0]}
+function bzRename(id){var r=bzRow(id);if(!r)return;askName('Rinomina',r.nome,function(n){
+  sb.from(BK).update({nome:n}).eq('id',id).then(function(x){if(x.error)return toast('Non riesco a rinominare: '+errMsg(x.error));
+    if(cru.id===id){cru.name=n;cru.named=true}if(pap.id===id){pap.name=n;pap.nameAuto=false}bzLoad()})})}
+function refsIn(o,pre,out){if(typeof o==='string'){if(o.indexOf(pre)===0)out.push(o)}else if(o&&typeof o==='object')Object.keys(o).forEach(function(k){refsIn(o[k],pre,out)});return out}
+function bzDup(id){
+  toast('Duplico…');
+  sb.from(BK).select('*').eq('id',id).single().then(function(r){
+    if(r.error||!r.data)throw r.error||new Error('bozza non trovata');
+    var row=r.data,nid=uid(),old=me.id+'/'+id+'/',nw=me.id+'/'+nid+'/',refs=refsIn(row.dati,old,[]);
+    var dati=JSON.parse(JSON.stringify(row.dati).split(old).join(nw));
+    return Promise.all(refs.map(function(p){return sb.storage.from(BK).copy(p,nw+p.slice(old.length)).then(function(x){if(x.error)throw x.error})})).then(function(){
+      return sb.from(BK).insert({id:nid,tipo:row.tipo,nome:row.nome+' (copia)',dati:dati,anteprima:row.anteprima})}).then(function(x){if(x.error)throw x.error;toast('Bozza duplicata.');bzLoad()})
+  }).catch(function(e){toast('Non riesco a duplicare: '+errMsg(e))})}
+function bzDelete(id){
+  var r=bzRow(id);if(!r)return;
+  var ask=function(extra){openModal('Eliminare la bozza?','«'+r.nome+'» verrà eliminata per sempre'+(r.tipo==='papiro'?', insieme alle sue immagini':'')+'.'+(extra||''),'Elimina',function(){bzDoDelete(id,r.tipo)})};
+  if(r.tipo!=='cruciverba')return ask();
+  sb.from(BK).select('id,nome').eq('tipo','papiro').eq('dati->xw->>cid',id).then(function(x){
+    var n=x.data?x.data.length:0;ask(n?' Il cruciverba è collegato a '+n+(n===1?' papiro':' papiri')+': in ciascuno resterà una copia.':'')}).catch(function(){ask()})}
+function bzDoDelete(id,t){
+  var folder=me.id+'/'+id;
+  sb.storage.from(BK).list(folder).then(function(l){var files=(l.data||[]).map(function(f){return folder+'/'+f.name});return files.length?sb.storage.from(BK).remove(files):null})
+   .then(function(){return sb.from(BK).delete().eq('id',id)}).then(function(x){
+    if(x&&x.error)throw x.error;
+    if(cru.id===id){cru.id=null;cru.named=false}if(pap.id===id){pap.id=null;pap.sig=papSig();pap.seen=pap.sig}
+    toast('Bozza eliminata.');bzLoad()}).catch(function(e){toast('Non riesco a eliminare: '+errMsg(e))})}
+$('bzNewP').onclick=function(){papNewAsk()};$('bzNewC').onclick=function(){cruNew()};
+
+sbInit();
 drawRows();doLive();go(0);
 })();
 </script>
